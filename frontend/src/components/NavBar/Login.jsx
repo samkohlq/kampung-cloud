@@ -5,14 +5,27 @@ import firebase from "../../firebase";
 
 const uiConfig = {
   signInFlow: "popup",
-  signInSuccessUrl: "/",
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
   callbacks: {
-    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+    signInSuccessWithAuthResult: async (authResult, redirectUrl) => {
+      if (authResult.additionalUserInfo.isNewUser) {
+        await fetch("http://localhost:4000/users/createUser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userName: authResult.user.displayName,
+            email: authResult.user.email,
+            phoneNum: authResult.user.phoneNumber,
+            authUid: authResult.user.uid,
+          }),
+        });
+      }
       return true;
     },
   },
@@ -34,7 +47,7 @@ function Login() {
       </Nav.Link>
 
       <Modal show={showLoginModal} onHide={handleCloseLoginModal}>
-        <Modal.Body closeButton>
+        <Modal.Body>
           <StyledFirebaseAuth
             uiConfig={uiConfig}
             firebaseAuth={firebase.auth()}

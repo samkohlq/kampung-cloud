@@ -29,8 +29,6 @@ class NavBar extends React.Component {
           <Navbar.Brand>Communal</Navbar.Brand>
           <Nav.Link>About</Nav.Link>
         </Nav>
-
-        {/* TODO: Make FAQs and Login on same line */}
         {this.state.loggedIn ? (
           <NavDropdown title={this.state.loggedInUserName}>
             <NavDropdown.Item
