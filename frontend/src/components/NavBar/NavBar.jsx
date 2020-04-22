@@ -1,7 +1,7 @@
 import React from "react";
-import { Navbar, NavDropdown } from "react-bootstrap";
+import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import firebase from "../../firebase";
-import Login from "../Login/Login";
+import Login from "./Login";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -24,25 +24,28 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div>
-        <Navbar fixed="top" bg="light" className="justify-content-between">
+      <Navbar bg="light" className="justify-content-between">
+        <Nav>
           <Navbar.Brand>Communal</Navbar.Brand>
-          {this.state.loggedIn ? (
-            <NavDropdown title={this.state.loggedInUserName}>
-              <NavDropdown.Item
-                size="sm"
-                onClick={() => {
-                  firebase.auth().signOut();
-                }}
-              >
-                Log out
-              </NavDropdown.Item>
-            </NavDropdown>
-          ) : (
-            <Login />
-          )}
-        </Navbar>
-      </div>
+          <Nav.Link>About</Nav.Link>
+        </Nav>
+
+        {/* TODO: Make FAQs and Login on same line */}
+        {this.state.loggedIn ? (
+          <NavDropdown title={this.state.loggedInUserName}>
+            <NavDropdown.Item
+              size="sm"
+              onClick={() => {
+                firebase.auth().signOut();
+              }}
+            >
+              Log out
+            </NavDropdown.Item>
+          </NavDropdown>
+        ) : (
+          <Login />
+        )}
+      </Navbar>
     );
   }
 }
