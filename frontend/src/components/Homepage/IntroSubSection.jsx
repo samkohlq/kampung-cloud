@@ -22,13 +22,13 @@ class IntroSubSection extends React.Component {
               <Button>Learn more</Button>
             </Container>
           </Col>
-          <Col className="px-3" xs="12" md="3">
+          <Col className="px-5" xs="12" md="3">
             <Container>
               <h2>XX</h2>
               requests fulfilled
             </Container>
           </Col>
-          <Col className="px-3" xs="12" md="3">
+          <Col className="px-5" xs="12" md="3">
             <Container>
               <h2>XX</h2>
               requests outstanding
