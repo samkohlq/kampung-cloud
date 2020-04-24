@@ -90,7 +90,7 @@ class RequestForm extends React.Component {
                     onChange={this.handleFormChange}
                   />
                   <Form.Text className="text-muted">
-                    Background information, if any
+                    Background information, instructions for delivery, if any
                   </Form.Text>
                 </Form.Group>
 

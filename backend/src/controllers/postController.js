@@ -20,11 +20,20 @@ export const retrievePosts = async (req, res) => {
     Post.findAll({
       order: [
         ["status", "DESC"],
-        ["createdAt", "DESC"],
+        ["requestDeadline", "ASC"],
       ],
     }),
   ]).catch((error) => {
     console.log(error);
   });
   res.send(posts);
+};
+
+export const deletePost = async (req, res) => {
+  const deletePostSuccess = await Post.destroy({
+    where: { id: req.query.postId },
+  });
+  if (deletePostSuccess) {
+    res.send("Post successfully deleted");
+  }
 };

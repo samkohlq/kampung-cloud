@@ -5,12 +5,17 @@ import Post from "./Post";
 class PostsList extends React.Component {
   constructor(props) {
     super(props);
+    this.rerenderPostsList = this.rerenderPostsList.bind(this);
     this.state = {
       posts: [],
     };
   }
 
   componentDidMount() {
+    this.retrievePosts();
+  }
+
+  retrievePosts = () => {
     fetch("http://localhost:4000/posts/retrievePosts")
       .then((response) => response.json())
       .then((json) => {
@@ -19,7 +24,12 @@ class PostsList extends React.Component {
           posts: posts,
         });
       });
-  }
+  };
+
+  rerenderPostsList = () => {
+    this.retrievePosts();
+    this.setState({ state: this.state });
+  };
 
   render() {
     return (
@@ -28,14 +38,21 @@ class PostsList extends React.Component {
           <thead>
             <tr>
               <th>Status</th>
-              <th>Request Deadline</th>
+              <th>Deadline</th>
               <th>Request</th>
               <th>Request Details</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {this.state.posts.map((post, i) => (
-              <Post id="post" key={i} post={post} />
+              <Post
+                id="post"
+                key={i}
+                post={post}
+                rerenderPostsList={this.rerenderPostsList}
+              />
             ))}
           </tbody>
         </Table>

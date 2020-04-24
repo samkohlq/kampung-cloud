@@ -6,7 +6,7 @@ class IntroSubSection extends React.Component {
     return (
       <Jumbotron fluid>
         <Row className="justify-content-md-center">
-          <Col className="px-5" xs="12" md="6">
+          <Col className="px-5 mb-5" xs="12" md="6">
             <Container>
               <h1 className="mb-5">Some title</h1>
               <p>
@@ -22,13 +22,13 @@ class IntroSubSection extends React.Component {
               <Button>Learn more</Button>
             </Container>
           </Col>
-          <Col className="px-5" xs="12" md="3">
+          <Col className="px-5 mb-5" xs="12" md="3">
             <Container>
               <h2>XX</h2>
               requests fulfilled
             </Container>
           </Col>
-          <Col className="px-5" xs="12" md="3">
+          <Col className="px-5 mb-5" xs="12" md="3">
             <Container>
               <h2>XX</h2>
               requests outstanding
