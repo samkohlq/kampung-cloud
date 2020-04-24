@@ -3,6 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import firebase from "../../firebase";
 import NavBar from "../NavBar/NavBar";
 import IntroSubSection from "./IntroSubSection";
+import PostsList from "./PostsList";
 import RequestForm from "./RequestForm";
 
 class Homepage extends React.Component {
@@ -10,7 +11,6 @@ class Homepage extends React.Component {
     super(props);
     this.state = {
       loggedIn: firebase.auth().currentUser ? true : false,
-      posts: [],
     };
   }
 
@@ -38,6 +38,7 @@ class Homepage extends React.Component {
         <NavBar />
         <IntroSubSection />
         {requestForm}
+        <PostsList />
       </>
     );
   }
