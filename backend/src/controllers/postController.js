@@ -7,7 +7,7 @@ export const createPost = async (req, res) => {
       requestDetails: req.body.requestDetails,
       requestorUid: req.body.requestorUid,
       requestDeadline: req.body.requestDeadline,
-      status: "Need help",
+      status: 0,
     }),
   ]).catch((error) => {
     console.log(error);
@@ -15,18 +15,18 @@ export const createPost = async (req, res) => {
   res.send(newPost);
 };
 
-export const retrievePosts = async (req, res) => {
-  const posts = await Promise.all([
+export const retrieveAllPosts = async (req, res) => {
+  const retrievedPosts = await Promise.all([
     Post.findAll({
       order: [
-        ["status", "DESC"],
+        ["status", "ASC"],
         ["requestDeadline", "ASC"],
       ],
     }),
   ]).catch((error) => {
     console.log(error);
   });
-  res.send(posts);
+  res.send(retrievedPosts);
 };
 
 export const deletePost = async (req, res) => {
@@ -36,4 +36,28 @@ export const deletePost = async (req, res) => {
   if (deletePostSuccess) {
     res.send("Post successfully deleted");
   }
+};
+
+export const assignPost = async (req, res) => {
+  const assignedPost = await Post.update(
+    {
+      fulfillerUid: req.body.loggedInUserUid,
+      status: 1,
+    },
+    {
+      where: { id: req.body.postId },
+    }
+  );
+  res.send(assignedPost);
+};
+
+export const retrievePost = async (req, res) => {
+  const retrievedPost = await Promise.all([
+    Post.findOne({
+      where: { id: req.query.postId },
+    }),
+  ]).catch((error) => {
+    console.log(error);
+  });
+  res.send(retrievedPost);
 };

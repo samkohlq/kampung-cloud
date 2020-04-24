@@ -26,7 +26,7 @@ class NavBar extends React.Component {
     return (
       <Navbar bg="light" className="justify-content-between">
         <Nav>
-          <Navbar.Brand>Communal</Navbar.Brand>
+          <Navbar.Brand href="/">Communal</Navbar.Brand>
           <Nav.Link>About</Nav.Link>
         </Nav>
         {this.state.loggedIn ? (

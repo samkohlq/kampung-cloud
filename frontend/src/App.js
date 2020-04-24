@@ -1,9 +1,14 @@
 import React from "react";
-import Homepage from "./components/Homepage/Homepage";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./routes";
 
 class App extends React.Component {
   render() {
-    return <Homepage />;
+    return (
+      <Router>
+        <Routes />
+      </Router>
+    );
   }
 }
 

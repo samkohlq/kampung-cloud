@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       request: DataTypes.STRING,
       requestorUid: DataTypes.STRING,
       fulfillerUid: DataTypes.STRING,
-      status: DataTypes.STRING,
+      status: DataTypes.INTEGER,
       requestDeadline: DataTypes.DATE,
       requestDetails: DataTypes.STRING,
     },
