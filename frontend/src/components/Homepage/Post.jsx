@@ -1,6 +1,6 @@
 import moment from "moment";
 import React from "react";
-import firebase from "../../firebase";
+import { Badge } from "react-bootstrap";
 import "./Post.css";
 
 const statuses = {
@@ -13,26 +13,34 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: null,
-      loggedInUserUid: null,
+      verifiedPost: null,
     };
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        this.setState({ loggedIn: true, loggedInUserUid: user.uid });
-      } else {
-        this.setState({ loggedIn: false, loggedInUserUid: null });
-      }
-    });
+    this.checkIfUserVerified();
   }
+
+  checkIfUserVerified = async () => {
+    await fetch(
+      `http://localhost:4000/users/checkIfUserVerified?authUid=${this.props.post.requestorUid}`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({
+          verifiedPost: json,
+        });
+      });
+  };
 
   render() {
     // format deadline from DATETIME to DD MMM YYYY
     const deadline = moment(this.props.post.requestDeadline).format(
       "DD MMM YYYY"
     );
+    const verifiedTag = this.state.verifiedPost ? (
+      <Badge variant="info">Verified</Badge>
+    ) : null;
     return (
       <tr
         className="cursor"
@@ -42,8 +50,11 @@ class Post extends React.Component {
       >
         <td>{statuses[this.props.post.status]}</td>
         <td>{deadline}</td>
-        <td>{this.props.post.request}</td>
+        <td>
+          {verifiedTag} {this.props.post.request}
+        </td>
         <td>{this.props.post.requestDetails}</td>
+        <td>{this.state.verifiedPost}</td>
       </tr>
     );
   }

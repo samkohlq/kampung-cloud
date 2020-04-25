@@ -1,5 +1,4 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
 import firebase from "../../firebase";
 import NavBar from "../NavBar/NavBar";
 import IntroSubSection from "./IntroSubSection";
@@ -25,13 +24,7 @@ class Homepage extends React.Component {
   }
 
   render() {
-    const requestForm = this.state.loggedIn ? (
-      <Row>
-        <Col sm="12" md="8">
-          <RequestForm />
-        </Col>
-      </Row>
-    ) : null;
+    const requestForm = this.state.loggedIn ? <RequestForm /> : null;
 
     return (
       <>

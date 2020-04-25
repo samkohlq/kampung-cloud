@@ -19,7 +19,6 @@ class RequestForm extends React.Component {
         ...this.state,
         [event.target.name]: event.target.value,
       });
-      console.log(this.state);
     }
   };
 
@@ -69,7 +68,7 @@ class RequestForm extends React.Component {
                 </Form.Group>
 
                 <Form.Group size="sm" className="mb-3">
-                  <Form.Label>What are you looking for?</Form.Label>
+                  <Form.Label>What do you need?</Form.Label>
                   <Form.Control
                     type="text"
                     name="request"
@@ -90,7 +89,8 @@ class RequestForm extends React.Component {
                     onChange={this.handleFormChange}
                   />
                   <Form.Text className="text-muted">
-                    Background information, instructions for delivery, if any
+                    For e.g. background information, instructions for delivery,
+                    sizes required
                   </Form.Text>
                 </Form.Group>
 

@@ -14,8 +14,8 @@ class PostsList extends React.Component {
     this.retrieveAllPosts();
   }
 
-  retrieveAllPosts = () => {
-    fetch("http://localhost:4000/posts/retrieveAllPosts")
+  retrieveAllPosts = async () => {
+    await fetch("http://localhost:4000/posts/retrieveAllPosts")
       .then((response) => response.json())
       .then((json) => {
         const posts = json[0];
@@ -35,6 +35,7 @@ class PostsList extends React.Component {
               <th>Deadline</th>
               <th>Request</th>
               <th>Request Details</th>
+              <th>Requestor</th>
             </tr>
           </thead>
           <tbody>

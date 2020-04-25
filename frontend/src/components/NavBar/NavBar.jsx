@@ -13,7 +13,7 @@ class NavBar extends React.Component {
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(async (user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ loggedIn: true, loggedInUserName: user.displayName });
       } else {
@@ -27,7 +27,8 @@ class NavBar extends React.Component {
       <Navbar bg="light" className="justify-content-between">
         <Nav>
           <Navbar.Brand href="/">Communal</Navbar.Brand>
-          <Nav.Link>About</Nav.Link>
+          <Nav.Link href="/about">How Does This Work?</Nav.Link>
+          <Nav.Link href="/collab">Collaborate</Nav.Link>
         </Nav>
         {this.state.loggedIn ? (
           <NavDropdown title={this.state.loggedInUserName}>

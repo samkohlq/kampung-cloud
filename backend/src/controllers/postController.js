@@ -8,6 +8,7 @@ export const createPost = async (req, res) => {
       requestorUid: req.body.requestorUid,
       requestDeadline: req.body.requestDeadline,
       status: 0,
+      verificationStatus: 0,
     }),
   ]).catch((error) => {
     console.log(error);
