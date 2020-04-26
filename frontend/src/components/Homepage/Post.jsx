@@ -27,10 +27,10 @@ class Post extends React.Component {
       `http://localhost:4000/users/retrieveUserInfo?authUid=${this.props.post.requestorUid}`
     )
       .then((response) => response.json())
-      .then((json) => {
+      .then((retrievedUser) => {
         this.setState({
-          verifiedPost: json.verificationStatus,
-          requestorName: json.userName,
+          verifiedPost: retrievedUser.verificationStatus,
+          requestorName: retrievedUser.userName,
         });
       });
   };

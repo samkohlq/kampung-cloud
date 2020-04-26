@@ -8,7 +8,7 @@ class IntroSubSection extends React.Component {
         <Row className="justify-content-md-center">
           <Col className="px-5 mb-5" xs="12" md="6">
             <Container>
-              <h1 className="mb-5">Some title</h1>
+              <h1 className="mb-5">What is Communal?</h1>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Suspendisse diam lectus, sodales at velit commodo, convallis
@@ -19,7 +19,13 @@ class IntroSubSection extends React.Component {
                 et fermentum. Duis fringilla erat odio, eget elementum nisi
                 molestie id.
               </p>
-              <Button>Learn more</Button>
+              <Button
+                onClick={() => {
+                  window.location.href = "/about";
+                }}
+              >
+                Learn more
+              </Button>
             </Container>
           </Col>
           <Col className="px-5 mb-5" xs="12" md="3">

@@ -58,7 +58,7 @@ class RequestForm extends React.Component {
             <Card.Body>
               <Form>
                 <Form.Group size="sm" className="mb-3">
-                  <Form.Label>When do you need this?</Form.Label>
+                  <Form.Label>When do you need this by?</Form.Label>
                   <DatePicker
                     className="ml-2 datepicker"
                     selected={this.state.requestDeadline}
@@ -75,22 +75,20 @@ class RequestForm extends React.Component {
                     onChange={this.handleFormChange}
                   />
                   <Form.Text className="text-muted">
-                    For e.g. 5 bottles of sanitiser for elderly
+                    For example: 5 bottles of sanitiser for elderly
                   </Form.Text>
                 </Form.Group>
 
                 <Form.Group size="sm" className="mb-3">
-                  <Form.Label>
-                    Anything else you'd like people to know?
-                  </Form.Label>
+                  <Form.Label>Tell us more about your request</Form.Label>
                   <Form.Control
                     as="textarea"
                     name="requestDetails"
                     onChange={this.handleFormChange}
                   />
                   <Form.Text className="text-muted">
-                    For e.g. background information, instructions for delivery,
-                    sizes required
+                    For example: Background information, instructions for
+                    delivery, sizes required
                   </Form.Text>
                 </Form.Group>
 

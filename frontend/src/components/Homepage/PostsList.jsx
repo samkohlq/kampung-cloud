@@ -1,21 +1,35 @@
 import React from "react";
 import { Container, Table } from "react-bootstrap";
+import firebase from "../../firebase";
 import Post from "./Post";
 
 class PostsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loggedInUserUid: null,
       posts: [],
     };
   }
 
   componentDidMount() {
-    this.retrieveAllPosts();
+    let fetchRequest;
+    const loggedInUserUid = firebase.auth().currentUser
+      ? firebase.auth().currentUser.uid
+      : null;
+    if (this.props.posts === "PickedUp") {
+      fetchRequest = `retrieveAllAssignedPosts?loggedInUserUid=${loggedInUserUid}`;
+    } else if (this.props.posts === "Posted") {
+      fetchRequest = `retrieveAllPostedPosts?loggedInUserUid=${loggedInUserUid}`;
+    } else {
+      fetchRequest = "retrieveAllPosts";
+    }
+    console.log(fetchRequest);
+    this.retrieveAllPosts(fetchRequest);
   }
 
-  retrieveAllPosts = async () => {
-    await fetch("http://localhost:4000/posts/retrieveAllPosts")
+  retrieveAllPosts = async (fetchRequest) => {
+    await fetch(`http://localhost:4000/posts/${fetchRequest}`)
       .then((response) => response.json())
       .then((json) => {
         const posts = json[0];

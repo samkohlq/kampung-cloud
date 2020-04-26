@@ -37,18 +37,33 @@ class Actions extends React.Component {
     });
   }
 
-  handlePickUpRequest = () => {
-    fetch("http://localhost:4000/posts/assignPostToFulfiller", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        loggedInUserUid: this.state.loggedInUserUid,
-        status: 1,
-        postId: this.props.postId,
-      }),
-    });
+  handlePickUpPost = () => {
+    fetch(
+      `http://localhost:4000/posts/assignPostToFulfiller?postId=${this.props.postId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          loggedInUserUid: this.state.loggedInUserUid,
+          status: 1,
+        }),
+      }
+    );
+    window.location.href = `/posts/${this.props.postId}`;
+  };
+
+  handleRemoveFulfillerFromPost = () => {
+    fetch(
+      `http://localhost:4000/posts/removeFulfillerFromPost?postId=${this.props.postId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     window.location.href = `/posts/${this.props.postId}`;
   };
 
@@ -79,21 +94,43 @@ class Actions extends React.Component {
           // Allow user to edit or delete post if post belongs to user
           actions = (
             <>
-              <Button onClick={this.handleEditPost}>Edit post</Button>
-              <Button onClick={this.handleDeletePost}>Delete post</Button>
+              <Button
+                className="mb-2"
+                variant="warning"
+                onClick={this.handleEditPost}
+              >
+                Edit
+              </Button>
+              <br></br>
+              <Button
+                className="mb-2"
+                variant="danger"
+                onClick={this.handleDeletePost}
+              >
+                Delete
+              </Button>
             </>
           );
         } else if (this.props.status === 0) {
           // Allow user to pick up a request if post does not belong to user
           actions = (
             <>
-              <Button onClick={this.handlePickUpRequest}>
+              <Button onClick={this.handlePickUpPost} variant="success">
                 Pick up request
               </Button>
             </>
           );
         } else if (this.props.fulfillerUid === this.state.loggedInUserUid) {
-          actions = <>Thanks for picking up this request!</>;
+          actions = (
+            <>
+              <Button
+                onClick={this.handleRemoveFulfillerFromPost}
+                variant="secondary"
+              >
+                Release request
+              </Button>
+            </>
+          );
         }
       } else {
         if (this.props.status === 0) {
