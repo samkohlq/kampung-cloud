@@ -6,7 +6,7 @@ import Actions from "./Actions";
 
 const statuses = {
   0: "Help needed",
-  1: "Help on the way",
+  1: "Help is on the way",
   2: "Completed",
 };
 
@@ -18,6 +18,7 @@ class PostPage extends React.Component {
       requestDetails: null,
       requestDeadline: null,
       requestorName: null,
+      fulfillerUid: null,
       status: null,
       verifiedPost: null,
     };
@@ -41,6 +42,7 @@ class PostPage extends React.Component {
           requestDetails: post.requestDetails,
           requestDeadline: post.requestDeadline,
           requestorUid: post.requestorUid,
+          fulfillerUid: post.fulfillerUid,
           status: post.status,
         });
       });
@@ -62,9 +64,7 @@ class PostPage extends React.Component {
   render() {
     const verifiedTag =
       this.state.verifiedPost === 1 ? (
-        <Badge variant="info" className="mb-5">
-          Verified
-        </Badge>
+        <Badge variant="info">Verified</Badge>
       ) : null;
     const deadline =
       this.state.status === 0 ? (
@@ -80,13 +80,19 @@ class PostPage extends React.Component {
               <h5>
                 {statuses[this.state.status]} {deadline}
               </h5>
-              {verifiedTag} {this.state.requestorName}
-              <h5>{this.state.requestDetails}</h5>
+              <div className="mb-5">
+                {verifiedTag} {this.state.requestorName}
+              </div>
+
+              <h5>Other details:</h5>
+              {this.state.requestDetails}
             </Col>
             <Col xs={12} sm={12} md={4}>
               <Actions
+                postId={this.props.match.params.id}
                 status={this.state.status}
                 requestorUid={this.state.requestorUid}
+                fulfillerUid={this.state.fulfillerUid}
               />
             </Col>
           </Row>

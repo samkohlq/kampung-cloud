@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  assignPost,
+  assignPostToFulfiller,
   createPost,
   deletePost,
   retrieveAllPosts,
@@ -19,7 +19,9 @@ router.get("/retrieveAllPosts", (req, res) => retrieveAllPosts(req, res));
 router.post("/deletePost", (req, res) => deletePost(req, res));
 
 // assign post
-router.put("/assignPost", (req, res) => assignPost(req, res));
+router.put("/assignPostToFulfiller", (req, res) =>
+  assignPostToFulfiller(req, res)
+);
 
 // retrieve a post
 router.get("/retrievePost", (req, res) => retrievePost(req, res));

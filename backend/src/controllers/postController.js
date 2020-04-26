@@ -39,7 +39,7 @@ export const deletePost = async (req, res) => {
   }
 };
 
-export const assignPost = async (req, res) => {
+export const assignPostToFulfiller = async (req, res) => {
   const assignedPost = await Post.update(
     {
       fulfillerUid: req.body.loggedInUserUid,

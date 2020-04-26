@@ -5,7 +5,7 @@ import "./Post.css";
 
 const statuses = {
   0: "Help needed",
-  1: "Help on the way",
+  1: "Help is on the way",
   2: "Completed",
 };
 
