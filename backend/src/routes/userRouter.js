@@ -1,9 +1,9 @@
 import express from "express";
 import {
-  checkIfUserVerified,
   createUser,
   deleteUser,
   removeUserVerificationStatus,
+  retrieveUserInfo,
   verifyUser,
 } from "../controllers/userController";
 
@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/createUser", (req, res) => createUser(req, res));
 
 // check if user is verified
-router.get("/checkIfUserVerified", (req, res) => checkIfUserVerified(req, res));
+router.get("/retrieveUserInfo", (req, res) => retrieveUserInfo(req, res));
 
 // delete user
 router.post("/deleteUser", (req, res) => deleteUser(req, res));

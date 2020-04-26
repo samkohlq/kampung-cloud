@@ -14,21 +14,23 @@ class Post extends React.Component {
     super(props);
     this.state = {
       verifiedPost: null,
+      requestorName: null,
     };
   }
 
   componentDidMount() {
-    this.checkIfUserVerified();
+    this.retrieveUserInfo();
   }
 
-  checkIfUserVerified = async () => {
+  retrieveUserInfo = async () => {
     await fetch(
-      `http://localhost:4000/users/checkIfUserVerified?authUid=${this.props.post.requestorUid}`
+      `http://localhost:4000/users/retrieveUserInfo?authUid=${this.props.post.requestorUid}`
     )
       .then((response) => response.json())
       .then((json) => {
         this.setState({
-          verifiedPost: json,
+          verifiedPost: json.verificationStatus,
+          requestorName: json.userName,
         });
       });
   };
@@ -38,9 +40,10 @@ class Post extends React.Component {
     const deadline = moment(this.props.post.requestDeadline).format(
       "DD MMM YYYY"
     );
-    const verifiedTag = this.state.verifiedPost ? (
-      <Badge variant="info">Verified</Badge>
-    ) : null;
+    const verifiedTag =
+      this.state.verifiedPost === 1 ? (
+        <Badge variant="info">Verified</Badge>
+      ) : null;
     return (
       <tr
         className="cursor"
@@ -50,11 +53,11 @@ class Post extends React.Component {
       >
         <td>{statuses[this.props.post.status]}</td>
         <td>{deadline}</td>
-        <td>
-          {verifiedTag} {this.props.post.request}
-        </td>
+        <td>{this.props.post.request}</td>
         <td>{this.props.post.requestDetails}</td>
-        <td>{this.state.verifiedPost}</td>
+        <td>
+          {verifiedTag} {this.state.requestorName}
+        </td>
       </tr>
     );
   }

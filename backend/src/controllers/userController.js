@@ -15,13 +15,13 @@ export const createUser = async (req, res) => {
   res.send(newUser);
 };
 
-export const checkIfUserVerified = async (req, res) => {
-  const verifiedUser = await User.findOne({
-    where: { authUid: req.query.authUid, verificationStatus: 1 },
+export const retrieveUserInfo = async (req, res) => {
+  const retrievedUser = await User.findOne({
+    where: { authUid: req.query.authUid },
   }).catch((error) => {
     console.log(error);
   });
-  verifiedUser ? res.send(true) : res.send(false);
+  res.send(retrievedUser);
 };
 
 export const deleteUser = async (req, res) => {
