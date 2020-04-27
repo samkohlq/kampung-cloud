@@ -4,7 +4,7 @@ import firebase from "../../firebase";
 import PostsList from "../Homepage/PostsList";
 import NavBar from "../NavBar/NavBar";
 
-class MyRequestsPage extends React.Component {
+class Requests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,4 +53,4 @@ class MyRequestsPage extends React.Component {
   }
 }
 
-export default MyRequestsPage;
+export default Requests;

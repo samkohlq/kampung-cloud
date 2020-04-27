@@ -40,10 +40,18 @@ class NavBar extends React.Component {
             <NavDropdown.Item
               size="sm"
               onClick={() => {
+                window.location.href = `/my-profile`;
+              }}
+            >
+              Profile
+            </NavDropdown.Item>
+            <NavDropdown.Item
+              size="sm"
+              onClick={() => {
                 window.location.href = `/my-requests`;
               }}
             >
-              My Requests
+              Requests
             </NavDropdown.Item>
             <NavDropdown.Item
               size="sm"

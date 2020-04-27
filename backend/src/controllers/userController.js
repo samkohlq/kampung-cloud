@@ -56,3 +56,15 @@ export const removeUserVerificationStatus = async (req, res) => {
   );
   res.send(updatedUser);
 };
+
+export const updateUserInfo = async (req, res) => {
+  const updatedUser = await User.update(
+    {
+      userName: req.body.userName,
+      email: req.body.email,
+      phoneNum: req.body.phoneNum,
+    },
+    { where: { authUid: req.query.authUid } }
+  );
+  res.send(updatedUser);
+};

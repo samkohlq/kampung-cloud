@@ -4,6 +4,7 @@ import {
   deleteUser,
   removeUserVerificationStatus,
   retrieveUserInfo,
+  updateUserInfo,
   verifyUser,
 } from "../controllers/userController";
 
@@ -25,5 +26,8 @@ router.put("/verifyUser", (req, res) => verifyUser(req, res));
 router.put("/removeUserVerificationStatus", (req, res) =>
   removeUserVerificationStatus(req, res)
 );
+
+// remove user's verification status
+router.put("/updateUserInfo", (req, res) => updateUserInfo(req, res));
 
 export default router;

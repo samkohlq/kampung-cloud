@@ -24,7 +24,6 @@ class PostsList extends React.Component {
     } else {
       fetchRequest = "retrieveAllPosts";
     }
-    console.log(fetchRequest);
     this.retrieveAllPosts(fetchRequest);
   }
 
