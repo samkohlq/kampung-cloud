@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import firebase from "../../firebase";
 import Post from "./Post";
 
@@ -40,24 +40,22 @@ class PostsList extends React.Component {
 
   render() {
     return (
-      <Container className="my-5">
-        <Table responsive="sm" hover>
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>Deadline</th>
-              <th>Request</th>
-              <th>Details</th>
-              <th>Requestor</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.posts.map((post, i) => (
-              <Post id="post" key={i} post={post} />
-            ))}
-          </tbody>
-        </Table>
-      </Container>
+      <Table className="my-5" responsive="sm" hover>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Deadline</th>
+            <th>Request</th>
+            <th>Details</th>
+            <th>Requestor</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.posts.map((post, i) => (
+            <Post id="post" key={i} post={post} />
+          ))}
+        </tbody>
+      </Table>
     );
   }
 }

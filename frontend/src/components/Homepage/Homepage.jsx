@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import firebase from "../../firebase";
 import NavBar from "../NavBar/NavBar";
 import IntroSubSection from "./IntroSubSection";
@@ -30,8 +31,10 @@ class Homepage extends React.Component {
       <>
         <NavBar />
         <IntroSubSection />
-        {requestForm}
-        <PostsList />
+        <Container className="justify-content-center">
+          {requestForm}
+          <PostsList />
+        </Container>
       </>
     );
   }
