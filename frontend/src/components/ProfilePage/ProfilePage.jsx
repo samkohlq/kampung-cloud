@@ -1,5 +1,13 @@
 import React from "react";
-import { Badge, Button, Container, Form, Spinner } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 import firebase from "../../firebase";
 import NavBar from "../NavBar/NavBar";
 
@@ -85,7 +93,6 @@ class Profile extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     let profile;
     if (this.state.isFetching) {
       profile = (
@@ -107,13 +114,13 @@ class Profile extends React.Component {
                 disabled={this.state.isDisabled}
                 defaultValue={this.state.userName}
                 onChange={this.handleFormChange}
-                name="name"
+                name="userName"
               />
             </Form.Group>
             <Form.Group>
               <Form.Label>Email</Form.Label>
               <Form.Control
-                disabled={this.state.isDisabled}
+                disabled="disabled"
                 defaultValue={this.state.email}
                 onChange={this.handleFormChange}
                 name="email"
@@ -148,7 +155,11 @@ class Profile extends React.Component {
     return (
       <>
         <NavBar />
-        <Container className="my-5">{profile}</Container>
+        <Container className="my-5">
+          <Row>
+            <Col md={6}>{profile}</Col>
+          </Row>
+        </Container>
       </>
     );
   }

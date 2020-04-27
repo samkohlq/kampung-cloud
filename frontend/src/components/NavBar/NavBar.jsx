@@ -28,6 +28,36 @@ class NavBar extends React.Component {
   }
 
   render() {
+    const loggedInUser = this.state.loggedIn ? (
+      <NavDropdown title={this.state.loggedInUserName}>
+        <NavDropdown.Item
+          size="sm"
+          onClick={() => {
+            window.location.href = `/my-profile`;
+          }}
+        >
+          Profile
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          size="sm"
+          onClick={() => {
+            window.location.href = `/my-requests`;
+          }}
+        >
+          Requests
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          size="sm"
+          onClick={() => {
+            firebase.auth().signOut();
+          }}
+        >
+          Log out
+        </NavDropdown.Item>
+      </NavDropdown>
+    ) : (
+      <Login />
+    );
     return (
       <Navbar bg="light" className="justify-content-between">
         <Nav>
@@ -35,36 +65,7 @@ class NavBar extends React.Component {
           <Nav.Link href="/getting-started">Getting Started</Nav.Link>
           <Nav.Link href="/collab">Collaborate</Nav.Link>
         </Nav>
-        {this.state.loggedIn ? (
-          <NavDropdown title={this.state.loggedInUserName}>
-            <NavDropdown.Item
-              size="sm"
-              onClick={() => {
-                window.location.href = `/my-profile`;
-              }}
-            >
-              Profile
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              size="sm"
-              onClick={() => {
-                window.location.href = `/my-requests`;
-              }}
-            >
-              Requests
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              size="sm"
-              onClick={() => {
-                firebase.auth().signOut();
-              }}
-            >
-              Log out
-            </NavDropdown.Item>
-          </NavDropdown>
-        ) : (
-          <Login />
-        )}
+        {this.state.isFetching ? null : loggedInUser}
       </Navbar>
     );
   }

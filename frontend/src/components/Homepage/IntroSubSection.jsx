@@ -22,7 +22,7 @@ class IntroSubSection extends React.Component {
                 </p>
                 <Button
                   onClick={() => {
-                    window.location.href = "/about";
+                    window.location.href = "/getting-started";
                   }}
                 >
                   Learn more

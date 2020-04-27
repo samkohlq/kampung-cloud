@@ -46,7 +46,6 @@ class PostsList extends React.Component {
             <th>Status</th>
             <th>Deadline</th>
             <th>Request</th>
-            <th>Details</th>
             <th>Requestor</th>
           </tr>
         </thead>

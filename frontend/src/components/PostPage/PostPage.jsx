@@ -18,6 +18,8 @@ class PostPage extends React.Component {
       requestDetails: null,
       requestDeadline: null,
       requestorName: null,
+      requestorPhoneNum: null,
+      requestorEmail: null,
       fulfillerUid: null,
       status: null,
       verifiedPost: null,
@@ -53,10 +55,12 @@ class PostPage extends React.Component {
       `http://localhost:4000/users/retrieveUserInfo?authUid=${this.state.requestorUid}`
     )
       .then((response) => response.json())
-      .then((json) => {
+      .then((retrievedUser) => {
         this.setState({
-          verifiedPost: json.verificationStatus,
-          requestorName: json.userName,
+          verifiedPost: retrievedUser.verificationStatus,
+          requestorName: retrievedUser.userName,
+          requestorPhoneNum: retrievedUser.phoneNum,
+          requestorEmail: retrievedUser.email,
         });
       });
   };
@@ -91,7 +95,10 @@ class PostPage extends React.Component {
               <Actions
                 postId={this.props.match.params.id}
                 status={this.state.status}
+                requestorName={this.state.requestorName}
                 requestorUid={this.state.requestorUid}
+                requestorEmail={this.state.requestorEmail}
+                requestorPhoneNum={this.state.requestorPhoneNum}
                 fulfillerUid={this.state.fulfillerUid}
               />
             </Col>

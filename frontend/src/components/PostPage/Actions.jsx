@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import firebase from "../../firebase";
 
 const statuses = {
@@ -23,17 +24,16 @@ class Actions extends React.Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
-          isFetching: false,
           loggedIn: true,
           loggedInUserUid: user.uid,
         });
       } else {
         this.setState({
-          isFetching: false,
           loggedIn: false,
           loggedInUserUid: null,
         });
       }
+      this.setState({ isFetching: false, status: this.props.status });
     });
   }
 
@@ -81,6 +81,7 @@ class Actions extends React.Component {
   };
 
   render() {
+    console.log(this.state);
     let actions;
     if (this.state.isFetching === true) {
       actions = (
@@ -88,7 +89,7 @@ class Actions extends React.Component {
           <Spinner animation="border" variant="primary" />
         </>
       );
-    } else {
+    } else if (this.state.isFetching === false) {
       if (this.state.loggedIn === true) {
         if (this.props.requestorUid === this.state.loggedInUserUid) {
           // Allow user to edit or delete post if post belongs to user
@@ -118,12 +119,29 @@ class Actions extends React.Component {
               <Button onClick={this.handlePickUpPost} variant="success">
                 Pick up request
               </Button>
+              <div className="my-2">
+                You'll see {this.props.requestorName}'s contact details here
+                when you pick up the request
+              </div>
             </>
           );
         } else if (this.props.fulfillerUid === this.state.loggedInUserUid) {
           actions = (
             <>
+              <h5 className="my-3">Thanks for offering your help!</h5>
+              <div className="mb-2">
+                Contact {this.props.requestorName} at{" "}
+                {this.props.requestorEmail}{" "}
+                {this.props.requestorPhoneNum ? (
+                  <> or {this.props.requestorPhoneNum} </>
+                ) : null}
+              </div>
+              <div style={{ fontSize: 13 }} className="mt-4">
+                Follow our <Link to="/getting-started">safety guidelines</Link>{" "}
+                to protect yourself against scams.
+              </div>
               <Button
+                className="my-5"
                 onClick={this.handleRemoveFulfillerFromPost}
                 variant="secondary"
               >
