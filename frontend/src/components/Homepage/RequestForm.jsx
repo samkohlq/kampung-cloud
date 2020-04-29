@@ -66,6 +66,17 @@ class RequestForm extends React.Component {
                     minDate={Date.now()}
                   />
                 </Form.Group>
+                {/* TODO(sheryl): tentative list of categories */}
+
+                <Form.Group>
+                  <Form.Label>
+                    What category does your request fall into?
+                  </Form.Label>
+                  <Form.Control as="select" value="Choose...">
+                    <option>Choose...</option>
+                    <option>...</option>
+                  </Form.Control>
+                </Form.Group>
 
                 <Form.Group size="sm" className="mb-3">
                   <Form.Label>What do you need?</Form.Label>

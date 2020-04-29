@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import firebase from "../../firebase";
+import EditPostModal from "./EditPostModal";
 
 const requestStatuses = {
   0: "Help needed",
@@ -111,18 +112,22 @@ class Actions extends React.Component {
             // Allow user to edit or delete post if post belongs to user
             actions = (
               <>
-                <Button
-                  className="mb-2"
-                  variant="warning"
-                  onClick={this.handleEditPost}
-                >
-                  Edit
-                </Button>
+                <h5>
+                  Your contact details will only be shown when someone picks up
+                  your request
+                </h5>
+                <div style={{ fontSize: 13 }} className="mt-4">
+                  Follow our{" "}
+                  <Link to="/getting-started">safety guidelines</Link> to
+                  protect yourself against scams.
+                </div>
+                <EditPostModal post={this.props.post} />
                 <br></br>
                 <Button
                   className="mb-2"
                   variant="danger"
                   onClick={this.handleDeletePost}
+                  size="sm"
                 >
                   Delete
                 </Button>
@@ -139,6 +144,14 @@ class Actions extends React.Component {
                     <> or {this.props.fulfillerPhoneNum} </>
                   ) : null}
                 </div>
+                <Button
+                  className="mt-4 mb-2"
+                  onClick={this.handleMarkPostAsCompleted}
+                  variant="success"
+                  size="sm"
+                >
+                  Mark as completed
+                </Button>
               </>
             );
           }
@@ -146,7 +159,11 @@ class Actions extends React.Component {
           // Allow user to pick up a request if post does not belong to user
           actions = (
             <>
-              <Button onClick={this.handlePickUpPost} variant="success">
+              <Button
+                onClick={this.handlePickUpPost}
+                variant="success"
+                size="sm"
+              >
                 Pick up request
               </Button>
               <div className="my-2">
@@ -173,17 +190,12 @@ class Actions extends React.Component {
                 Follow our <Link to="/getting-started">safety guidelines</Link>{" "}
                 to protect yourself against scams.
               </div>
-              <Button
-                className="mt-4 mb-2"
-                onClick={this.handleMarkPostAsCompleted}
-                variant="success"
-              >
-                Mark as completed
-              </Button>
+
               <br></br>
               <Button
                 onClick={this.handleRemoveFulfillerFromPost}
                 variant="secondary"
+                size="sm"
               >
                 Release request
               </Button>

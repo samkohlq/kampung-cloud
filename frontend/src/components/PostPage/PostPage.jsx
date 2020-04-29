@@ -47,6 +47,7 @@ class PostPage extends React.Component {
       .then((json) => {
         const post = json[0];
         this.setState({
+          post: post,
           request: post.request,
           requestDetails: post.requestDetails,
           requestDeadline: post.requestDeadline,
@@ -109,6 +110,7 @@ class PostPage extends React.Component {
             <Col xs={12} sm={12} md={4}>
               <Actions
                 postId={this.props.match.params.id}
+                post={this.state.post}
                 requestStatus={this.state.requestStatus}
                 requestorName={this.state.requestorName}
                 requestorUid={this.state.requestorUid}
