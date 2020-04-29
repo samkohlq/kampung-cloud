@@ -3,6 +3,7 @@ import { Post } from "../db/models";
 export const createPost = async (req, res) => {
   const newPost = await Post.create({
     request: req.body.request,
+    requestType: req.body.requestType,
     requestDetails: req.body.requestDetails,
     requestorUid: req.body.requestorUid,
     requestDeadline: req.body.requestDeadline,

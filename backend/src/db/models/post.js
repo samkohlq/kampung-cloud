@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     "Post",
     {
       request: DataTypes.STRING,
+      requestType: DataTypes.STRING,
       requestorUid: DataTypes.STRING,
       fulfillerUid: DataTypes.STRING,
       requestStatus: DataTypes.INTEGER,
