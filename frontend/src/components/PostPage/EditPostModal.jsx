@@ -8,9 +8,9 @@ class EditPostModal extends React.Component {
     this.state = {
       showModal: false,
       setShowModal: false,
-      request: props.post.request,
-      requestDeadline: new Date(props.post.requestDeadline),
-      requestDetails: props.post.requestDetails,
+      request: props.retrievedPost.request,
+      requestDeadline: new Date(props.retrievedPost.requestDeadline),
+      requestDetails: props.retrievedPost.requestDetails,
     };
   }
 
@@ -35,7 +35,7 @@ class EditPostModal extends React.Component {
 
   handleFormSubmit = () => {
     fetch(
-      `http://localhost:4000/posts/updatePost?postId=${this.props.post.id}`,
+      `http://localhost:4000/posts/updatePost?postId=${this.props.retrievedPost.id}`,
       {
         method: "PUT",
         headers: {
@@ -48,7 +48,7 @@ class EditPostModal extends React.Component {
         }),
       }
     );
-    window.location.href = `/posts/${this.props.post.id}`;
+    window.location.href = `/posts/${this.props.retrievedPost.id}`;
   };
 
   render() {

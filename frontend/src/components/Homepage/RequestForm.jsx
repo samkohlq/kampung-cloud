@@ -8,9 +8,7 @@ import "./RequestForm.css";
 class RequestForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      requestDeadline: null,
-    };
+    this.state = {};
   }
 
   handleFormChange = (event) => {
@@ -37,6 +35,7 @@ class RequestForm extends React.Component {
       },
       body: JSON.stringify({
         request: this.state.request,
+        requestType: this.state.requestType,
         requestDetails: this.state.requestDetails,
         requestorUid: requestorUid,
         requestDeadline: this.state.requestDeadline,
@@ -66,15 +65,25 @@ class RequestForm extends React.Component {
                     minDate={Date.now()}
                   />
                 </Form.Group>
-                {/* TODO(sheryl): tentative list of categories */}
 
                 <Form.Group>
                   <Form.Label>
                     What category does your request fall into?
                   </Form.Label>
-                  <Form.Control as="select" value="Choose...">
-                    <option>Choose...</option>
-                    <option>...</option>
+                  <Form.Control
+                    as="select"
+                    defaultValue="--"
+                    name="requestType"
+                    onChange={this.handleFormChange}
+                  >
+                    <option disabled="disabled">--</option>
+                    <option>Meals</option>
+                    <option>Groceries</option>
+                    <option>Clothing</option>
+                    <option>Hygiene</option>
+                    <option>Cash</option>
+                    <option>Tech</option>
+                    <option>Other</option>
                   </Form.Control>
                 </Form.Group>
 

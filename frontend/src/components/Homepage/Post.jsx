@@ -36,7 +36,6 @@ class Post extends React.Component {
   };
 
   render() {
-    // format deadline from DATETIME to DD MMM YYYY
     const deadline = moment(this.props.post.requestDeadline).format(
       "DD MMM YYYY"
     );
@@ -54,9 +53,8 @@ class Post extends React.Component {
         <td>{statuses[this.props.post.requestStatus]}</td>
         <td>{deadline}</td>
         <td>{this.props.post.request}</td>
-        <td>
-          {verifiedTag} {this.state.requestorName}
-        </td>
+        <td>{this.props.post.requestType}</td>
+        <td>{verifiedTag}</td>
       </tr>
     );
   }

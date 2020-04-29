@@ -15,9 +15,6 @@ class Actions extends React.Component {
     super(props);
     this.state = {
       isFetching: true,
-      loggedIn: null,
-      loggedInUserUid: null,
-      requestStatus: null,
     };
   }
 
@@ -43,7 +40,7 @@ class Actions extends React.Component {
 
   handlePickUpPost = () => {
     fetch(
-      `http://localhost:4000/posts/assignPostToFulfiller?postId=${this.props.postId}`,
+      `http://localhost:4000/posts/assignPostToFulfiller?postId=${this.props.retrievedPost.id}`,
       {
         method: "PUT",
         headers: {
@@ -55,12 +52,12 @@ class Actions extends React.Component {
         }),
       }
     );
-    window.location.href = `/posts/${this.props.postId}`;
+    window.location.href = `/posts/${this.props.retrievedPost.id}`;
   };
 
   handleMarkPostAsCompleted = () => {
     fetch(
-      `http://localhost:4000/posts/markPostAsCompleted?postId=${this.props.postId}`,
+      `http://localhost:4000/posts/markPostAsCompleted?postId=${this.props.retrievedPost.id}`,
       {
         method: "PUT",
         headers: {
@@ -68,12 +65,12 @@ class Actions extends React.Component {
         },
       }
     );
-    window.location.href = `/posts/${this.props.postId}`;
+    window.location.href = `/posts/${this.props.retrievedPost.id}`;
   };
 
   handleRemoveFulfillerFromPost = () => {
     fetch(
-      `http://localhost:4000/posts/removeFulfillerFromPost?postId=${this.props.postId}`,
+      `http://localhost:4000/posts/removeFulfillerFromPost?postId=${this.props.retrievedPost.id}`,
       {
         method: "PUT",
         headers: {
@@ -81,12 +78,12 @@ class Actions extends React.Component {
         },
       }
     );
-    window.location.href = `/posts/${this.props.postId}`;
+    window.location.href = `/posts/${this.props.retrievedPost.id}`;
   };
 
   handleDeletePost = () => {
     fetch(
-      `http://localhost:4000/posts/deletePost?postId=${this.props.postId}`,
+      `http://localhost:4000/posts/deletePost?postId=${this.props.retrievedPost.id}`,
       {
         method: "POST",
         headers: {
@@ -98,125 +95,151 @@ class Actions extends React.Component {
   };
 
   render() {
+    const {
+      fulfillerName,
+      fulfillerEmail,
+      fulfillerPhoneNum,
+      requestorName,
+      requestorEmail,
+      requestorPhoneNum,
+    } = this.props;
+    const {
+      requestStatus,
+      requestorUid,
+      fulfillerUid,
+    } = this.props.retrievedPost;
+
     let actions;
-    if (this.state.isFetching === true) {
+    if (this.state.isFetching) {
       actions = (
         <>
           <Spinner animation="border" variant="primary" />
         </>
       );
-    } else if (this.state.isFetching === false) {
-      if (this.state.loggedIn === true) {
-        if (this.props.requestorUid === this.state.loggedInUserUid) {
-          if (this.props.requestStatus === 0) {
-            // Allow user to edit or delete post if post belongs to user
-            actions = (
-              <>
-                <h5>
-                  Your contact details will only be shown when someone picks up
-                  your request
-                </h5>
-                <div style={{ fontSize: 13 }} className="mt-4">
-                  Follow our{" "}
-                  <Link to="/getting-started">safety guidelines</Link> to
-                  protect yourself against scams.
-                </div>
-                <EditPostModal post={this.props.post} />
-                <br></br>
-                <Button
-                  className="mb-2"
-                  variant="danger"
-                  onClick={this.handleDeletePost}
-                  size="sm"
-                >
-                  Delete
-                </Button>
-              </>
-            );
-          } else if (this.props.requestStatus === 1) {
-            actions = (
-              <>
-                <h5>{this.props.fulfillerName} has picked up your request!</h5>
-                <div className="mb-2">
-                  Contact {this.props.fulfillerName} at{" "}
-                  {this.props.fulfillerEmail}{" "}
-                  {this.props.fulfillerPhoneNum ? (
-                    <> or {this.props.fulfillerPhoneNum} </>
-                  ) : null}
-                </div>
-                <Button
-                  className="mt-4 mb-2"
-                  onClick={this.handleMarkPostAsCompleted}
-                  variant="success"
-                  size="sm"
-                >
-                  Mark as completed
-                </Button>
-              </>
-            );
+    } else {
+      switch (requestStatus) {
+        // if help is needed
+        case 0:
+          if (this.state.loggedIn) {
+            // if user is logged in and logged-in user is the requestor, allow user to edit or delete request
+            if (this.state.loggedInUserUid === requestorUid) {
+              actions = (
+                <>
+                  <h5 className="my-2">
+                    Your contact details will only be shown when someone picks
+                    up your request
+                  </h5>
+                  <div style={{ fontSize: 13 }} className="mt-4">
+                    Follow our{" "}
+                    <Link to="/getting-started">safety guidelines</Link> to
+                    protect yourself against scams.
+                  </div>
+                  <EditPostModal retrievedPost={this.props.retrievedPost} />
+                  <br></br>
+                  <Button
+                    className="mb-2"
+                    variant="danger"
+                    onClick={this.handleDeletePost}
+                    size="sm"
+                  >
+                    Delete
+                  </Button>
+                </>
+              );
+            } else {
+              // else if logged in user is not the requestor, let the user pick up request
+              actions = (
+                <>
+                  <Button
+                    onClick={this.handlePickUpPost}
+                    variant="success"
+                    size="sm"
+                  >
+                    Pick up request
+                  </Button>
+                  <div className="my-2">
+                    You'll see {requestorName}'s contact details here when you
+                    pick up the request
+                  </div>
+                </>
+              );
+            }
+          } else {
+            // else if no one is logged in, ask user to log in and pick up a request
+            actions = <>Log in to pick up a request</>;
           }
-        } else if (this.props.requestStatus === 0) {
-          // Allow user to pick up a request if post does not belong to user
+          break;
+        // if someone has offered help
+        case 1:
+          if (this.state.loggedIn) {
+            // if logged in user is the requestor, show fulfiller's contact details
+            if (this.state.loggedInUserUid === requestorUid) {
+              actions = (
+                <>
+                  <h5 className="my-2">
+                    {fulfillerName} has picked up your request!
+                  </h5>
+                  <div className="mb-2">
+                    Contact {fulfillerName} at {fulfillerEmail}{" "}
+                    {fulfillerPhoneNum ? <> or {fulfillerPhoneNum} </> : null}
+                  </div>
+                  <Button
+                    className="mt-4 mb-2"
+                    onClick={this.handleMarkPostAsCompleted}
+                    variant="success"
+                    size="sm"
+                  >
+                    Mark as completed
+                  </Button>
+                </>
+              );
+              // if logged in user is the fulfiller, show requestor's contact details and allow user to release request
+            } else if (this.state.loggedInUserUid === fulfillerUid) {
+              actions = (
+                <>
+                  <h5 className="my-2">Thanks for offering your help!</h5>
+                  <div className="mb-2">
+                    Contact {requestorName} at {requestorEmail}{" "}
+                    {requestorPhoneNum ? <> or {requestorPhoneNum} </> : null}
+                  </div>
+                  <div style={{ fontSize: 13 }} className="mt-4">
+                    Follow our{" "}
+                    <Link to="/getting-started">safety guidelines</Link> to
+                    protect yourself against scams.
+                  </div>
+                  <br></br>
+                  <Button
+                    onClick={this.handleRemoveFulfillerFromPost}
+                    variant="secondary"
+                    size="sm"
+                  >
+                    Release request
+                  </Button>
+                </>
+              );
+            }
+          } else {
+            actions = <>{requestStatuses[requestStatus]}</>;
+          }
+          break;
+        // if help has been rendered
+        case 2:
           actions = (
             <>
-              <Button
-                onClick={this.handlePickUpPost}
-                variant="success"
-                size="sm"
-              >
-                Pick up request
-              </Button>
-              <div className="my-2">
-                You'll see {this.props.requestorName}'s contact details here
-                when you pick up the request
-              </div>
+              <h5 className="my-2">
+                {requestStatuses[requestStatus]} by {fulfillerName}
+              </h5>
             </>
           );
-        } else if (
-          this.props.fulfillerUid === this.state.loggedInUserUid &&
-          this.props.requestStatus === 1
-        ) {
+          break;
+        default:
           actions = (
             <>
-              <h5 className="my-3">Thanks for offering your help!</h5>
-              <div className="mb-2">
-                Contact {this.props.requestorName} at{" "}
-                {this.props.requestorEmail}{" "}
-                {this.props.requestorPhoneNum ? (
-                  <> or {this.props.requestorPhoneNum} </>
-                ) : null}
-              </div>
-              <div style={{ fontSize: 13 }} className="mt-4">
-                Follow our <Link to="/getting-started">safety guidelines</Link>{" "}
-                to protect yourself against scams.
-              </div>
-
-              <br></br>
-              <Button
-                onClick={this.handleRemoveFulfillerFromPost}
-                variant="secondary"
-                size="sm"
-              >
-                Release request
-              </Button>
+              <h5 className="my-2">{requestStatuses[requestStatus]}</h5>
             </>
           );
-        } else if (this.props.requestStatus === 2) {
-          actions = (
-            <>
-              <h5>Completed by {this.props.fulfillerName}</h5>
-            </>
-          );
-        }
-      } else {
-        if (this.props.requestStatus === 0) {
-          actions = <>Log in to pick up a request</>;
-        } else {
-          actions = <>{requestStatuses[this.props.requestStatus]}</>;
-        }
       }
     }
-
     return <div>{actions}</div>;
   }
 }
