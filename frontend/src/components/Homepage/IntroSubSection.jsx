@@ -26,7 +26,6 @@ class IntroSubSection extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <Jumbotron fluid>
         <Container className="justify-content-center">

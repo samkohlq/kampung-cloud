@@ -4,10 +4,10 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../../firebase";
 
 const uiConfig = {
-  signInFlow: "popup",
+  signInFlow: "redirect",
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
   callbacks: {
     signInSuccessWithAuthResult: async (authResult, redirectUrl) => {
