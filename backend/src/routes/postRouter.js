@@ -1,8 +1,10 @@
 import express from "express";
 import {
   assignPostToFulfiller,
+  countPostsByRequestStatus,
   createPost,
   deletePost,
+  markPostAsCompleted,
   removeFulfillerFromPost,
   retrieveAllAssignedPosts,
   retrieveAllPostedPosts,
@@ -29,6 +31,11 @@ router.get("/retrieveAllPostedPosts", (req, res) =>
   retrieveAllPostedPosts(req, res)
 );
 
+// retrieve count of all completed posts
+router.get("/countPostsByRequestStatus", (req, res) =>
+  countPostsByRequestStatus(req, res)
+);
+
 // retrieve a post
 router.get("/retrievePost", (req, res) => retrievePost(req, res));
 
@@ -44,6 +51,9 @@ router.put("/assignPostToFulfiller", (req, res) =>
 router.put("/removeFulfillerFromPost", (req, res) =>
   removeFulfillerFromPost(req, res)
 );
+
+// remove fulfiller from post
+router.put("/markPostAsCompleted", (req, res) => markPostAsCompleted(req, res));
 
 // update post
 router.put("/updatePost", (req, res) => updatePost(req, res));

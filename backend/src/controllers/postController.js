@@ -1,16 +1,14 @@
 import { Post } from "../db/models";
 
 export const createPost = async (req, res) => {
-  const newPost = await Promise.all([
-    Post.create({
-      request: req.body.request,
-      requestDetails: req.body.requestDetails,
-      requestorUid: req.body.requestorUid,
-      requestDeadline: req.body.requestDeadline,
-      status: 0,
-      verificationStatus: 0,
-    }),
-  ]).catch((error) => {
+  const newPost = await Post.create({
+    request: req.body.request,
+    requestDetails: req.body.requestDetails,
+    requestorUid: req.body.requestorUid,
+    requestDeadline: req.body.requestDeadline,
+    requestStatus: 0,
+    verificationStatus: 0,
+  }).catch((error) => {
     console.log(error);
   });
   res.send(newPost);
@@ -20,7 +18,7 @@ export const retrieveAllPosts = async (req, res) => {
   const retrievedPosts = await Promise.all([
     Post.findAll({
       order: [
-        ["status", "ASC"],
+        ["requestStatus", "ASC"],
         ["requestDeadline", "ASC"],
       ],
     }),
@@ -35,7 +33,7 @@ export const retrieveAllAssignedPosts = async (req, res) => {
     Post.findAll({
       where: { fulfillerUid: req.query.loggedInUserUid },
       order: [
-        ["status", "ASC"],
+        ["requestStatus", "ASC"],
         ["requestDeadline", "ASC"],
       ],
     }),
@@ -50,7 +48,7 @@ export const retrieveAllPostedPosts = async (req, res) => {
     Post.findAll({
       where: { requestorUid: req.query.loggedInUserUid },
       order: [
-        ["status", "ASC"],
+        ["requestStatus", "ASC"],
         ["requestDeadline", "ASC"],
       ],
     }),
@@ -58,6 +56,23 @@ export const retrieveAllPostedPosts = async (req, res) => {
     console.log(error);
   });
   res.send(retrievedPostedPosts);
+};
+
+export const countPostsByRequestStatus = async (req, res) => {
+  const numOfCompletedPosts = await Post.count({
+    where: { requestStatus: 2 },
+  }).catch((error) => {
+    console.log(error);
+  });
+  const numOfOutstandingPosts = await Post.count({
+    where: { requestStatus: 0 },
+  }).catch((error) => {
+    console.log(error);
+  });
+  res.send({
+    completedPosts: numOfCompletedPosts,
+    outstandingPosts: numOfOutstandingPosts,
+  });
 };
 
 export const retrievePost = async (req, res) => {
@@ -84,7 +99,7 @@ export const assignPostToFulfiller = async (req, res) => {
   const assignedPost = await Post.update(
     {
       fulfillerUid: req.body.loggedInUserUid,
-      status: 1,
+      requestStatus: 1,
     },
     {
       where: { id: req.query.postId },
@@ -97,7 +112,19 @@ export const removeFulfillerFromPost = async (req, res) => {
   const updatedPost = await Post.update(
     {
       fulfillerUid: null,
-      status: 0,
+      requestStatus: 0,
+    },
+    {
+      where: { id: req.query.postId },
+    }
+  );
+  res.send(updatedPost);
+};
+
+export const markPostAsCompleted = async (req, res) => {
+  const updatedPost = await Post.update(
+    {
+      requestStatus: 2,
     },
     {
       where: { id: req.query.postId },

@@ -111,7 +111,7 @@ class Profile extends React.Component {
             <Form.Group>
               <Form.Label>Name</Form.Label>
               <Form.Control
-                disabled={this.state.isDisabled}
+                disabled={"disabled"}
                 defaultValue={this.state.userName}
                 onChange={this.handleFormChange}
                 name="userName"

@@ -3,7 +3,7 @@ import { Button, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import firebase from "../../firebase";
 
-const statuses = {
+const requestStatuses = {
   0: "Help needed",
   1: "Help is on the way",
   2: "Completed",
@@ -16,7 +16,7 @@ class Actions extends React.Component {
       isFetching: true,
       loggedIn: null,
       loggedInUserUid: null,
-      status: null,
+      requestStatus: null,
     };
   }
 
@@ -33,7 +33,10 @@ class Actions extends React.Component {
           loggedInUserUid: null,
         });
       }
-      this.setState({ isFetching: false, status: this.props.status });
+      this.setState({
+        isFetching: false,
+        requestStatus: this.props.requestStatus,
+      });
     });
   }
 
@@ -47,8 +50,21 @@ class Actions extends React.Component {
         },
         body: JSON.stringify({
           loggedInUserUid: this.state.loggedInUserUid,
-          status: 1,
+          requestStatus: 1,
         }),
+      }
+    );
+    window.location.href = `/posts/${this.props.postId}`;
+  };
+
+  handleMarkPostAsCompleted = () => {
+    fetch(
+      `http://localhost:4000/posts/markPostAsCompleted?postId=${this.props.postId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
     window.location.href = `/posts/${this.props.postId}`;
@@ -81,7 +97,6 @@ class Actions extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     let actions;
     if (this.state.isFetching === true) {
       actions = (
@@ -92,27 +107,42 @@ class Actions extends React.Component {
     } else if (this.state.isFetching === false) {
       if (this.state.loggedIn === true) {
         if (this.props.requestorUid === this.state.loggedInUserUid) {
-          // Allow user to edit or delete post if post belongs to user
-          actions = (
-            <>
-              <Button
-                className="mb-2"
-                variant="warning"
-                onClick={this.handleEditPost}
-              >
-                Edit
-              </Button>
-              <br></br>
-              <Button
-                className="mb-2"
-                variant="danger"
-                onClick={this.handleDeletePost}
-              >
-                Delete
-              </Button>
-            </>
-          );
-        } else if (this.props.status === 0) {
+          if (this.props.requestStatus === 0) {
+            // Allow user to edit or delete post if post belongs to user
+            actions = (
+              <>
+                <Button
+                  className="mb-2"
+                  variant="warning"
+                  onClick={this.handleEditPost}
+                >
+                  Edit
+                </Button>
+                <br></br>
+                <Button
+                  className="mb-2"
+                  variant="danger"
+                  onClick={this.handleDeletePost}
+                >
+                  Delete
+                </Button>
+              </>
+            );
+          } else if (this.props.requestStatus === 1) {
+            actions = (
+              <>
+                <h5>{this.props.fulfillerName} has picked up your request!</h5>
+                <div className="mb-2">
+                  Contact {this.props.fulfillerName} at{" "}
+                  {this.props.fulfillerEmail}{" "}
+                  {this.props.fulfillerPhoneNum ? (
+                    <> or {this.props.fulfillerPhoneNum} </>
+                  ) : null}
+                </div>
+              </>
+            );
+          }
+        } else if (this.props.requestStatus === 0) {
           // Allow user to pick up a request if post does not belong to user
           actions = (
             <>
@@ -125,7 +155,10 @@ class Actions extends React.Component {
               </div>
             </>
           );
-        } else if (this.props.fulfillerUid === this.state.loggedInUserUid) {
+        } else if (
+          this.props.fulfillerUid === this.state.loggedInUserUid &&
+          this.props.requestStatus === 1
+        ) {
           actions = (
             <>
               <h5 className="my-3">Thanks for offering your help!</h5>
@@ -141,7 +174,14 @@ class Actions extends React.Component {
                 to protect yourself against scams.
               </div>
               <Button
-                className="my-5"
+                className="mt-4 mb-2"
+                onClick={this.handleMarkPostAsCompleted}
+                variant="success"
+              >
+                Mark as completed
+              </Button>
+              <br></br>
+              <Button
                 onClick={this.handleRemoveFulfillerFromPost}
                 variant="secondary"
               >
@@ -149,12 +189,18 @@ class Actions extends React.Component {
               </Button>
             </>
           );
+        } else if (this.props.requestStatus === 2) {
+          actions = (
+            <>
+              <h5>Completed by {this.props.fulfillerName}</h5>
+            </>
+          );
         }
       } else {
-        if (this.props.status === 0) {
+        if (this.props.requestStatus === 0) {
           actions = <>Log in to pick up a request</>;
         } else {
-          actions = <>{statuses[this.props.status]}</>;
+          actions = <>{requestStatuses[this.props.requestStatus]}</>;
         }
       }
     }

@@ -2,7 +2,31 @@ import React from "react";
 import { Button, Col, Container, Jumbotron, Row } from "react-bootstrap";
 
 class IntroSubSection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      requestsCompleted: null,
+      requestsOutstanding: null,
+    };
+  }
+
+  componentDidMount() {
+    this.countPostsByRequestStatus();
+  }
+
+  countPostsByRequestStatus = () => {
+    fetch(`http://localhost:4000/posts/countPostsByRequestStatus`)
+      .then((response) => response.json())
+      .then((postsCounts) => {
+        this.setState({
+          requestsCompleted: postsCounts.completedPosts,
+          requestsOutstanding: postsCounts.outstandingPosts,
+        });
+      });
+  };
+
   render() {
+    console.log(this.state);
     return (
       <Jumbotron fluid>
         <Container className="justify-content-center">
@@ -31,13 +55,13 @@ class IntroSubSection extends React.Component {
             </Col>
             <Col className="mb-5" xs="12" md="3">
               <Container>
-                <h2>XX</h2>
+                <h2>{this.state.requestsCompleted}</h2>
                 requests fulfilled
               </Container>
             </Col>
             <Col className="mb-5" xs="12" md="3">
               <Container>
-                <h2>XX</h2>
+                <h2>{this.state.requestsOutstanding}</h2>
                 requests outstanding
               </Container>
             </Col>
