@@ -4,6 +4,7 @@ import express from "express";
 import logger from "morgan";
 import path from "path";
 import "regenerator-runtime/runtime";
+import commentRouter from "./routes/commentRouter";
 import postRouter from "./routes/postRouter";
 import userRouter from "./routes/userRouter";
 
@@ -18,5 +19,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
+app.use("/comments", commentRouter);
 
 module.exports = app;
