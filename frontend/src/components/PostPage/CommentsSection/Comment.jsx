@@ -42,7 +42,7 @@ class Comment extends React.Component {
               {this.state.user.userName}
               {" | "}
               {moment(this.props.comment.createdAt).format(
-                "DD MMM YYYY hh:mm A"
+                "DD MMM YYYY, h:mm A"
               )}
             </div>
           )}

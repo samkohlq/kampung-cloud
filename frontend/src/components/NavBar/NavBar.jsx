@@ -61,7 +61,7 @@ class NavBar extends React.Component {
     return (
       <Navbar bg="light" className="justify-content-between">
         <Nav>
-          <Navbar.Brand href="/">Communal</Navbar.Brand>
+          <Navbar.Brand href="/">Community Cloud</Navbar.Brand>
           <Nav.Link href="/getting-started">Getting Started</Nav.Link>
           <Nav.Link href="/collab">Collaborate</Nav.Link>
         </Nav>

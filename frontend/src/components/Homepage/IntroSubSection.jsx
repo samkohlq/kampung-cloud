@@ -34,7 +34,7 @@ class IntroSubSection extends React.Component {
           <Row className="justify-content-md-center">
             <Col className="mb-5" xs="12" md="6">
               <Container>
-                <h1 className="mb-5">What is Communal?</h1>
+                <h1 className="mb-5">What is Community Cloud?</h1>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Suspendisse diam lectus, sodales at velit commodo, convallis

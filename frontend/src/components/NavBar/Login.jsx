@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Modal, Nav } from "react-bootstrap";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import firebase from "../../firebase";
+import { default as firebase } from "../../firebase";
 
 const uiConfig = {
   signInFlow: "popup",
@@ -11,11 +11,18 @@ const uiConfig = {
   ],
   callbacks: {
     signInSuccessWithAuthResult: async (authResult, redirectUrl) => {
+      const idToken = await firebase
+        .auth()
+        .currentUser.getIdToken()
+        .then(function (idToken) {
+          return idToken;
+        });
       if (authResult.additionalUserInfo.isNewUser) {
         await fetch("http://localhost:4000/users/createUser", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${idToken}`,
           },
           body: JSON.stringify({
             userName: authResult.user.displayName,
