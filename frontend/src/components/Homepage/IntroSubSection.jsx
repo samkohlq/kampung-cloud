@@ -6,6 +6,7 @@ class IntroSubSection extends React.Component {
     super(props);
     this.state = {
       requestsCompleted: null,
+      requestsInProgress: null,
       requestsOutstanding: null,
     };
   }
@@ -20,6 +21,7 @@ class IntroSubSection extends React.Component {
       .then((postsCounts) => {
         this.setState({
           requestsCompleted: postsCounts.completedPosts,
+          requestsInProgress: postsCounts.inProgressPosts,
           requestsOutstanding: postsCounts.outstandingPosts,
         });
       });
@@ -52,13 +54,19 @@ class IntroSubSection extends React.Component {
                 </Button>
               </Container>
             </Col>
-            <Col className="mb-5" xs="12" md="3">
+            <Col className="mb-5" xs="12" md="2">
               <Container>
                 <h2>{this.state.requestsCompleted}</h2>
                 requests fulfilled
               </Container>
             </Col>
-            <Col className="mb-5" xs="12" md="3">
+            <Col className="mb-5" xs="12" md="2">
+              <Container>
+                <h2>{this.state.requestsInProgress}</h2>
+                requests in progress
+              </Container>
+            </Col>
+            <Col className="mb-5" xs="12" md="2">
               <Container>
                 <h2>{this.state.requestsOutstanding}</h2>
                 requests outstanding

@@ -65,6 +65,11 @@ export const countPostsByRequestStatus = async (req, res) => {
   }).catch((error) => {
     console.log(error);
   });
+  const numOfInProgressPosts = await Post.count({
+    where: { requestStatus: 1 },
+  }).catch((error) => {
+    console.log(error);
+  });
   const numOfOutstandingPosts = await Post.count({
     where: { requestStatus: 0 },
   }).catch((error) => {
@@ -72,6 +77,7 @@ export const countPostsByRequestStatus = async (req, res) => {
   });
   res.send({
     completedPosts: numOfCompletedPosts,
+    inProgressPosts: numOfInProgressPosts,
     outstandingPosts: numOfOutstandingPosts,
   });
 };
