@@ -3,7 +3,7 @@ import React from "react";
 import { Badge, Col, Container, Row, Spinner } from "react-bootstrap";
 import NavBar from "../NavBar/NavBar";
 import Actions from "./Actions";
-import CommentsList from "./CommentsList";
+import CommentsSection from "./CommentsSection/CommentsSection";
 
 const requestStatuses = {
   0: "Help needed",
@@ -68,23 +68,6 @@ class PostPage extends React.Component {
   };
 
   render() {
-    let verifiedTag;
-    let deadline;
-    if (this.state.isFetching === false) {
-      verifiedTag =
-        this.state.verifiedPost === 1 ? (
-          <Badge variant="info">Verified</Badge>
-        ) : null;
-      deadline =
-        this.state.requestStatus === 0 ? (
-          <>
-            by{" "}
-            {moment(this.state.retrievedPost.requestDeadline).format(
-              "DD MMM YYYY"
-            )}
-          </>
-        ) : null;
-    }
     return (
       <>
         <NavBar />
@@ -100,22 +83,36 @@ class PostPage extends React.Component {
                   <Col>
                     <h3 className="mb-3">{this.state.retrievedPost.request}</h3>
                     <h5>
-                      {requestStatuses[this.state.retrievedPost.requestStatus]}{" "}
-                      {deadline}
+                      {requestStatuses[this.state.retrievedPost.requestStatus]}
                     </h5>
+                    <h6>
+                      {/* show deadline if request has not been completed */}
+                      {this.state.retrievedPost.requestStatus === 2 ? null : (
+                        <>
+                          {"Deadline: "}
+                          {moment(
+                            this.state.retrievedPost.requestDeadline
+                          ).format("DD MMM YYYY")}
+                        </>
+                      )}
+                    </h6>
+                    {/* Show request type */}
                     <Badge className="mb-2" variant="secondary">
                       {this.state.retrievedPost.requestType}
                     </Badge>
+                    {/* Show verified badge if user is verified */}
                     <div className="mb-5">
-                      {verifiedTag} {this.state.requestorName}
+                      {this.state.verifiedPost === 1 ? (
+                        <Badge variant="info">Verified</Badge>
+                      ) : null}{" "}
+                      {this.state.requestorName}
                     </div>
 
-                    <h5>Other details:</h5>
                     {this.state.retrievedPost.requestDetails}
                   </Col>
                 </Row>
                 <Row>
-                  <CommentsList retrievedPost={this.state.retrievedPost} />
+                  <CommentsSection retrievedPost={this.state.retrievedPost} />
                 </Row>
               </Col>
               <Col xs={12} sm={12} md={4}>

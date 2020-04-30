@@ -183,14 +183,6 @@ class Actions extends React.Component {
                     Contact {fulfillerName} at {fulfillerEmail}{" "}
                     {fulfillerPhoneNum ? <> or {fulfillerPhoneNum} </> : null}
                   </div>
-                  <Button
-                    className="mt-4 mb-2"
-                    onClick={this.handleMarkPostAsCompleted}
-                    variant="success"
-                    size="sm"
-                  >
-                    Mark as completed
-                  </Button>
                 </>
               );
               // if logged in user is the fulfiller, show requestor's contact details and allow user to release request
@@ -207,6 +199,15 @@ class Actions extends React.Component {
                     <Link to="/getting-started">safety guidelines</Link> to
                     protect yourself against scams.
                   </div>
+                  <br></br>
+                  <Button
+                    className="mt-4 mb-2"
+                    onClick={this.handleMarkPostAsCompleted}
+                    variant="success"
+                    size="sm"
+                  >
+                    Mark as completed
+                  </Button>
                   <br></br>
                   <Button
                     onClick={this.handleRemoveFulfillerFromPost}
