@@ -57,12 +57,19 @@ class Profile extends React.Component {
   };
 
   updateUserInfo = async (userUid) => {
+    const idToken = await firebase
+      .auth()
+      .currentUser.getIdToken()
+      .then((idToken) => {
+        return idToken;
+      });
     await fetch(
       `http://localhost:4000/users/updateUserInfo?authUid=${userUid}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
         },
         body: JSON.stringify({
           userName: this.state.userName,

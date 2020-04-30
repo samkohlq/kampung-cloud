@@ -14,7 +14,7 @@ const uiConfig = {
       const idToken = await firebase
         .auth()
         .currentUser.getIdToken()
-        .then(function (idToken) {
+        .then((idToken) => {
           return idToken;
         });
       if (authResult.additionalUserInfo.isNewUser) {

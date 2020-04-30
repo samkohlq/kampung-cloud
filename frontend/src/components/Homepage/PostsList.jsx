@@ -43,10 +43,9 @@ class PostsList extends React.Component {
       <Table className="my-5" responsive="sm" hover>
         <thead>
           <tr>
-            <th>Status</th>
-            <th>Deadline</th>
             <th>Request</th>
-            <th>Request Type</th>
+            <th>Deadline</th>
+            <th>Status</th>
             <th></th>
           </tr>
         </thead>

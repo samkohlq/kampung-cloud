@@ -11,27 +11,23 @@ export const createUser = async (req, res) => {
     admin
       .auth()
       .verifyIdToken(idToken)
-      .then(async function (decodedToken) {
-        const newUser = await Promise.all([
-          User.create({
-            userName: req.body.userName,
-            authUid: req.body.authUid,
-            email: req.body.email,
-            phoneNum: req.body.phoneNum,
-            verificationStatus: 0,
-          }),
-        ]).catch((error) => {
+      .then(async (decodedToken) => {
+        const newUser = await User.create({
+          userName: req.body.userName,
+          authUid: req.body.authUid,
+          email: req.body.email,
+          phoneNum: req.body.phoneNum,
+          verificationStatus: 0,
+        }).catch((error) => {
           console.log(error);
         });
         res.send(newUser);
       })
-      .catch(function (error) {
-        console.log("did it fail here?");
+      .catch((error) => {
         console.log(error);
         res.sendStatus(401);
       });
   } else {
-    console.log("or did it fail here at the second one?");
     res.sendStatus(401);
   }
 };
@@ -43,6 +39,36 @@ export const retrieveUserInfo = async (req, res) => {
     console.log(error);
   });
   res.send(retrievedUser);
+};
+
+export const updateUserInfo = async (req, res) => {
+  let idToken = req.headers["authorization"];
+
+  if (idToken) {
+    if (idToken.startsWith("Bearer ")) {
+      idToken = idToken.slice(7, idToken.length);
+    }
+    admin
+      .auth()
+      .verifyIdToken(idToken)
+      .then(async (decodedToken) => {
+        const updatedUser = await User.update(
+          {
+            userName: req.body.userName,
+            email: req.body.email,
+            phoneNum: req.body.phoneNum,
+          },
+          { where: { authUid: req.query.authUid } }
+        );
+        res.send(updatedUser);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.sendStatus(401);
+      });
+  } else {
+    res.sendStatus(401);
+  }
 };
 
 export const deleteUser = async (req, res) => {
@@ -74,18 +100,6 @@ export const removeUserVerificationStatus = async (req, res) => {
     {
       where: { authUid: req.query.authUid },
     }
-  );
-  res.send(updatedUser);
-};
-
-export const updateUserInfo = async (req, res) => {
-  const updatedUser = await User.update(
-    {
-      userName: req.body.userName,
-      email: req.body.email,
-      phoneNum: req.body.phoneNum,
-    },
-    { where: { authUid: req.query.authUid } }
   );
   res.send(updatedUser);
 };

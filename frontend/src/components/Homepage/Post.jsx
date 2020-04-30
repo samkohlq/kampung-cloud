@@ -50,10 +50,9 @@ class Post extends React.Component {
           window.location.href = `/posts/${this.props.post.id}`;
         }}
       >
-        <td>{statuses[this.props.post.requestStatus]}</td>
-        <td>{deadline}</td>
         <td>{this.props.post.request}</td>
-        <td>{this.props.post.requestType}</td>
+        <td>{deadline}</td>
+        <td>{statuses[this.props.post.requestStatus]}</td>
         <td>{verifiedTag}</td>
       </tr>
     );
