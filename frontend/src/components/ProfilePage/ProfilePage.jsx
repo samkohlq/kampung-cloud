@@ -15,21 +15,26 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isFetching: true,
+      verificationStatus: null,
       loggedIn: null,
       loggedInUserUid: null,
       requestForUserConfidentialInfo: true,
-      userName: null,
-      email: null,
-      phoneNum: null,
-      verificationStatus: null,
-      isFetching: true,
+      formData: {
+        userName: null,
+        email: null,
+        phoneNum: null,
+      },
       isDisabled: "disabled",
+      showValidation: null,
     };
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(async (user) => {
+      // if user is logged in
       if (user) {
+        // retrieve user's information
         const idToken = await firebase
           .auth()
           .currentUser.getIdToken()
@@ -41,6 +46,7 @@ class Profile extends React.Component {
           this.state.requestForUserConfidentialInfo,
           idToken
         );
+        // and update state to reflect logged-in status
         this.setState({
           loggedIn: true,
           isFetching: false,
@@ -68,12 +74,13 @@ class Profile extends React.Component {
     )
       .then((response) => response.json())
       .then((retrievedUser) => {
-        console.log(retrievedUser);
         this.setState({
           loggedInUserUid: retrievedUser.authUid,
-          userName: retrievedUser.userName,
-          email: retrievedUser.email,
-          phoneNum: retrievedUser.phoneNum,
+          formData: {
+            userName: retrievedUser.userName,
+            email: retrievedUser.email,
+            phoneNum: retrievedUser.phoneNum,
+          },
           verificationStatus: retrievedUser.verificationStatus,
         });
       });
@@ -95,9 +102,9 @@ class Profile extends React.Component {
           Authorization: `Bearer ${idToken}`,
         },
         body: JSON.stringify({
-          userName: this.state.userName,
-          email: this.state.email,
-          phoneNum: this.state.phoneNum,
+          userName: this.state.formData.userName,
+          email: this.state.formData.email,
+          phoneNum: this.state.formData.phoneNum,
         }),
       }
     );
@@ -113,12 +120,18 @@ class Profile extends React.Component {
     }
   };
 
+  // enable fields if user chooses to edit profile
   handleEditProfile = () => {
-    if (this.state.isDisabled === "disabled") {
-      this.setState({ isDisabled: null });
-    } else {
-      this.setState({ isDisabled: "disabled" });
+    this.setState({ isDisabled: null });
+  };
+
+  // disable fields and send updates to backend when user saves changes
+  handleUpdateProfile = () => {
+    if (this.state.phoneNum.length === 8) {
+      this.setState({ isDisabled: "disabled", showValidation: null });
       this.updateUserInfo(this.state.loggedInUserUid);
+    } else {
+      this.setState({ showValidation: "border-danger" });
     }
   };
 
@@ -142,7 +155,7 @@ class Profile extends React.Component {
               <Form.Label>Name</Form.Label>
               <Form.Control
                 disabled="disabled"
-                defaultValue={this.state.userName}
+                defaultValue={this.state.formData.userName}
                 onChange={this.handleFormChange}
                 name="userName"
               />
@@ -151,7 +164,7 @@ class Profile extends React.Component {
               <Form.Label>Email</Form.Label>
               <Form.Control
                 disabled="disabled"
-                defaultValue={this.state.email}
+                defaultValue={this.state.formData.email}
                 onChange={this.handleFormChange}
                 name="email"
               />
@@ -159,11 +172,17 @@ class Profile extends React.Component {
             <Form.Group>
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
+                className={this.state.showValidation}
                 disabled={this.state.isDisabled}
-                defaultValue={this.state.phoneNum}
+                defaultValue={this.state.formData.phoneNum}
                 onChange={this.handleFormChange}
                 name="phoneNum"
               />
+              {this.state.showValidation ? (
+                <Form.Text className="text-danger">
+                  Please provide a valid phone number
+                </Form.Text>
+              ) : null}
             </Form.Group>
             {this.state.isDisabled === "disabled" ? (
               <div>
@@ -171,7 +190,7 @@ class Profile extends React.Component {
               </div>
             ) : (
               <div align="right">
-                <Button onClick={this.handleEditProfile}>Save changes</Button>
+                <Button onClick={this.handleUpdateProfile}>Save changes</Button>
               </div>
             )}
           </Form>
