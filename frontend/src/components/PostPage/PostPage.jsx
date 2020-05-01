@@ -24,14 +24,19 @@ class PostPage extends React.Component {
   async componentDidMount() {
     // retrieve post
     await this.retrievePost(this.props.match.params.id);
+    // retrieve and save requestor's name and verification status in state
     await this.retrieveUserInfo(
       this.state.retrievedPost.requestorUid,
       this.state.requestForUserConfidentialInfo
     );
-    await this.retrieveUserInfo(
-      this.state.retrievedPost.fulfillerUid,
-      this.state.requestForUserConfidentialInfo
-    );
+    // retrieve and save fulfiller's name in state if request has been picked up
+    if (this.state.retrievedPost.fulfillerUid) {
+      await this.retrieveUserInfo(
+        this.state.retrievedPost.fulfillerUid,
+        this.state.requestForUserConfidentialInfo
+      );
+    }
+
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         // set state to reflect that user is logged in
@@ -50,12 +55,14 @@ class PostPage extends React.Component {
 
         // if logged in user is the requestor
         if (user.uid === this.state.retrievedPost.requestorUid) {
-          // retrieve fulfiller's information, including email and phoneNum
-          await this.retrieveUserInfo(
-            this.state.retrievedPost.fulfillerUid,
-            this.state.requestForUserConfidentialInfo,
-            idToken
-          );
+          if (this.state.retrievedPost.fulfillerUid) {
+            // retrieve fulfiller's information, including email and phoneNum
+            await this.retrieveUserInfo(
+              this.state.retrievedPost.fulfillerUid,
+              this.state.requestForUserConfidentialInfo,
+              idToken
+            );
+          }
           // else if logged in user is the fulfiller
         } else if (user.uid === this.state.retrievedPost.fulfillerUid) {
           // retrieve requestor's information, including email and phoneNum
@@ -117,6 +124,7 @@ class PostPage extends React.Component {
           fulfillerPhoneNum: retrievedUser.phoneNum,
         });
       }
+      // if we only asked for name and verification status
     } else {
       // check if retrieved user is the requestor or fulfiller
       if (retrievedUser.authUid === this.state.retrievedPost.requestorUid) {
@@ -137,7 +145,6 @@ class PostPage extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <>
         <NavBar />
