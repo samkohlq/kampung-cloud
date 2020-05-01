@@ -15,16 +15,20 @@ class Post extends React.Component {
     this.state = {
       verifiedPost: null,
       requestorName: null,
+      requestForUserConfidentialInfo: false,
     };
   }
 
   componentDidMount() {
-    this.retrieveUserInfo();
+    this.retrieveUserInfo(
+      this.props.post.requestorUid,
+      this.state.requestForUserConfidentialInfo
+    );
   }
 
-  retrieveUserInfo = async () => {
+  retrieveUserInfo = async (userUid, requestForUserConfidentialInfo) => {
     await fetch(
-      `http://localhost:4000/users/retrieveUserInfo?authUid=${this.props.post.requestorUid}`
+      `http://localhost:4000/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`
     )
       .then((response) => response.json())
       .then((retrievedUser) => {

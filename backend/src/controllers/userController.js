@@ -33,12 +33,40 @@ export const createUser = async (req, res) => {
 };
 
 export const retrieveUserInfo = async (req, res) => {
-  const retrievedUser = await User.findOne({
-    where: { authUid: req.query.authUid },
-  }).catch((error) => {
-    console.log(error);
-  });
-  res.send(retrievedUser);
+  let idToken = req.headers["authorization"];
+
+  if (req.query.requestForUserConfidentialInfo === "true") {
+    if (idToken) {
+      if (idToken.startsWith("Bearer ")) {
+        idToken = idToken.slice(7, idToken.length);
+      }
+      admin
+        .auth()
+        .verifyIdToken(idToken)
+        .then(async (decodedToken) => {
+          const retrievedUser = await User.findOne({
+            where: { authUid: req.query.authUid },
+          }).catch((error) => {
+            console.log(error);
+          });
+          res.send(retrievedUser);
+        })
+        .catch((error) => {
+          console.log(error);
+          res.sendStatus(401);
+        });
+    } else {
+      res.sendStatus(401);
+    }
+  } else {
+    const retrievedUserInfo = await User.findOne({
+      where: { authUid: req.query.authUid },
+      attributes: ["userName", "verificationStatus", "authUid"],
+    }).catch((error) => {
+      console.log(error);
+    });
+    res.send(retrievedUserInfo);
+  }
 };
 
 export const updateUserInfo = async (req, res) => {

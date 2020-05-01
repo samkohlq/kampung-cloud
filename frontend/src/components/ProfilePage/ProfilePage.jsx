@@ -17,6 +17,7 @@ class Profile extends React.Component {
     this.state = {
       loggedIn: null,
       loggedInUserUid: null,
+      requestForUserConfidentialInfo: true,
       userName: null,
       email: null,
       phoneNum: null,
@@ -27,9 +28,19 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        this.retrieveUserInfo(user.uid);
+        const idToken = await firebase
+          .auth()
+          .currentUser.getIdToken()
+          .then((idToken) => {
+            return idToken;
+          });
+        this.retrieveUserInfo(
+          user.uid,
+          this.state.requestForUserConfidentialInfo,
+          idToken
+        );
         this.setState({
           loggedIn: true,
           isFetching: false,
@@ -40,12 +51,24 @@ class Profile extends React.Component {
     });
   }
 
-  retrieveUserInfo = async (userUid) => {
+  retrieveUserInfo = async (
+    userUid,
+    requestForUserConfidentialInfo,
+    idToken
+  ) => {
     await fetch(
-      `http://localhost:4000/users/retrieveUserInfo?authUid=${userUid}`
+      `http://localhost:4000/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
     )
       .then((response) => response.json())
       .then((retrievedUser) => {
+        console.log(retrievedUser);
         this.setState({
           loggedInUserUid: retrievedUser.authUid,
           userName: retrievedUser.userName,
