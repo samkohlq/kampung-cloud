@@ -8,10 +8,18 @@ class EditPostModal extends React.Component {
     this.state = {
       showModal: false,
       setShowModal: false,
-      requestDeadline: new Date(props.retrievedPost.requestDeadline),
-      requestType: props.retrievedPost.requestType,
-      request: props.retrievedPost.request,
-      requestDetails: props.retrievedPost.requestDetails,
+      requestData: {
+        requestDeadline: new Date(props.retrievedPost.requestDeadline),
+        requestType: props.retrievedPost.requestType,
+        request: props.retrievedPost.request,
+        requestDetails: props.retrievedPost.requestDetails,
+      },
+      validations: {
+        showRequestDeadlineValidation: null,
+        showRequestTypeValidation: null,
+        showRequestValidation: null,
+        showRequestDetailsValidation: null,
+      },
     };
   }
 
@@ -24,18 +32,111 @@ class EditPostModal extends React.Component {
   };
 
   handleDateChange = (event) => {
-    this.setState({ requestDeadline: event });
+    this.setState({
+      requestData: {
+        requestDeadline: event,
+      },
+    });
   };
 
   handleChange = (event) => {
     this.setState({
       ...this.state,
-      [event.target.name]: event.target.value,
+      requestData: {
+        ...this.state.requestData,
+        [event.target.name]: event.target.value,
+      },
     });
   };
 
   handleFormSubmit = async () => {
-    console.log(this.state);
+    if (
+      this.state.requestData.requestDeadline &&
+      this.state.requestData.requestType &&
+      this.state.requestData.request &&
+      this.state.requestData.requestDetails
+    ) {
+      this.submitForm();
+    } else {
+      // if requestDeadline empty
+      if (!this.state.requestData.requestDeadline) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDeadlineValidation: "border-danger",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDeadlineValidation: null,
+          },
+        });
+      }
+
+      // if requestType empty
+      if (!this.state.requestData.requestType) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestTypeValidation: "border-danger",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestTypeValidation: null,
+          },
+        });
+      }
+
+      // if request empty
+      if (!this.state.requestData.request) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestValidation: "border-danger",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestValidation: null,
+          },
+        });
+      }
+
+      // if request details empty
+      if (!this.state.requestData.requestDetails) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDetailsValidation: "border-danger",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDetailsValidation: null,
+          },
+        });
+      }
+    }
+  };
+
+  submitForm = async () => {
     const response = await fetch(
       `http://localhost:4000/posts/updatePost?postId=${this.props.retrievedPost.id}`,
       {
@@ -44,10 +145,10 @@ class EditPostModal extends React.Component {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          requestDeadline: this.state.requestDeadline,
-          requestType: this.state.requestType,
-          request: this.state.request,
-          requestDetails: this.state.requestDetails,
+          requestDeadline: this.state.requestData.requestDeadline,
+          requestType: this.state.requestData.requestType,
+          request: this.state.requestData.request,
+          requestDetails: this.state.requestData.requestDetails,
         }),
       }
     );
@@ -82,8 +183,8 @@ class EditPostModal extends React.Component {
               <Form.Group size="sm" className="mb-3">
                 <Form.Label>When do you need this by?</Form.Label>
                 <DatePicker
-                  className="ml-2 datepicker"
-                  selected={this.state.requestDeadline}
+                  className={`ml-2 datepicker ${this.state.validations.showRequestDeadlineValidation}`}
+                  selected={this.state.requestData.requestDeadline}
                   onChange={this.handleDateChange}
                   minDate={Date.now()}
                 />
@@ -94,8 +195,9 @@ class EditPostModal extends React.Component {
                   What category does your request fall into?
                 </Form.Label>
                 <Form.Control
+                  className={this.state.validations.showRequestTypeValidation}
                   as="select"
-                  defaultValue={this.state.requestType}
+                  defaultValue={this.state.requestData.requestType}
                   name="requestType"
                   onChange={this.handleChange}
                 >
@@ -108,17 +210,28 @@ class EditPostModal extends React.Component {
                   <option>Tech</option>
                   <option>Other</option>
                 </Form.Control>
+                {this.state.validations.showRequestTypeValidation ? (
+                  <Form.Text className="text-danger">
+                    Please select a category
+                  </Form.Text>
+                ) : null}
               </Form.Group>
 
               <Form.Group size="sm" className="mb-3">
                 <Form.Label>What do you need?</Form.Label>
                 <Form.Control
+                  className={this.state.validations.showRequestValidation}
                   type="text"
                   name="request"
-                  defaultValue={this.state.request}
+                  defaultValue={this.state.requestData.request}
                   onChange={this.handleChange}
                   maxLength="120"
                 />
+                {this.state.validations.showRequestValidation ? (
+                  <Form.Text className="text-danger">
+                    Please tell us what help you're looking for
+                  </Form.Text>
+                ) : null}
                 <Form.Text className="text-muted">
                   For example: 5 bottles of sanitiser for elderly
                 </Form.Text>
@@ -127,12 +240,20 @@ class EditPostModal extends React.Component {
               <Form.Group size="sm" className="mb-3">
                 <Form.Label>Tell us more about your request</Form.Label>
                 <Form.Control
+                  className={
+                    this.state.validations.showRequestDetailsValidation
+                  }
                   as="textarea"
                   name="requestDetails"
-                  defaultValue={this.state.requestDetails}
+                  defaultValue={this.state.requestData.requestDetails}
                   maxLength="1800"
                   onChange={this.handleChange}
                 />
+                {this.state.validations.showRequestDetailsValidation ? (
+                  <Form.Text className="text-danger">
+                    Please tell us more about your request
+                  </Form.Text>
+                ) : null}
                 <Form.Text className="text-muted">
                   For example: Background information, instructions for
                   delivery, sizes required
