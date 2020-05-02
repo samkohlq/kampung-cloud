@@ -12,11 +12,14 @@ import {
   retrievePost,
   updatePost,
 } from "../controllers/postController";
+import { postValidationRules, validate } from "../validations/postValidator";
 
 const router = express.Router();
 
 // create post
-router.post("/createPost", (req, res) => createPost(req, res));
+router.post("/createPost", postValidationRules(), validate, (req, res) =>
+  createPost(req, res)
+);
 
 // retrieve all posts
 router.get("/retrieveAllPosts", (req, res) => retrieveAllPosts(req, res));
@@ -56,6 +59,8 @@ router.put("/removeFulfillerFromPost", (req, res) =>
 router.put("/markPostAsCompleted", (req, res) => markPostAsCompleted(req, res));
 
 // update post
-router.put("/updatePost", (req, res) => updatePost(req, res));
+router.put("/updatePost", postValidationRules(), validate, (req, res) =>
+  updatePost(req, res)
+);
 
 export default router;

@@ -21,8 +21,6 @@ class Profile extends React.Component {
       loggedInUserUid: null,
       requestForUserConfidentialInfo: true,
       formData: {
-        userName: null,
-        email: null,
         phoneNum: null,
       },
       isDisabled: "disabled",
@@ -133,7 +131,6 @@ class Profile extends React.Component {
   // disable fields and send updates to backend when user saves changes
   handleUpdateProfile = () => {
     if (this.state.formData.phoneNum.length === 8) {
-      this.setState({ isDisabled: "disabled", showValidation: null });
       this.updateUserPhoneNum(this.state.loggedInUserUid);
     } else {
       this.setState({ showValidation: "border-danger" });

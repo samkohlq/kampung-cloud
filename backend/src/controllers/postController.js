@@ -2,11 +2,11 @@ import { Post } from "../db/models";
 
 export const createPost = async (req, res) => {
   const newPost = await Post.create({
-    request: req.body.request,
+    requestDeadline: req.body.requestDeadline,
     requestType: req.body.requestType,
+    request: req.body.request,
     requestDetails: req.body.requestDetails,
     requestorUid: req.body.requestorUid,
-    requestDeadline: req.body.requestDeadline,
     requestStatus: 0,
     verificationStatus: 0,
   }).catch((error) => {
@@ -143,8 +143,9 @@ export const markPostAsCompleted = async (req, res) => {
 export const updatePost = async (req, res) => {
   const updatedPost = await Post.update(
     {
-      request: req.body.request,
       requestDeadline: req.body.requestDeadline,
+      requestType: req.body.requestType,
+      request: req.body.request,
       requestDetails: req.body.requestDetails,
     },
     {

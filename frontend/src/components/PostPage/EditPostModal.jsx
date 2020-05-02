@@ -8,8 +8,9 @@ class EditPostModal extends React.Component {
     this.state = {
       showModal: false,
       setShowModal: false,
-      request: props.retrievedPost.request,
       requestDeadline: new Date(props.retrievedPost.requestDeadline),
+      requestType: props.retrievedPost.requestType,
+      request: props.retrievedPost.request,
       requestDetails: props.retrievedPost.requestDetails,
     };
   }
@@ -33,8 +34,9 @@ class EditPostModal extends React.Component {
     });
   };
 
-  handleFormSubmit = () => {
-    fetch(
+  handleFormSubmit = async () => {
+    console.log(this.state);
+    const response = await fetch(
       `http://localhost:4000/posts/updatePost?postId=${this.props.retrievedPost.id}`,
       {
         method: "PUT",
@@ -42,13 +44,18 @@ class EditPostModal extends React.Component {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          requestDeadline: this.state.requestDeadline,
+          requestType: this.state.requestType,
           request: this.state.request,
           requestDetails: this.state.requestDetails,
-          requestDeadline: this.state.requestDeadline,
         }),
       }
     );
-    window.location.href = `/posts/${this.props.retrievedPost.id}`;
+    if (response.status === 422) {
+      alert("Please fix the errors in the form");
+    } else if (response.status === 200) {
+      window.location.href = `/posts/${this.props.retrievedPost.id}`;
+    }
   };
 
   render() {
@@ -82,7 +89,26 @@ class EditPostModal extends React.Component {
                 />
               </Form.Group>
 
-              {/* TODO(sam): add categories list */}
+              <Form.Group size="sm" className="mb-3">
+                <Form.Label>
+                  What category does your request fall into?
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  defaultValue={this.state.requestType}
+                  name="requestType"
+                  onChange={this.handleChange}
+                >
+                  <option disabled="disabled">--</option>
+                  <option>Meals</option>
+                  <option>Groceries</option>
+                  <option>Clothing</option>
+                  <option>Hygiene</option>
+                  <option>Cash</option>
+                  <option>Tech</option>
+                  <option>Other</option>
+                </Form.Control>
+              </Form.Group>
 
               <Form.Group size="sm" className="mb-3">
                 <Form.Label>What do you need?</Form.Label>
@@ -91,6 +117,7 @@ class EditPostModal extends React.Component {
                   name="request"
                   defaultValue={this.state.request}
                   onChange={this.handleChange}
+                  maxLength="120"
                 />
                 <Form.Text className="text-muted">
                   For example: 5 bottles of sanitiser for elderly
@@ -103,6 +130,7 @@ class EditPostModal extends React.Component {
                   as="textarea"
                   name="requestDetails"
                   defaultValue={this.state.requestDetails}
+                  maxLength="1800"
                   onChange={this.handleChange}
                 />
                 <Form.Text className="text-muted">

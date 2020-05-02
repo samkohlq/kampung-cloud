@@ -7,7 +7,10 @@ import {
   updateUserPhoneNum,
   verifyUser,
 } from "../controllers/userController";
-import { phoneNumValidationRules, validate } from "./validator";
+import {
+  phoneNumValidationRules,
+  validate,
+} from "../validations/userValidator";
 
 const router = express.Router();
 

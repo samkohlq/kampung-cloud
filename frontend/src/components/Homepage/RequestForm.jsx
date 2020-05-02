@@ -8,25 +8,127 @@ import "./RequestForm.css";
 class RequestForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      validations: {
+        showRequestDeadlineValidation: null,
+        showRequestTypeValidation: null,
+        showRequestValidation: null,
+        showRequestDetailsValidation: null,
+      },
+      request: {
+        requestDeadline: null,
+        requestType: null,
+        request: null,
+        requestDetails: null,
+      },
+    };
   }
 
   handleFormChange = (event) => {
     if (event.target) {
       this.setState({
         ...this.state,
-        [event.target.name]: event.target.value,
+        request: {
+          ...this.state.request,
+          [event.target.name]: event.target.value,
+        },
       });
     }
   };
 
   handleDateChange = (date) => {
     this.setState({
-      requestDeadline: date,
+      ...this.state,
+      request: {
+        ...this.state.request,
+        requestDeadline: date,
+      },
     });
   };
 
   handleFormSubmit = async () => {
+    if (
+      this.state.request.requestDeadline &&
+      this.state.request.requestType &&
+      this.state.request.request &&
+      this.state.request.requestDetails
+    ) {
+      this.submitForm();
+    } else {
+      if (!this.state.request.requestDeadline) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDeadlineValidation: "border-danger",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDeadlineValidation: null,
+          },
+        });
+      }
+      if (!this.state.request.requestType) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestTypeValidation: "border-danger",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestTypeValidation: null,
+          },
+        });
+      }
+
+      if (!this.state.request.request) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestValidation: "border-danger",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestValidation: null,
+          },
+        });
+      }
+
+      if (!this.state.request.requestDetails) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDetailsValidation: "border-danger",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDetailsValidation: null,
+          },
+        });
+      }
+    }
+  };
+
+  submitForm = async () => {
     const requestorUid = await firebase.auth().currentUser.uid;
     fetch("http://localhost:4000/posts/createPost", {
       method: "POST",
@@ -34,18 +136,18 @@ class RequestForm extends React.Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        request: this.state.request,
-        requestType: this.state.requestType,
-        requestDetails: this.state.requestDetails,
+        requestDeadline: this.state.request.requestDeadline,
+        requestType: this.state.request.requestType,
+        request: this.state.request.request,
+        requestDetails: this.state.request.requestDetails,
         requestorUid: requestorUid,
-        requestDeadline: this.state.requestDeadline,
       }),
     });
+    window.location.href = "/";
   };
 
   render() {
     return (
-      // TODO(sam): add frontend form validations
       <Accordion className="mx-5">
         <Card>
           <Card.Header>
@@ -59,8 +161,8 @@ class RequestForm extends React.Component {
                 <Form.Group size="sm" className="mb-3">
                   <Form.Label>When do you need this by?</Form.Label>
                   <DatePicker
-                    className="ml-2 datepicker"
-                    selected={this.state.requestDeadline}
+                    className={`ml-2 datepicker ${this.state.validations.showRequestDeadlineValidation}`}
+                    selected={this.state.request.requestDeadline}
                     onChange={this.handleDateChange}
                     minDate={Date.now()}
                   />
@@ -71,6 +173,7 @@ class RequestForm extends React.Component {
                     What category does your request fall into?
                   </Form.Label>
                   <Form.Control
+                    className={this.state.validations.showRequestTypeValidation}
                     as="select"
                     defaultValue="--"
                     name="requestType"
@@ -85,15 +188,27 @@ class RequestForm extends React.Component {
                     <option>Tech</option>
                     <option>Other</option>
                   </Form.Control>
+                  {this.state.validations.showRequestTypeValidation ? (
+                    <Form.Text className="text-danger">
+                      Please select a category
+                    </Form.Text>
+                  ) : null}
                 </Form.Group>
 
                 <Form.Group size="sm" className="mb-3">
                   <Form.Label>What do you need?</Form.Label>
                   <Form.Control
+                    className={this.state.validations.showRequestValidation}
                     type="text"
                     name="request"
+                    maxLength="120"
                     onChange={this.handleFormChange}
                   />
+                  {this.state.validations.showRequestValidation ? (
+                    <Form.Text className="text-danger">
+                      Please tell us what help you're looking for
+                    </Form.Text>
+                  ) : null}
                   <Form.Text className="text-muted">
                     For example: 5 bottles of sanitiser for elderly
                   </Form.Text>
@@ -102,19 +217,26 @@ class RequestForm extends React.Component {
                 <Form.Group size="sm" className="mb-3">
                   <Form.Label>Tell us more about your request</Form.Label>
                   <Form.Control
+                    className={
+                      this.state.validations.showRequestDetailsValidation
+                    }
                     as="textarea"
                     name="requestDetails"
+                    maxLength="1800"
                     onChange={this.handleFormChange}
                   />
+                  {this.state.validations.showRequestDetailsValidation ? (
+                    <Form.Text className="text-danger">
+                      Please tell us more about your request
+                    </Form.Text>
+                  ) : null}
                   <Form.Text className="text-muted">
                     For example: Background information, instructions for
                     delivery, sizes required
                   </Form.Text>
                 </Form.Group>
-
                 <Button
                   variant="primary"
-                  type="submit"
                   size="sm"
                   className="float-right mb-3"
                   onClick={this.handleFormSubmit}
