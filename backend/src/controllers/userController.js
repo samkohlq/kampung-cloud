@@ -69,7 +69,7 @@ export const retrieveUserInfo = async (req, res) => {
   }
 };
 
-export const updateUserInfo = async (req, res) => {
+export const updateUserPhoneNum = async (req, res) => {
   let idToken = req.headers["authorization"];
 
   if (idToken) {
@@ -80,15 +80,13 @@ export const updateUserInfo = async (req, res) => {
       .auth()
       .verifyIdToken(idToken)
       .then(async (decodedToken) => {
-        const updatedUser = await User.update(
+        const updatedPhoneNum = await User.update(
           {
-            userName: req.body.userName,
-            email: req.body.email,
             phoneNum: req.body.phoneNum,
           },
           { where: { authUid: req.query.authUid } }
         );
-        res.send(updatedUser);
+        res.send(updatedPhoneNum);
       })
       .catch((error) => {
         console.log(error);

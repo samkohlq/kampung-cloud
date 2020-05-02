@@ -4,9 +4,10 @@ import {
   deleteUser,
   removeUserVerificationStatus,
   retrieveUserInfo,
-  updateUserInfo,
+  updateUserPhoneNum,
   verifyUser,
 } from "../controllers/userController";
+import { phoneNumValidationRules, validate } from "./validator";
 
 const router = express.Router();
 
@@ -27,7 +28,12 @@ router.put("/removeUserVerificationStatus", (req, res) =>
   removeUserVerificationStatus(req, res)
 );
 
-// remove user's verification status
-router.put("/updateUserInfo", (req, res) => updateUserInfo(req, res));
+// update user's phone number
+router.put(
+  "/updateUserPhoneNum",
+  phoneNumValidationRules(),
+  validate,
+  (req, res) => updateUserPhoneNum(req, res)
+);
 
 export default router;

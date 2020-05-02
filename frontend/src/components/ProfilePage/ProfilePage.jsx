@@ -86,15 +86,15 @@ class Profile extends React.Component {
       });
   };
 
-  updateUserInfo = async (userUid) => {
+  updateUserPhoneNum = async (userUid) => {
     const idToken = await firebase
       .auth()
       .currentUser.getIdToken()
       .then((idToken) => {
         return idToken;
       });
-    await fetch(
-      `http://localhost:4000/users/updateUserInfo?authUid=${userUid}`,
+    const response = await fetch(
+      `http://localhost:4000/users/updateUserPhoneNum?authUid=${userUid}`,
       {
         method: "PUT",
         headers: {
@@ -102,20 +102,25 @@ class Profile extends React.Component {
           Authorization: `Bearer ${idToken}`,
         },
         body: JSON.stringify({
-          userName: this.state.formData.userName,
-          email: this.state.formData.email,
           phoneNum: this.state.formData.phoneNum,
         }),
       }
     );
-    window.location.href = `/my-profile`;
+    if (response.status === 422) {
+      alert("Please provide a valid phone number");
+    } else if (response.status === 200) {
+      window.location.href = `/my-profile`;
+    }
   };
 
   handleFormChange = (event) => {
     if (event.target) {
       this.setState({
         ...this.state,
-        [event.target.name]: event.target.value,
+        formData: {
+          ...this.state.formData,
+          [event.target.name]: event.target.value,
+        },
       });
     }
   };
@@ -127,9 +132,9 @@ class Profile extends React.Component {
 
   // disable fields and send updates to backend when user saves changes
   handleUpdateProfile = () => {
-    if (this.state.phoneNum.length === 8) {
+    if (this.state.formData.phoneNum.length === 8) {
       this.setState({ isDisabled: "disabled", showValidation: null });
-      this.updateUserInfo(this.state.loggedInUserUid);
+      this.updateUserPhoneNum(this.state.loggedInUserUid);
     } else {
       this.setState({ showValidation: "border-danger" });
     }
