@@ -148,11 +148,11 @@ class RequestForm extends React.Component {
 
   render() {
     return (
-      <Accordion className="mx-5">
+      <Accordion className="mx-auto w-50">
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="0">
-              Add a request
+              <div className="d-inline">Have a request?</div>
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">

@@ -3,9 +3,9 @@ import React from "react";
 import { Badge } from "react-bootstrap";
 import "./Post.css";
 
-const statuses = {
+const requestStatuses = {
   0: "Help needed",
-  1: "Help is on the way",
+  1: "Help on the way",
   2: "Completed",
 };
 
@@ -56,7 +56,8 @@ class Post extends React.Component {
       >
         <td>{this.props.post.request}</td>
         <td>{deadline}</td>
-        <td>{statuses[this.props.post.requestStatus]}</td>
+        <td>{this.props.post.requestType}</td>
+        <td>{requestStatuses[this.props.post.requestStatus]}</td>
         <td>{verifiedTag}</td>
       </tr>
     );

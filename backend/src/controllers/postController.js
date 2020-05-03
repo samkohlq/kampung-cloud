@@ -15,17 +15,28 @@ export const createPost = async (req, res) => {
   res.send(newPost);
 };
 
-export const retrieveAllPosts = async (req, res) => {
-  const retrievedPosts = await Promise.all([
-    Post.findAll({
+export const retrievePosts = async (req, res) => {
+  let retrievedPosts;
+  if (req.query.postsListType == "all") {
+    retrievedPosts = await Post.findAll({
       order: [
         ["requestStatus", "ASC"],
         ["requestDeadline", "ASC"],
       ],
-    }),
-  ]).catch((error) => {
-    console.log(error);
-  });
+    }).catch((error) => {
+      console.log(error);
+    });
+  } else {
+    retrievedPosts = await Post.findAll({
+      where: { requestType: req.query.postsListType },
+      order: [
+        ["requestStatus", "ASC"],
+        ["requestDeadline", "ASC"],
+      ],
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
   res.send(retrievedPosts);
 };
 

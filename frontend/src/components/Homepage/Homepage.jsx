@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import firebase from "../../firebase";
 import NavBar from "../NavBar/NavBar";
 import IntroSubSection from "./IntroSubSection";
-import PostsList from "./PostsList";
+import RequestCategories from "./RequestCategories";
 import RequestForm from "./RequestForm";
 
 class Homepage extends React.Component {
@@ -33,7 +33,7 @@ class Homepage extends React.Component {
         <IntroSubSection />
         <Container className="justify-content-center">
           {requestForm}
-          <PostsList />
+          <RequestCategories />
         </Container>
       </>
     );

@@ -8,11 +8,33 @@ class PostsList extends React.Component {
     super(props);
     this.state = {
       loggedInUserUid: null,
+      postsListType: this.props.postsListType,
       posts: [],
     };
   }
 
   componentDidMount() {
+    this.retrievePosts();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.postsListType !== state.postsListType) {
+      return {
+        postsListType: props.postsListType,
+      };
+    }
+
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.postsListType !== prevProps.postsListType) {
+      this.setState({ postsListType: this.props.postsListType });
+      this.retrievePosts();
+    }
+  }
+
+  retrievePosts = async () => {
     let fetchRequest;
     const loggedInUserUid = firebase.auth().currentUser
       ? firebase.auth().currentUser.uid
@@ -22,29 +44,24 @@ class PostsList extends React.Component {
     } else if (this.props.posts === "Posted") {
       fetchRequest = `retrieveAllPostedPosts?loggedInUserUid=${loggedInUserUid}`;
     } else {
-      fetchRequest = "retrieveAllPosts";
+      fetchRequest = `retrievePosts?postsListType=${this.state.postsListType}`;
     }
-    this.retrieveAllPosts(fetchRequest);
-  }
-
-  retrieveAllPosts = async (fetchRequest) => {
-    await fetch(`http://localhost:4000/posts/${fetchRequest}`)
-      .then((response) => response.json())
-      .then((json) => {
-        const posts = json[0];
-        this.setState({
-          posts: posts,
-        });
-      });
+    const response = await fetch(`http://localhost:4000/posts/${fetchRequest}`);
+    const posts = await response.json();
+    this.setState({
+      posts: posts,
+    });
   };
 
   render() {
+    console.log(this.state);
     return (
       <Table className="my-5" responsive="sm" hover>
         <thead>
           <tr>
             <th>Request</th>
             <th>Deadline</th>
+            <th>Category</th>
             <th>Status</th>
             <th></th>
           </tr>

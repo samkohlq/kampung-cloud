@@ -6,7 +6,7 @@ import EditPostModal from "./EditPostModal";
 
 const requestStatuses = {
   0: "Help needed",
-  1: "Help is on the way",
+  1: "Help on the way",
   2: "Completed",
 };
 

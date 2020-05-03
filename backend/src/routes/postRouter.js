@@ -8,8 +8,8 @@ import {
   removeFulfillerFromPost,
   retrieveAllAssignedPosts,
   retrieveAllPostedPosts,
-  retrieveAllPosts,
   retrievePost,
+  retrievePosts,
   updatePost,
 } from "../controllers/postController";
 import { postValidationRules, validate } from "../validations/postValidator";
@@ -22,7 +22,7 @@ router.post("/createPost", postValidationRules(), validate, (req, res) =>
 );
 
 // retrieve all posts
-router.get("/retrieveAllPosts", (req, res) => retrieveAllPosts(req, res));
+router.get("/retrievePosts", (req, res) => retrievePosts(req, res));
 
 // retrieve all posts
 router.get("/retrieveAllAssignedPosts", (req, res) =>
