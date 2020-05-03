@@ -64,12 +64,13 @@ class Login extends React.Component {
       <>
         <Nav>
           <Nav.Link
+            className="text-uppercase"
             variant="primary"
             onClick={() => {
               this.handleShowLoginModal();
             }}
           >
-            Log in
+            Log in / Sign up
           </Nav.Link>
         </Nav>
         <Modal

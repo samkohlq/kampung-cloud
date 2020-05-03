@@ -41,30 +41,26 @@ export const retrievePosts = async (req, res) => {
 };
 
 export const retrieveAllAssignedPosts = async (req, res) => {
-  const retrievedAssignedPosts = await Promise.all([
-    Post.findAll({
-      where: { fulfillerUid: req.query.loggedInUserUid },
-      order: [
-        ["requestStatus", "ASC"],
-        ["requestDeadline", "ASC"],
-      ],
-    }),
-  ]).catch((error) => {
+  const retrievedAssignedPosts = await Post.findAll({
+    where: { fulfillerUid: req.query.loggedInUserUid },
+    order: [
+      ["requestStatus", "ASC"],
+      ["requestDeadline", "ASC"],
+    ],
+  }).catch((error) => {
     console.log(error);
   });
   res.send(retrievedAssignedPosts);
 };
 
 export const retrieveAllPostedPosts = async (req, res) => {
-  const retrievedPostedPosts = await Promise.all([
-    Post.findAll({
-      where: { requestorUid: req.query.loggedInUserUid },
-      order: [
-        ["requestStatus", "ASC"],
-        ["requestDeadline", "ASC"],
-      ],
-    }),
-  ]).catch((error) => {
+  const retrievedPostedPosts = await Post.findAll({
+    where: { requestorUid: req.query.loggedInUserUid },
+    order: [
+      ["requestStatus", "ASC"],
+      ["requestDeadline", "ASC"],
+    ],
+  }).catch((error) => {
     console.log(error);
   });
   res.send(retrievedPostedPosts);
@@ -76,11 +72,6 @@ export const countPostsByRequestStatus = async (req, res) => {
   }).catch((error) => {
     console.log(error);
   });
-  const numOfInProgressPosts = await Post.count({
-    where: { requestStatus: 1 },
-  }).catch((error) => {
-    console.log(error);
-  });
   const numOfOutstandingPosts = await Post.count({
     where: { requestStatus: 0 },
   }).catch((error) => {
@@ -88,7 +79,6 @@ export const countPostsByRequestStatus = async (req, res) => {
   });
   res.send({
     completedPosts: numOfCompletedPosts,
-    inProgressPosts: numOfInProgressPosts,
     outstandingPosts: numOfOutstandingPosts,
   });
 };

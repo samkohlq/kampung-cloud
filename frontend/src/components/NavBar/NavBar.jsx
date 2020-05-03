@@ -32,7 +32,7 @@ class NavBar extends React.Component {
       <Nav>
         <NavDropdown title={this.state.loggedInUserName}>
           <NavDropdown.Item
-            size="sm"
+            className="small"
             onClick={() => {
               window.location.href = `/my-profile`;
             }}
@@ -40,7 +40,7 @@ class NavBar extends React.Component {
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item
-            size="sm"
+            className="small"
             onClick={() => {
               window.location.href = `/my-requests`;
             }}
@@ -48,7 +48,7 @@ class NavBar extends React.Component {
             Requests
           </NavDropdown.Item>
           <NavDropdown.Item
-            size="sm"
+            className="small"
             onClick={() => {
               firebase.auth().signOut();
             }}
@@ -62,14 +62,14 @@ class NavBar extends React.Component {
     );
     return (
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">Community Cloud</Navbar.Brand>
+        <Navbar.Brand href="/">Kampung Cloud</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse className="justify-content-end">
+        <Navbar.Collapse className="justify-content-end small">
           <Nav className="mr-auto">
-            <Navbar.Text>
+            <Navbar.Text className="text-uppercase">
               <Nav.Link href="/getting-started">Getting Started</Nav.Link>
             </Navbar.Text>
-            <Navbar.Text>
+            <Navbar.Text className="text-uppercase">
               <Nav.Link href="/collab">Collaborate</Nav.Link>
             </Navbar.Text>
           </Nav>

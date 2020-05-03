@@ -54,7 +54,7 @@ class PostsList extends React.Component {
   };
 
   render() {
-    console.log(this.state);
+    console.log(this.state.posts);
     return (
       <Table className="my-5" responsive="sm" size="sm" hover>
         <thead>
@@ -68,7 +68,7 @@ class PostsList extends React.Component {
         </thead>
         <tbody>
           {this.state.posts.map((post, i) => (
-            <Post id="post" key={i} post={post} />
+            <Post key={i} post={post} />
           ))}
         </tbody>
       </Table>
