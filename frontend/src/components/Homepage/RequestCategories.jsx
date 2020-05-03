@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import PostsList from "./PostsList";
+import PostsList from "../PostsList/PostsList";
 
 class RequestCategories extends React.Component {
   constructor(props) {

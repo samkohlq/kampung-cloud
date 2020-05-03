@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import firebase from "../../firebase";
-import Login from "./Login";
+import Login from "../NavBar/Login";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -32,7 +32,6 @@ class NavBar extends React.Component {
       <Nav>
         <NavDropdown title={this.state.loggedInUserName}>
           <NavDropdown.Item
-            className="small"
             onClick={() => {
               window.location.href = `/my-profile`;
             }}
@@ -40,7 +39,6 @@ class NavBar extends React.Component {
             Profile
           </NavDropdown.Item>
           <NavDropdown.Item
-            className="small"
             onClick={() => {
               window.location.href = `/my-requests`;
             }}
@@ -48,7 +46,6 @@ class NavBar extends React.Component {
             Requests
           </NavDropdown.Item>
           <NavDropdown.Item
-            className="small"
             onClick={() => {
               firebase.auth().signOut();
             }}
@@ -64,7 +61,7 @@ class NavBar extends React.Component {
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="/">Kampung Cloud</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse className="justify-content-end small">
+        <Navbar.Collapse className="justify-content-end">
           <Nav className="mr-auto">
             <Navbar.Text className="text-uppercase">
               <Nav.Link href="/getting-started">Getting Started</Nav.Link>

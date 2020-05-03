@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Spinner } from "react-bootstrap";
 import firebase from "../../firebase";
-import PostsList from "../Homepage/PostsList";
 import NavBar from "../NavBar/NavBar";
+import PostsList from "../PostsList/PostsList";
 
 class Requests extends React.Component {
   constructor(props) {

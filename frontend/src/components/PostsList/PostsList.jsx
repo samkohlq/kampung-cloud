@@ -54,7 +54,6 @@ class PostsList extends React.Component {
   };
 
   render() {
-    console.log(this.state.posts);
     return (
       <Table className="my-5" responsive="sm" size="sm" hover>
         <thead>

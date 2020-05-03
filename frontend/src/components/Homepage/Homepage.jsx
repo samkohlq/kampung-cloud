@@ -25,14 +25,12 @@ class Homepage extends React.Component {
   }
 
   render() {
-    const requestForm = this.state.loggedIn ? <RequestForm /> : null;
-
     return (
       <>
         <NavBar />
         <IntroSubSection />
         <Container className="justify-content-center">
-          {requestForm}
+          {this.state.loggedIn ? <RequestForm /> : null}
           <RequestCategories />
         </Container>
       </>
