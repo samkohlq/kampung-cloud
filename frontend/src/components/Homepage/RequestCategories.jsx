@@ -6,7 +6,7 @@ class RequestCategories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      postsListType: "all",
+      postsListType: "All",
     };
   }
   handleClick = (event) => {
@@ -19,6 +19,17 @@ class RequestCategories extends React.Component {
         <Row className="my-5">
           <Col align="center">
             <Button
+              className="my-2"
+              variant="outline-secondary"
+              name="All"
+              onClick={this.handleClick}
+            >
+              all
+            </Button>
+          </Col>
+          <Col align="center">
+            <Button
+              className="my-2"
               variant="outline-secondary"
               name="Meals"
               onClick={this.handleClick}
@@ -28,6 +39,7 @@ class RequestCategories extends React.Component {
           </Col>
           <Col align="center">
             <Button
+              className="my-2"
               variant="outline-secondary"
               name="Groceries"
               onClick={this.handleClick}
@@ -37,6 +49,7 @@ class RequestCategories extends React.Component {
           </Col>
           <Col align="center">
             <Button
+              className="my-2"
               variant="outline-secondary"
               name="Hygiene"
               onClick={this.handleClick}
@@ -46,6 +59,7 @@ class RequestCategories extends React.Component {
           </Col>
           <Col align="center">
             <Button
+              className="my-2"
               variant="outline-secondary"
               name="Clothing"
               onClick={this.handleClick}
@@ -55,6 +69,7 @@ class RequestCategories extends React.Component {
           </Col>
           <Col align="center">
             <Button
+              className="my-2"
               variant="outline-secondary"
               name="Cash"
               onClick={this.handleClick}
@@ -64,6 +79,7 @@ class RequestCategories extends React.Component {
           </Col>
           <Col align="center">
             <Button
+              className="my-2"
               variant="outline-secondary"
               name="Tech"
               onClick={this.handleClick}
@@ -73,6 +89,7 @@ class RequestCategories extends React.Component {
           </Col>
           <Col align="center">
             <Button
+              className="my-2"
               variant="outline-secondary"
               name="Other"
               onClick={this.handleClick}

@@ -17,7 +17,7 @@ export const createPost = async (req, res) => {
 
 export const retrievePosts = async (req, res) => {
   let retrievedPosts;
-  if (req.query.postsListType == "all") {
+  if (req.query.postsListType == "All") {
     retrievedPosts = await Post.findAll({
       order: [
         ["requestStatus", "ASC"],
