@@ -62,15 +62,16 @@ class Login extends React.Component {
 
     return (
       <>
-        <Nav.Link
-          variant="primary"
-          onClick={() => {
-            this.handleShowLoginModal();
-          }}
-        >
-          Log in
-        </Nav.Link>
-
+        <Nav>
+          <Nav.Link
+            variant="primary"
+            onClick={() => {
+              this.handleShowLoginModal();
+            }}
+          >
+            Log in
+          </Nav.Link>
+        </Nav>
         <Modal
           show={this.state.setShowLoginModal}
           onHide={this.handleCloseLoginModal}
