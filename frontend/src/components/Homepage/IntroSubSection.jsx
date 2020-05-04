@@ -50,13 +50,13 @@ class IntroSubSection extends React.Component {
                 </Button>
               </Container>
             </Col>
-            <Col className="mb-5" xs="12" md="2">
+            <Col className="mb-5" xs="12" md="3">
               <Container>
                 <h2>{this.state.requestsCompleted}</h2>
                 requests fulfilled
               </Container>
             </Col>
-            <Col className="mb-5" xs="12" md="2">
+            <Col className="mb-5" xs="12" md="3">
               <Container>
                 <h2>{this.state.requestsOutstanding}</h2>
                 requests outstanding

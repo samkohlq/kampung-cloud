@@ -56,6 +56,7 @@ class NavBar extends React.Component {
           <NavDropdown.Item
             onClick={() => {
               firebase.auth().signOut();
+              this.toggleModal();
             }}
           >
             Log out
