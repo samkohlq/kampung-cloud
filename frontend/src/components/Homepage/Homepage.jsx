@@ -30,7 +30,7 @@ class Homepage extends React.Component {
         <NavBar />
         <IntroSubSection />
         <Container className="justify-content-center">
-          {this.state.loggedIn ? <RequestForm /> : null}
+          <RequestForm loggedIn={this.state.loggedIn} />
           <RequestCategories />
         </Container>
       </>

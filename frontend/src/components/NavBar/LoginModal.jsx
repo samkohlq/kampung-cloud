@@ -1,28 +1,32 @@
 import React from "react";
-import { Button, Modal, Nav } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { default as firebase } from "../../firebase";
-import "./Login.css";
+import "./LoginModal.css";
 
-class Login extends React.Component {
+class LoginModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      setShowLoginModal: false,
+      showLoginModal: this.props.showLoginModal,
     };
   }
 
-  handleShowLoginModal = () => {
-    this.setState({
-      setShowLoginModal: true,
-    });
-  };
+  static getDerivedStateFromProps(props, state) {
+    if (props.showLoginModal !== state.showLoginModal) {
+      return {
+        showLoginModal: props.showLoginModal,
+      };
+    }
 
-  handleCloseLoginModal = () => {
-    this.setState({
-      setShowLoginModal: false,
-    });
-  };
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.showLoginModal !== prevProps.showLoginModal) {
+      this.setState({ showLoginModal: this.props.showLoginModal });
+    }
+  }
 
   render() {
     var uiConfig = {
@@ -62,21 +66,7 @@ class Login extends React.Component {
 
     return (
       <>
-        <Nav>
-          <Nav.Link
-            className="text-uppercase"
-            variant="primary"
-            onClick={() => {
-              this.handleShowLoginModal();
-            }}
-          >
-            Log in / Sign up
-          </Nav.Link>
-        </Nav>
-        <Modal
-          show={this.state.setShowLoginModal}
-          onHide={this.handleCloseLoginModal}
-        >
+        <Modal show={this.state.showLoginModal} onHide={this.props.toggleModal}>
           <Modal.Body>
             <StyledFirebaseAuth
               uiConfig={uiConfig}
@@ -87,7 +77,7 @@ class Login extends React.Component {
             <Button
               variant="outline-secondary"
               size="sm"
-              onClick={this.handleCloseLoginModal}
+              onClick={this.props.toggleModal}
             >
               Close
             </Button>
@@ -97,4 +87,4 @@ class Login extends React.Component {
     );
   }
 }
-export default Login;
+export default LoginModal;

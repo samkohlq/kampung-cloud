@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import firebase from "../../firebase";
-import Login from "../NavBar/Login";
+import LoginModal from "./LoginModal";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -10,7 +10,9 @@ class NavBar extends React.Component {
       isFetching: true,
       loggedIn: firebase.auth().currentUser ? true : false,
       loggedInUserName: null,
+      showLoginModal: false,
     };
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +28,12 @@ class NavBar extends React.Component {
       }
     });
   }
+
+  toggleModal = () => {
+    this.setState({
+      showLoginModal: !this.state.showLoginModal,
+    });
+  };
 
   render() {
     const loggedInUser = this.state.loggedIn ? (
@@ -55,7 +63,23 @@ class NavBar extends React.Component {
         </NavDropdown>
       </Nav>
     ) : (
-      <Login />
+      <>
+        <Nav>
+          <Nav.Link
+            className="text-uppercase"
+            variant="primary"
+            onClick={() => {
+              this.toggleModal();
+            }}
+          >
+            Log in / Sign up
+          </Nav.Link>
+        </Nav>
+        <LoginModal
+          showLoginModal={this.state.showLoginModal}
+          toggleModal={this.toggleModal}
+        />
+      </>
     );
     return (
       <Navbar bg="light" expand="lg">

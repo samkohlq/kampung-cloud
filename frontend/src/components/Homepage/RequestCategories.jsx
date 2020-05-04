@@ -71,16 +71,6 @@ class RequestCategories extends React.Component {
             <Button
               className="my-2"
               variant="outline-secondary"
-              name="Cash"
-              onClick={this.handleClick}
-            >
-              cash
-            </Button>
-          </Col>
-          <Col align="center">
-            <Button
-              className="my-2"
-              variant="outline-secondary"
               name="Tech"
               onClick={this.handleClick}
             >
