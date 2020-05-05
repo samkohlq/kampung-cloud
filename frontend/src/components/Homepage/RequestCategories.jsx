@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Col, Image, Row } from "react-bootstrap";
+import { Col, Image, Row } from "react-bootstrap";
+import allGrey from "../../images/request-categories/all-grey.png";
 import clothingGrey from "../../images/request-categories/clothing-grey.png";
 import groceriesGrey from "../../images/request-categories/groceries-grey.png";
 import hygieneGrey from "../../images/request-categories/hygiene-grey.png";
@@ -30,14 +31,13 @@ class RequestCategories extends React.Component {
         </div>
         <Row className="my-5">
           <Col align="center">
-            <Button
-              className="my-2"
-              variant="outline-secondary"
+            <Image
+              className="request-category-icon"
+              src={allGrey}
               name="All"
               onClick={this.handleClick}
-            >
-              all
-            </Button>
+            />
+            <div className="text-secondary small mt-1">all</div>
           </Col>
           <Col align="center">
             <Image

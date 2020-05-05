@@ -87,27 +87,30 @@ class NavBar extends React.Component {
       </>
     );
     return (
-      <Navbar bg="light" expand="lg" sticky="top">
-        <Navbar.Brand href="/">
-          <img
-            src={Logo}
-            width="200"
-            className="d-inline-block align-top"
-            alt="kampung cloud logo"
-          />
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse className="justify-content-end">
-          <Nav className="mr-auto">
-            <Navbar.Text className="text-uppercase">
-              <Nav.Link href="/getting-started">Getting Started</Nav.Link>
+      <>
+        <Navbar bg="light" expand="lg" sticky="top">
+          <Navbar.Brand href="/">
+            <img
+              src={Logo}
+              width="200"
+              className="d-inline-block align-top"
+              alt="kampung cloud logo"
+            />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse className="justify-content-end">
+            <Nav className="mr-auto">
+              <Navbar.Text className="text-uppercase">
+                <Nav.Link href="/getting-started">Getting Started</Nav.Link>
+              </Navbar.Text>
+            </Nav>
+            <Navbar.Text>
+              {this.state.isFetching ? null : loggedInUser}
             </Navbar.Text>
-          </Nav>
-          <Navbar.Text>
-            {this.state.isFetching ? null : loggedInUser}
-          </Navbar.Text>
-        </Navbar.Collapse>
-      </Navbar>
+          </Navbar.Collapse>
+        </Navbar>
+        <hr></hr>
+      </>
     );
   }
 }
