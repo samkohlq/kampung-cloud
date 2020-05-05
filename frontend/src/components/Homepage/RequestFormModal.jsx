@@ -42,6 +42,7 @@ class RequestFormModal extends React.Component {
   }
 
   handleFormChange = (event) => {
+    // if (event.target.name === "declaration")
     if (event.target) {
       this.setState({
         ...this.state,
@@ -164,6 +165,7 @@ class RequestFormModal extends React.Component {
   };
 
   render() {
+    console.log(this.state.request.declaration);
     return (
       <Modal
         show={this.state.showRequestFormModal}
@@ -248,6 +250,15 @@ class RequestFormModal extends React.Component {
                 For example: Background information, instructions for delivery,
                 sizes required
               </Form.Text>
+            </Form.Group>
+            <Form.Group controlId="formBasicCheckbox">
+              <Form.Check
+                className="small"
+                type="checkbox"
+                onChange={this.handleFormChange}
+                name="declaration"
+                label="I agree to share my contact information with whoever picks up my request"
+              />
             </Form.Group>
             <Button
               variant="outline-dark"

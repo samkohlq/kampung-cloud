@@ -136,7 +136,7 @@ class Actions extends React.Component {
                   </div>
                   <EditPostModal retrievedPost={this.props.retrievedPost} />
                   <Button
-                    className="mb-2 btn-block"
+                    className="mb-2 btn-block py-3"
                     variant="secondary"
                     onClick={this.handleDeletePost}
                     size="sm"

@@ -183,8 +183,8 @@ class PostPage extends React.Component {
                   by {this.state.requestorName}
                 </div>
 
-                <h6 className="text-uppercase">Details</h6>
-                <div className="text-justify">
+                <h5 className="text-uppercase">Details</h5>
+                <div className="text-justify" style={{ fontSize: "0.9rem" }}>
                   {this.state.retrievedPost.requestDetails}
                 </div>
               </Col>

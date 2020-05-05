@@ -35,10 +35,10 @@ class Comment extends React.Component {
   render() {
     return (
       <>
-        <div className="mx-3 my-4">
+        <div className="ml-1 my-4" style={{ fontSize: "0.9rem" }}>
           {this.props.comment.comment} <br></br>
           {this.state.isFetching ? null : (
-            <div className="font-weight-bold small">
+            <div className="mt-1 small text-black-50">
               {this.state.user.userName}
               {" | "}
               {moment(this.props.comment.createdAt).format(
@@ -46,6 +46,7 @@ class Comment extends React.Component {
               )}
             </div>
           )}
+          <hr></hr>
         </div>
       </>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FormControl, InputGroup } from "react-bootstrap";
+import { Button, FormControl } from "react-bootstrap";
 import firebase from "../../../firebase";
 import CommentsList from "./CommentsList";
 
@@ -50,22 +50,29 @@ class CommentsSection extends React.Component {
         <h5 className="text-uppercase">Comments</h5>
         <CommentsList retrievedPost={this.props.retrievedPost} />
         {this.state.loggedIn ? (
-          <InputGroup className="my-3">
+          <>
             <FormControl
               onChange={this.handleInputChange}
               size="sm"
+              maxLength="200"
               placeholder="Type comment here"
+              as="textarea"
+              rows={3}
+              onKeyPress={(event) => {
+                if (event.charCode === 13) {
+                  this.handleSubmit();
+                }
+              }}
             />
-            <InputGroup.Append>
-              <Button
-                onClick={this.handleSubmit}
-                variant="outline-secondary"
-                size="sm"
-              >
-                Send
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
+            <Button
+              className="mt-2"
+              onClick={this.handleSubmit}
+              variant="primary"
+              size="sm"
+            >
+              Send
+            </Button>
+          </>
         ) : null}
       </>
     );

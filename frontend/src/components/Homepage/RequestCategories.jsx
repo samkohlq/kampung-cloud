@@ -24,6 +24,10 @@ class RequestCategories extends React.Component {
   render() {
     return (
       <>
+        <h5 className="text-uppercase">Request board</h5>
+        <div className="text-secondary small">
+          Click to filter the requests by category
+        </div>
         <Row className="my-5">
           <Col align="center">
             <Button
@@ -42,6 +46,7 @@ class RequestCategories extends React.Component {
               name="Meals"
               onClick={this.handleClick}
             />
+            <div className="text-secondary small mt-1">meals</div>
           </Col>
           <Col align="center">
             <Image
@@ -50,6 +55,7 @@ class RequestCategories extends React.Component {
               name="Groceries"
               onClick={this.handleClick}
             />
+            <div className="text-secondary small mt-1">groceries</div>
           </Col>
           <Col align="center">
             <Image
@@ -58,6 +64,7 @@ class RequestCategories extends React.Component {
               name="Hygiene"
               onClick={this.handleClick}
             />
+            <div className="text-secondary small mt-1">hygiene</div>
           </Col>
           <Col align="center">
             <Image
@@ -66,6 +73,7 @@ class RequestCategories extends React.Component {
               name="Clothing"
               onClick={this.handleClick}
             />
+            <div className="text-secondary small mt-1">clothing</div>
           </Col>
           <Col align="center">
             <Image
@@ -74,6 +82,7 @@ class RequestCategories extends React.Component {
               name="Tech"
               onClick={this.handleClick}
             />
+            <div className="text-secondary small mt-1">tech</div>
           </Col>
           <Col align="center">
             <Image
@@ -82,6 +91,7 @@ class RequestCategories extends React.Component {
               name="Other"
               onClick={this.handleClick}
             />
+            <div className="text-secondary small mt-1">other</div>
           </Col>
         </Row>
         <PostsList postsListType={this.state.postsListType} />

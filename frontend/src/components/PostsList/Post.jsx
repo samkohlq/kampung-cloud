@@ -1,6 +1,5 @@
 import moment from "moment";
 import React from "react";
-import { Badge } from "react-bootstrap";
 import "./Post.css";
 
 const requestStatuses = {
@@ -41,10 +40,6 @@ class Post extends React.Component {
     const deadline = moment(this.props.post.requestDeadline).format(
       "DD MMM YYYY"
     );
-    const verifiedTag =
-      this.state.verifiedPost === 1 ? (
-        <Badge variant="info">Verified</Badge>
-      ) : null;
     return (
       <tr
         className="cursor"
