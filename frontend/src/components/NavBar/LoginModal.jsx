@@ -66,7 +66,10 @@ class LoginModal extends React.Component {
 
     return (
       <>
-        <Modal show={this.state.showLoginModal} onHide={this.props.toggleModal}>
+        <Modal
+          show={this.state.showLoginModal}
+          onHide={this.props.toggleLoginModal}
+        >
           <Modal.Body>
             <StyledFirebaseAuth
               uiConfig={uiConfig}
@@ -77,7 +80,7 @@ class LoginModal extends React.Component {
             <Button
               variant="outline-secondary"
               size="sm"
-              onClick={this.props.toggleModal}
+              onClick={this.props.toggleLoginModal}
             >
               Close
             </Button>
