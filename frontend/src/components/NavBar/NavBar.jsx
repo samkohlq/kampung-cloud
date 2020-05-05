@@ -58,9 +58,9 @@ class NavBar extends React.Component {
           </NavDropdown.Item>
           <NavDropdown.Item
             className="small"
-            onClick={async () => {
-              await firebase.auth().signOut();
-              this.toggleLoginModal();
+            onClick={() => {
+              firebase.auth().signOut();
+              this.setState({ showLoginModal: false });
             }}
           >
             Log out
@@ -101,9 +101,6 @@ class NavBar extends React.Component {
           <Nav className="mr-auto">
             <Navbar.Text className="text-uppercase">
               <Nav.Link href="/getting-started">Getting Started</Nav.Link>
-            </Navbar.Text>
-            <Navbar.Text className="text-uppercase">
-              <Nav.Link href="/collab">Collaborate</Nav.Link>
             </Navbar.Text>
           </Nav>
           <Navbar.Text>

@@ -250,7 +250,7 @@ class RequestFormModal extends React.Component {
               </Form.Text>
             </Form.Group>
             <Button
-              variant="primary"
+              variant="outline-dark"
               size="sm"
               className="float-right mb-3"
               onClick={this.handleValidateAndSubmitForm}

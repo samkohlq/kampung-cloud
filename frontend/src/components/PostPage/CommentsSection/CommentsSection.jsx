@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, FormControl, InputGroup } from "react-bootstrap";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
 import firebase from "../../../firebase";
 import CommentsList from "./CommentsList";
 
@@ -46,8 +46,8 @@ class CommentsSection extends React.Component {
 
   render() {
     return (
-      <Container className="my-5">
-        <h4>Comments</h4>
+      <>
+        <h5 className="text-uppercase">Comments</h5>
         <CommentsList retrievedPost={this.props.retrievedPost} />
         {this.state.loggedIn ? (
           <InputGroup className="my-3">
@@ -67,7 +67,7 @@ class CommentsSection extends React.Component {
             </InputGroup.Append>
           </InputGroup>
         ) : null}
-      </Container>
+      </>
     );
   }
 }

@@ -23,13 +23,19 @@ class CommentsList extends React.Component {
   };
 
   render() {
-    return (
-      <>
-        {this.state.comments.map((comment, i) => (
+    const commentsList =
+      this.state.comments.length === 0 ? (
+        <div className="my-5">
+          <h6 className="text-center text-secondary">
+            Add a comment to get the conversation going!
+          </h6>
+        </div>
+      ) : (
+        this.state.comments.map((comment, i) => (
           <Comment id="comment" key={i} comment={comment} />
-        ))}
-      </>
-    );
+        ))
+      );
+    return <>{commentsList}</>;
   }
 }
 

@@ -135,10 +135,9 @@ class Actions extends React.Component {
                     protect yourself against scams.
                   </div>
                   <EditPostModal retrievedPost={this.props.retrievedPost} />
-                  <br></br>
                   <Button
-                    className="mb-2"
-                    variant="danger"
+                    className="mb-2 btn-block"
+                    variant="secondary"
                     onClick={this.handleDeletePost}
                     size="sm"
                   >
@@ -151,14 +150,15 @@ class Actions extends React.Component {
               actions = (
                 <>
                   <Button
+                    className="btn-block"
                     onClick={this.handlePickUpPost}
-                    variant="success"
+                    variant="primary"
                     size="sm"
                   >
                     Pick up request
                   </Button>
-                  <div className="my-2">
-                    You'll see {requestorName}'s contact details here when you
+                  <div className="my-2 small">
+                    You'll see {requestorName}'s contact details here after you
                     pick up the request
                   </div>
                 </>
@@ -241,7 +241,7 @@ class Actions extends React.Component {
           );
       }
     }
-    return <div>{actions}</div>;
+    return <>{actions}</>;
   }
 }
 

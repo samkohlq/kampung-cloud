@@ -153,46 +153,42 @@ class PostPage extends React.Component {
             <Spinner animation="border" variant="primary" />
           </>
         ) : (
-          <Container className="my-5">
+          <Container>
             <Row>
-              <Col xs={12} sm={12} md={8}>
-                <Row>
-                  <Col>
-                    <h3 className="mb-3">{this.state.retrievedPost.request}</h3>
-                    <h5>
-                      {requestStatuses[this.state.retrievedPost.requestStatus]}
-                    </h5>
-                    <h6>
-                      {/* show deadline if request has not been completed */}
-                      {this.state.retrievedPost.requestStatus === 2 ? null : (
-                        <>
-                          {"Deadline: "}
-                          {moment(
-                            this.state.retrievedPost.requestDeadline
-                          ).format("DD MMM YYYY")}
-                        </>
+              <Col xs={12} sm={12} md={8} className="my-5 px-4">
+                <h3 className="mb-3">{this.state.retrievedPost.request}</h3>
+                <h5>
+                  {requestStatuses[this.state.retrievedPost.requestStatus]}
+                </h5>
+                <h6>
+                  {/* show deadline if request has not been completed */}
+                  {this.state.retrievedPost.requestStatus === 2 ? null : (
+                    <>
+                      {"Deadline: "}
+                      {moment(this.state.retrievedPost.requestDeadline).format(
+                        "DD MMM YYYY"
                       )}
-                    </h6>
-                    {/* Show request type */}
-                    <Badge className="mb-2" variant="secondary">
-                      {this.state.retrievedPost.requestType}
-                    </Badge>
-                    {/* Show verified badge if user is verified */}
-                    <div className="mb-5">
-                      {this.state.verifiedPost === 1 ? (
-                        <Badge variant="info">Verified</Badge>
-                      ) : null}{" "}
-                      {this.state.requestorName}
-                    </div>
+                    </>
+                  )}
+                </h6>
+                {/* Show request type */}
+                <Badge className="mb-2" variant="secondary">
+                  {this.state.retrievedPost.requestType}
+                </Badge>
+                {/* Show verified badge if user is verified */}
+                <div className="mb-5">
+                  {this.state.verifiedPost === 1 ? (
+                    <Badge variant="info">Verified</Badge>
+                  ) : null}{" "}
+                  by {this.state.requestorName}
+                </div>
 
-                    {this.state.retrievedPost.requestDetails}
-                  </Col>
-                </Row>
-                <Row>
-                  <CommentsSection retrievedPost={this.state.retrievedPost} />
-                </Row>
+                <h6 className="text-uppercase">Details</h6>
+                <div className="text-justify">
+                  {this.state.retrievedPost.requestDetails}
+                </div>
               </Col>
-              <Col xs={12} sm={12} md={4}>
+              <Col xs={12} sm={12} md={4} className="my-5 px-4">
                 <Actions
                   retrievedPost={this.state.retrievedPost}
                   requestorName={this.state.requestorName}
@@ -202,6 +198,12 @@ class PostPage extends React.Component {
                   fulfillerEmail={this.state.fulfillerEmail}
                   fulfillerPhoneNum={this.state.fulfillerPhoneNum}
                 />
+              </Col>
+            </Row>
+            <hr></hr>
+            <Row>
+              <Col xs={12} sm={12} md={8} className="my-5 px-4">
+                <CommentsSection retrievedPost={this.state.retrievedPost} />
               </Col>
             </Row>
           </Container>

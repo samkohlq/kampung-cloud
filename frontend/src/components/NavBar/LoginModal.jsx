@@ -31,7 +31,7 @@ class LoginModal extends React.Component {
   render() {
     var uiConfig = {
       signInFlow: "popup",
-      signInSuccessUrl: "/",
+      signInSuccessUrl: window.location.href,
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID,

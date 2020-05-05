@@ -56,7 +56,6 @@ class Post extends React.Component {
         <td>{deadline}</td>
         <td>{this.props.post.requestType}</td>
         <td>{requestStatuses[this.props.post.requestStatus]}</td>
-        <td>{verifiedTag}</td>
       </tr>
     );
   }

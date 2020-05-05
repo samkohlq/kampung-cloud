@@ -1,6 +1,5 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 class IntroSubSection extends React.Component {
   constructor(props) {
@@ -38,8 +37,7 @@ class IntroSubSection extends React.Component {
               roll of toilet paper, or a carton of eggs, we believe that every
               little act of kindness can make a difference in these times of
               need. Send in a request or fulfil a request. We can all get by
-              with a little help sometimes.{" "}
-              <Link to="/getting-started">Learn more</Link>.
+              with a little help sometimes.
             </p>
           </Container>
         </Col>

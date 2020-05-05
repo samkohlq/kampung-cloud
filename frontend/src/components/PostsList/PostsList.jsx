@@ -62,7 +62,6 @@ class PostsList extends React.Component {
             <th style={{ width: "10%" }}>Deadline</th>
             <th style={{ width: "10%" }}>Category</th>
             <th style={{ width: "20%" }}>Status</th>
-            <th style={{ width: "10%" }}></th>
           </tr>
         </thead>
         <tbody>
