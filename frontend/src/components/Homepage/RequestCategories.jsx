@@ -1,6 +1,13 @@
 import React from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Image, Row } from "react-bootstrap";
+import clothingGrey from "../../images/request-categories/clothing-grey.png";
+import groceriesGrey from "../../images/request-categories/groceries-grey.png";
+import hygieneGrey from "../../images/request-categories/hygiene-grey.png";
+import mealsGrey from "../../images/request-categories/meals-grey.png";
+import otherGrey from "../../images/request-categories/other-grey.png";
+import techGrey from "../../images/request-categories/tech-grey.png";
 import PostsList from "../PostsList/PostsList";
+import "./RequestCategories.css";
 
 class RequestCategories extends React.Component {
   constructor(props) {
@@ -9,6 +16,7 @@ class RequestCategories extends React.Component {
       postsListType: "All",
     };
   }
+
   handleClick = (event) => {
     this.setState({ postsListType: event.target.name });
   };
@@ -28,64 +36,52 @@ class RequestCategories extends React.Component {
             </Button>
           </Col>
           <Col align="center">
-            <Button
-              className="my-2"
-              variant="outline-secondary"
+            <Image
+              className="request-category-icon"
+              src={mealsGrey}
               name="Meals"
               onClick={this.handleClick}
-            >
-              meals
-            </Button>
+            />
           </Col>
           <Col align="center">
-            <Button
-              className="my-2"
-              variant="outline-secondary"
+            <Image
+              className="request-category-icon"
+              src={groceriesGrey}
               name="Groceries"
               onClick={this.handleClick}
-            >
-              groceries
-            </Button>
+            />
           </Col>
           <Col align="center">
-            <Button
-              className="my-2"
-              variant="outline-secondary"
+            <Image
+              className="request-category-icon"
+              src={hygieneGrey}
               name="Hygiene"
               onClick={this.handleClick}
-            >
-              hygiene
-            </Button>
+            />
           </Col>
           <Col align="center">
-            <Button
-              className="my-2"
-              variant="outline-secondary"
+            <Image
+              className="request-category-icon"
+              src={clothingGrey}
               name="Clothing"
               onClick={this.handleClick}
-            >
-              clothing
-            </Button>
+            />
           </Col>
           <Col align="center">
-            <Button
-              className="my-2"
-              variant="outline-secondary"
+            <Image
+              className="request-category-icon"
+              src={techGrey}
               name="Tech"
               onClick={this.handleClick}
-            >
-              tech
-            </Button>
+            />
           </Col>
           <Col align="center">
-            <Button
-              className="my-2"
-              variant="outline-secondary"
+            <Image
+              className="request-category-icon"
+              src={otherGrey}
               name="Other"
               onClick={this.handleClick}
-            >
-              other
-            </Button>
+            />
           </Col>
         </Row>
         <PostsList postsListType={this.state.postsListType} />

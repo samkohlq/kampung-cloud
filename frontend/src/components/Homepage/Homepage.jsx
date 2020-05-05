@@ -3,9 +3,11 @@ import { Button, Container } from "react-bootstrap";
 import firebase from "../../firebase";
 import LoginModal from "../NavBar/LoginModal";
 import NavBar from "../NavBar/NavBar";
+import "./Homepage.css";
 import IntroSubSection from "./IntroSubSection";
 import RequestCategories from "./RequestCategories";
 import RequestFormModal from "./RequestFormModal";
+import RequestStats from "./RequestStats";
 
 class Homepage extends React.Component {
   constructor(props) {
@@ -48,27 +50,29 @@ class Homepage extends React.Component {
     return (
       <>
         <NavBar />
-        <IntroSubSection />
-        <Container className="justify-content-center">
-          <div className="text-center">
-            <Button
-              onClick={() => {
-                this.toggleRequestFormModal();
-              }}
-            >
-              Have a request?
-            </Button>
-          </div>
-          <RequestFormModal
-            showRequestFormModal={this.state.showRequestFormModal}
-            toggleRequestFormModal={this.toggleRequestFormModal}
-          />
-          <RequestCategories />
-        </Container>
         <LoginModal
           showLoginModal={this.state.showLoginModal}
           toggleLoginModal={this.toggleLoginModal}
         />
+        <IntroSubSection />
+        <div className="text-center">
+          <Button
+            id="request-button"
+            onClick={() => {
+              this.toggleRequestFormModal();
+            }}
+          >
+            Have a request?
+          </Button>
+        </div>
+        <RequestFormModal
+          showRequestFormModal={this.state.showRequestFormModal}
+          toggleRequestFormModal={this.toggleRequestFormModal}
+        />
+        <RequestStats />
+        <Container className="justify-content-center">
+          <RequestCategories />
+        </Container>
       </>
     );
   }

@@ -1,0 +1,20 @@
+#request-button {
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: white;
+  border-style: solid;
+  border-color: #666666;
+  border-radius: 0%;
+  color: black;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#request-button:hover {
+  border-style: solid;
+  border-color: #f58025;
+  background-color: #f58025;
+  color: white;
+}

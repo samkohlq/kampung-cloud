@@ -170,6 +170,9 @@ class RequestFormModal extends React.Component {
         onHide={this.props.toggleRequestFormModal}
         centered
       >
+        <Modal.Header closeButton>
+          <Modal.Title>Tell us more about your request</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group size="sm" className="mb-3">
@@ -256,15 +259,6 @@ class RequestFormModal extends React.Component {
             </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="outline-secondary"
-            size="sm"
-            onClick={this.props.toggleRequestFormModal}
-          >
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
     );
   }

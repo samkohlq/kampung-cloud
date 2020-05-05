@@ -1,0 +1,11 @@
+.stats {
+  background-color: #f58025;
+}
+
+.stats-font-style {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
+}

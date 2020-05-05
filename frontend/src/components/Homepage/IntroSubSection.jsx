@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Col, Container, Jumbotron, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class IntroSubSection extends React.Component {
   constructor(props) {
@@ -27,44 +28,22 @@ class IntroSubSection extends React.Component {
 
   render() {
     return (
-      <Jumbotron fluid>
-        <Container className="justify-content-center">
-          <Row>
-            <Col className="mb-5" xs="12" md="6">
-              <Container>
-                <h1 className="mb-5">What is Kampung Cloud?</h1>
-                <p>
-                  Kampung Cloud is a place that brings people together - those
-                  in need and those that want to help. Whether it’s a loaf of
-                  bread, a roll of toilet paper, or a carton of eggs, we believe
-                  that every little act of kindness can make a difference in
-                  these times of need. Send in a request or fulfil a request. We
-                  can all get by with a little help sometimes.
-                </p>
-                <Button
-                  onClick={() => {
-                    window.location.href = "/getting-started";
-                  }}
-                >
-                  Learn more
-                </Button>
-              </Container>
-            </Col>
-            <Col className="mb-5" xs="12" md="3">
-              <Container>
-                <h2>{this.state.requestsCompleted}</h2>
-                requests fulfilled
-              </Container>
-            </Col>
-            <Col className="mb-5" xs="12" md="3">
-              <Container>
-                <h2>{this.state.requestsOutstanding}</h2>
-                requests outstanding
-              </Container>
-            </Col>
-          </Row>
-        </Container>
-      </Jumbotron>
+      <Row>
+        <Col className="my-5" xs={12} md={{ offset: 2, span: 8 }}>
+          <Container className="text-center">
+            <h3 className="mb-4 text-uppercase">What is Kampung Cloud?</h3>
+            <p>
+              Kampung Cloud is a place that brings people together - those in
+              need and those that want to help. Whether it’s a loaf of bread, a
+              roll of toilet paper, or a carton of eggs, we believe that every
+              little act of kindness can make a difference in these times of
+              need. Send in a request or fulfil a request. We can all get by
+              with a little help sometimes.{" "}
+              <Link to="/getting-started">Learn more</Link>.
+            </p>
+          </Container>
+        </Col>
+      </Row>
     );
   }
 }
