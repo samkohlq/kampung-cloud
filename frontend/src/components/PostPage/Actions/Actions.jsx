@@ -1,8 +1,12 @@
 import React from "react";
-import { Button, Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import firebase from "../../firebase";
+import firebase from "../../../firebase";
+import DeleteRequst from "./DeleteRequest";
 import EditPostModal from "./EditPostModal";
+import MarkRequestCompleted from "./MarkRequestCompleted";
+import PickUpRequest from "./PickUpRequest";
+import ReleaseRequest from "./ReleaseRequest";
 
 const requestStatuses = {
   0: "Help needed",
@@ -38,64 +42,9 @@ class Actions extends React.Component {
     });
   }
 
-  handlePickUpPost = () => {
-    fetch(
-      `http://localhost:4000/posts/assignPostToFulfiller?postId=${this.props.retrievedPost.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          loggedInUserUid: this.state.loggedInUserUid,
-          requestStatus: 1,
-        }),
-      }
-    );
-    window.location.href = `/posts/${this.props.retrievedPost.id}`;
-  };
-
-  handleMarkPostAsCompleted = () => {
-    fetch(
-      `http://localhost:4000/posts/markPostAsCompleted?postId=${this.props.retrievedPost.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    window.location.href = `/posts/${this.props.retrievedPost.id}`;
-  };
-
-  handleRemoveFulfillerFromPost = () => {
-    fetch(
-      `http://localhost:4000/posts/removeFulfillerFromPost?postId=${this.props.retrievedPost.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    window.location.href = `/posts/${this.props.retrievedPost.id}`;
-  };
-
-  handleDeletePost = () => {
-    fetch(
-      `http://localhost:4000/posts/deletePost?postId=${this.props.retrievedPost.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    window.location.href = "/";
-  };
-
   render() {
     const {
+      retrievedPost,
       fulfillerName,
       fulfillerEmail,
       fulfillerPhoneNum,
@@ -104,6 +53,7 @@ class Actions extends React.Component {
       requestorPhoneNum,
     } = this.props;
     const {
+      id,
       requestStatus,
       requestorUid,
       fulfillerUid,
@@ -134,33 +84,19 @@ class Actions extends React.Component {
                     <Link to="/getting-started">safety guidelines</Link> to
                     protect yourself against scams.
                   </div>
-                  <EditPostModal retrievedPost={this.props.retrievedPost} />
-                  <Button
-                    className="mb-2 btn-block py-3"
-                    variant="secondary"
-                    onClick={this.handleDeletePost}
-                    size="sm"
-                  >
-                    Delete
-                  </Button>
+                  <EditPostModal retrievedPost={retrievedPost} />
+                  <DeleteRequst postId={id} />
                 </>
               );
             } else {
               // else if logged in user is not the requestor, let the user pick up request
               actions = (
                 <>
-                  <Button
-                    className="btn-block"
-                    onClick={this.handlePickUpPost}
-                    variant="primary"
-                    size="sm"
-                  >
-                    Pick up request
-                  </Button>
-                  <div className="my-2 small">
-                    You'll see {requestorName}'s contact details here after you
-                    pick up the request
-                  </div>
+                  <PickUpRequest
+                    loggedInUserUid={this.state.loggedInUserUid}
+                    requestorName={requestorName}
+                    postId={id}
+                  />
                 </>
               );
             }
@@ -200,22 +136,8 @@ class Actions extends React.Component {
                     protect yourself against scams.
                   </div>
                   <br></br>
-                  <Button
-                    className="mt-4 mb-2"
-                    onClick={this.handleMarkPostAsCompleted}
-                    variant="success"
-                    size="sm"
-                  >
-                    Mark as completed
-                  </Button>
-                  <br></br>
-                  <Button
-                    onClick={this.handleRemoveFulfillerFromPost}
-                    variant="secondary"
-                    size="sm"
-                  >
-                    Release request
-                  </Button>
+                  <MarkRequestCompleted postId={id} />
+                  <ReleaseRequest postId={id} />
                 </>
               );
             }

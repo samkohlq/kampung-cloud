@@ -13,6 +13,7 @@ class EditPostModal extends React.Component {
         requestType: props.retrievedPost.requestType,
         request: props.retrievedPost.request,
         requestDetails: props.retrievedPost.requestDetails,
+        declaration: props.retrievedPost.declaration,
       },
       validations: {
         showRequestDeadlineValidation: null,
@@ -149,6 +150,7 @@ class EditPostModal extends React.Component {
           requestType: this.state.requestData.requestType,
           request: this.state.requestData.request,
           requestDetails: this.state.requestData.requestDetails,
+          declaration: this.state.requestData.declaration,
         }),
       }
     );
@@ -160,6 +162,7 @@ class EditPostModal extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <>
         <Button

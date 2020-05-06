@@ -3,7 +3,7 @@ import React from "react";
 import { Badge, Col, Container, Row, Spinner } from "react-bootstrap";
 import firebase from "../../firebase";
 import NavBar from "../NavBar/NavBar";
-import Actions from "./Actions";
+import Actions from "./Actions/Actions";
 import CommentsSection from "./CommentsSection/CommentsSection";
 
 const requestStatuses = {
