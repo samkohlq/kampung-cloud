@@ -54,12 +54,11 @@ class PostsList extends React.Component {
 
   render() {
     return (
-      <Table className="mb-5" responsive="sm" size="sm" hover>
+      <Table className="mb-5" responsive="sm" hover>
         <thead>
           <tr>
             <th style={{ width: "60%" }}>Request</th>
-            <th style={{ width: "10%" }}>Deadline</th>
-            <th style={{ width: "10%" }}>Category</th>
+            <th style={{ width: "20%" }}>Deadline</th>
             <th style={{ width: "20%" }}>Status</th>
           </tr>
         </thead>

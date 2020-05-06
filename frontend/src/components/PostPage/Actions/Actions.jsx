@@ -57,7 +57,7 @@ class Actions extends React.Component {
     if (this.state.isFetching) {
       actions = (
         <>
-          <Spinner animation="border" variant="primary" />
+          <Spinner animation="border" variant="info" />
         </>
       );
     } else {

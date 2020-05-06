@@ -1,20 +1,20 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import HoverImage from "react-hover-image";
-import allGrey from "../../../images/request-categories-icons/all-grey.png";
-import allOrange from "../../../images/request-categories-icons/all-orange.png";
-import clothingGrey from "../../../images/request-categories-icons/clothing-grey.png";
-import clothingOrange from "../../../images/request-categories-icons/clothing-orange.png";
-import groceriesGrey from "../../../images/request-categories-icons/groceries-grey.png";
-import groceriesOrange from "../../../images/request-categories-icons/groceries-orange.png";
-import hygieneGrey from "../../../images/request-categories-icons/hygiene-grey.png";
-import hygieneOrange from "../../../images/request-categories-icons/hygiene-orange.png";
-import mealsGrey from "../../../images/request-categories-icons/meals-grey.png";
-import mealsOrange from "../../../images/request-categories-icons/meals-orange.png";
-import otherGrey from "../../../images/request-categories-icons/other-grey.png";
-import otherOrange from "../../../images/request-categories-icons/other-orange.png";
-import techGrey from "../../../images/request-categories-icons/tech-grey.png";
-import techOrange from "../../../images/request-categories-icons/tech-orange.png";
+import allHover from "../../../images/request-categories-icons/all-on-hover.png";
+import all from "../../../images/request-categories-icons/all.png";
+import clothingHover from "../../../images/request-categories-icons/clothing-on-hover.png";
+import clothing from "../../../images/request-categories-icons/clothing.png";
+import groceriesHover from "../../../images/request-categories-icons/groceries-on-hover.png";
+import groceries from "../../../images/request-categories-icons/groceries.png";
+import hygieneHover from "../../../images/request-categories-icons/hygiene-on-hover.png";
+import hygiene from "../../../images/request-categories-icons/hygiene.png";
+import mealsHover from "../../../images/request-categories-icons/meals-on-hover.png";
+import meals from "../../../images/request-categories-icons/meals.png";
+import otherHover from "../../../images/request-categories-icons/other-on-hover.png";
+import other from "../../../images/request-categories-icons/other.png";
+import techHover from "../../../images/request-categories-icons/tech-on-hover.png";
+import tech from "../../../images/request-categories-icons/tech.png";
 import PostsList from "../../PostsList/PostsList";
 import "./RequestCategories.css";
 
@@ -24,13 +24,30 @@ class RequestCategories extends React.Component {
     this.state = {
       postsListType: "All",
       hoverEffect: "none",
+      opacities: {
+        all: "1",
+        meals: "1",
+        groceries: "1",
+        hygiene: "1",
+        clothing: "1",
+        tech: "1",
+        other: "1",
+      },
     };
   }
 
   render() {
     return (
       <>
-        <h5 className="text-uppercase">Request board</h5>
+        <h5
+          style={{
+            fontFamily: "Cooper Black",
+            fontWeight: "bold",
+            fontSize: "1.9rem",
+          }}
+        >
+          Request board
+        </h5>
         <div className="text-secondary small">
           Click to filter the requests by category
         </div>
@@ -38,10 +55,22 @@ class RequestCategories extends React.Component {
           <Col align="center">
             <HoverImage
               className="request-category-icon"
-              src={allGrey}
-              hoverSrc={allOrange}
+              style={{ opacity: this.state.opacities.all }}
+              src={all}
+              hoverSrc={allHover}
               onClick={() => {
-                this.setState({ postsListType: "All" });
+                this.setState({
+                  postsListType: "All",
+                  opacities: {
+                    all: "1",
+                    meals: "0.6",
+                    groceries: "0.6",
+                    hygiene: "0.6",
+                    clothing: "0.6",
+                    tech: "0.6",
+                    other: "0.6",
+                  },
+                });
               }}
             />
             <div className="text-secondary small mt-1">all</div>
@@ -49,10 +78,22 @@ class RequestCategories extends React.Component {
           <Col align="center">
             <HoverImage
               className="request-category-icon"
-              src={mealsGrey}
-              hoverSrc={mealsOrange}
+              style={{ opacity: this.state.opacities.meals }}
+              src={meals}
+              hoverSrc={mealsHover}
               onClick={() => {
-                this.setState({ postsListType: "Meals" });
+                this.setState({
+                  postsListType: "Meals",
+                  opacities: {
+                    all: "0.6",
+                    meals: "1",
+                    groceries: "0.6",
+                    hygiene: "0.6",
+                    clothing: "0.6",
+                    tech: "0.6",
+                    other: "0.6",
+                  },
+                });
               }}
             />
             <div className="text-secondary small mt-1">meals</div>
@@ -60,10 +101,22 @@ class RequestCategories extends React.Component {
           <Col align="center">
             <HoverImage
               className="request-category-icon"
-              src={groceriesGrey}
-              hoverSrc={groceriesOrange}
+              style={{ opacity: this.state.opacities.groceries }}
+              src={groceries}
+              hoverSrc={groceriesHover}
               onClick={() => {
-                this.setState({ postsListType: "Groceries" });
+                this.setState({
+                  postsListType: "Groceries",
+                  opacities: {
+                    all: "0.6",
+                    meals: "0.6",
+                    groceries: "1",
+                    hygiene: "0.6",
+                    clothing: "0.6",
+                    tech: "0.6",
+                    other: "0.6",
+                  },
+                });
               }}
             />
             <div className="text-secondary small mt-1">groceries</div>
@@ -71,10 +124,22 @@ class RequestCategories extends React.Component {
           <Col align="center">
             <HoverImage
               className="request-category-icon"
-              src={hygieneGrey}
-              hoverSrc={hygieneOrange}
+              style={{ opacity: this.state.opacities.hygiene }}
+              src={hygiene}
+              hoverSrc={hygieneHover}
               onClick={() => {
-                this.setState({ postsListType: "Hygiene" });
+                this.setState({
+                  postsListType: "Hygiene",
+                  opacities: {
+                    all: "0.6",
+                    meals: "0.6",
+                    groceries: "0.6",
+                    hygiene: "1",
+                    clothing: "0.6",
+                    tech: "0.6",
+                    other: "0.6",
+                  },
+                });
               }}
             />
             <div className="text-secondary small mt-1">hygiene</div>
@@ -82,10 +147,22 @@ class RequestCategories extends React.Component {
           <Col align="center">
             <HoverImage
               className="request-category-icon"
-              src={clothingGrey}
-              hoverSrc={clothingOrange}
+              style={{ opacity: this.state.opacities.clothing }}
+              src={clothing}
+              hoverSrc={clothingHover}
               onClick={() => {
-                this.setState({ postsListType: "Clothing" });
+                this.setState({
+                  postsListType: "Clothing",
+                  opacities: {
+                    all: "0.6",
+                    meals: "0.6",
+                    groceries: "0.6",
+                    hygiene: "0.6",
+                    clothing: "1",
+                    tech: "0.6",
+                    other: "0.6",
+                  },
+                });
               }}
             />
             <div className="text-secondary small mt-1">clothing</div>
@@ -93,10 +170,22 @@ class RequestCategories extends React.Component {
           <Col align="center">
             <HoverImage
               className="request-category-icon"
-              src={techGrey}
-              hoverSrc={techOrange}
+              style={{ opacity: this.state.opacities.tech }}
+              src={tech}
+              hoverSrc={techHover}
               onClick={() => {
-                this.setState({ postsListType: "Tech" });
+                this.setState({
+                  postsListType: "Tech",
+                  opacities: {
+                    all: "0.6",
+                    meals: "0.6",
+                    groceries: "0.6",
+                    hygiene: "0.6",
+                    clothing: "0.6",
+                    tech: "1",
+                    other: "0.6",
+                  },
+                });
               }}
             />
             <div className="text-secondary small mt-1">tech</div>
@@ -104,10 +193,22 @@ class RequestCategories extends React.Component {
           <Col align="center">
             <HoverImage
               className="request-category-icon"
-              src={otherGrey}
-              hoverSrc={otherOrange}
+              style={{ opacity: this.state.opacities.other }}
+              src={other}
+              hoverSrc={otherHover}
               onClick={() => {
-                this.setState({ postsListType: "Other" });
+                this.setState({
+                  postsListType: "Other",
+                  opacities: {
+                    all: "0.6",
+                    meals: "0.6",
+                    groceries: "0.6",
+                    hygiene: "0.6",
+                    clothing: "0.6",
+                    tech: "0.6",
+                    other: "1",
+                  },
+                });
               }}
             />
             <div className="text-secondary small mt-1">other</div>

@@ -1,11 +1,19 @@
-.stats {
-  background-color: rgb(230, 120, 35);
-}
-
 .stats-font-style {
   text-align: center;
   text-transform: uppercase;
   font-size: 0.9rem;
   font-weight: bold;
-  color: white;
+  color: rgb(89, 89, 89);
+}
+
+.divider {
+  border: solid;
+  border-width: 0.1rem;
+  border-color: #999999;
+  background-color: #999999;
+}
+
+.request-descriptor {
+  text-transform: uppercase;
+  color: #666666;
 }

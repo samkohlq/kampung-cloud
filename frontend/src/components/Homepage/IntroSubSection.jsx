@@ -28,9 +28,8 @@ class IntroSubSection extends React.Component {
   render() {
     return (
       <Row>
-        <Col className="my-5" xs={12} md={{ offset: 2, span: 8 }}>
+        <Col className="mt-2 mb-3" xs={12} md={{ offset: 2, span: 8 }}>
           <Container className="text-center">
-            <h3 className="mb-4 text-uppercase">What is Kampung Cloud?</h3>
             <p>
               Kampung Cloud is a place that brings people together - those in
               need and those that want to help. Whether it’s a loaf of bread, a

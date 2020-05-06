@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Image } from "react-bootstrap";
 import firebase from "../../firebase";
+import welcomeBanner from "../../images/welcome-banner.png";
 import LoginModal from "../NavBar/LoginModal";
 import NavBar from "../NavBar/NavBar";
 import IntroSubSection from "./IntroSubSection";
@@ -53,33 +54,38 @@ class Homepage extends React.Component {
           showLoginModal={this.state.showLoginModal}
           toggleLoginModal={this.toggleLoginModal}
         />
-        <IntroSubSection />
         <div className="text-center">
-          <Button
-            className="mr-2 text-uppercase font-weight-bold px-3"
-            variant="outline-primary"
-            onClick={() => {
-              this.toggleRequestFormModal();
-            }}
-          >
-            Add a request
-          </Button>
-          <Button
-            className="text-uppercase font-weight-bold px-3"
-            variant="outline-secondary"
-            onClick={() => {
-              window.location.href = "/getting-started";
-            }}
-          >
-            Learn more
-          </Button>
+          <Image className="img-fluid" src={welcomeBanner} />
+          <IntroSubSection />
+        </div>
+        <div className="text-center">
+          <div>
+            <Button
+              className="mr-2 text-uppercase font-weight-bold px-3"
+              variant="outline-info"
+              onClick={() => {
+                this.toggleRequestFormModal();
+              }}
+            >
+              Add a request
+            </Button>
+            <Button
+              className="text-uppercase font-weight-bold px-3"
+              variant="outline-secondary"
+              onClick={() => {
+                window.location.href = "/getting-started";
+              }}
+            >
+              Learn more
+            </Button>
+          </div>
         </div>
         <RequestFormModal
           showRequestFormModal={this.state.showRequestFormModal}
           toggleRequestFormModal={this.toggleRequestFormModal}
         />
-        <RequestStats />
         <Container className="justify-content-center">
+          <RequestStats />
           <RequestCategories />
         </Container>
       </>

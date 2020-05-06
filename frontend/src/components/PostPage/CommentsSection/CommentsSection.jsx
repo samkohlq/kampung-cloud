@@ -67,7 +67,7 @@ class CommentsSection extends React.Component {
             <Button
               className="mt-2"
               onClick={this.handleSubmit}
-              variant="primary"
+              variant="info"
               size="sm"
             >
               Send

@@ -1,6 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import NavBar from "../NavBar/NavBar";
+import "./GettingStartedPage.css";
 import SafetyGuidelines from "./SafetyGuidelines";
 
 class AboutPage extends React.Component {
@@ -14,7 +15,9 @@ class AboutPage extends React.Component {
               <Row className="my-5">
                 <Col className="mx-5">
                   <div className="text-center">
-                    <h3 className="my-3">How this Kampung works</h3>
+                    <h3 className="my-3 subsection-header">
+                      How this Kampung works
+                    </h3>
                     <p>This kampung is a community built on trust.</p>
                     <p>
                       We want to keep the kampung spirit alive and provide a
@@ -29,7 +32,9 @@ class AboutPage extends React.Component {
               <Row className="my-5">
                 <Col className="mx-5">
                   <div className="text-center">
-                    <h3 className="my-3">How are requests fulfilled?</h3>
+                    <h3 className="my-3 subsection-header">
+                      How are requests fulfilled?
+                    </h3>
                     <p>
                       Request made > Request being prepared > Request on its way
                       > Request fulfilled
@@ -40,7 +45,9 @@ class AboutPage extends React.Component {
               <Row className="my-5">
                 <Col className="mx-5">
                   <div className="text-left">
-                    <h3 className="my-3">Keeping this Kampung safe</h3>
+                    <h3 className="my-3  subsection-header">
+                      Keeping this Kampung safe
+                    </h3>
                     <p>
                       The safety of our users is important to us. We don’t vet
                       the requests coming in because we trust that everybody is

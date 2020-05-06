@@ -1,6 +1,5 @@
 import moment from "moment";
 import React from "react";
-import "./Post.css";
 
 const requestStatuses = {
   0: "Help needed",
@@ -37,22 +36,17 @@ class Post extends React.Component {
   };
 
   render() {
-    const deadline = moment(this.props.post.requestDeadline).format(
-      "DD MMM YYYY"
-    );
+    const deadline = moment(this.props.post.requestDeadline).format("DD MMM");
     return (
       <tr
-        className="cursor"
+        style={{ cursor: "pointer" }}
         onClick={() => {
           window.location.href = `/posts/${this.props.post.id}`;
         }}
       >
-        <td className="table-row-data">{this.props.post.request}</td>
-        <td className="table-row-data">{deadline}</td>
-        <td className="table-row-data">{this.props.post.requestType}</td>
-        <td className="table-row-data">
-          {requestStatuses[this.props.post.requestStatus]}
-        </td>
+        <td>{this.props.post.request}</td>
+        <td>{deadline}</td>
+        <td>{requestStatuses[this.props.post.requestStatus]}</td>
       </tr>
     );
   }

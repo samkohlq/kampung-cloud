@@ -29,20 +29,30 @@ class IntroSubSection extends React.Component {
   render() {
     return (
       <div className="my-5 justify-content-center">
-        <Row className="stats stats-font-style">
+        <hr className="divider"></hr>
+        <Row>
           <Col xs={{ offset: 3, span: 6 }} md={{ offset: 4, span: 4 }}>
-            <Row className="pt-3">
+            <Row className="pt-3 text-center">
               <Col className="mb-3">
-                <h2>{this.state.requestsCompleted}</h2>
-                requests<br></br>fulfilled
+                <h1 style={{ fontSize: "6rem", color: "#00A166" }}>
+                  {this.state.requestsCompleted}
+                </h1>
+                <div className="request-descriptor">
+                  requests<br></br>fulfilled
+                </div>
               </Col>
               <Col className="mb-3">
-                <h2>{this.state.requestsOutstanding}</h2>
-                requests<br></br>outstanding
+                <h1 style={{ fontSize: "6rem", color: "#00A166" }}>
+                  {this.state.requestsOutstanding}
+                </h1>
+                <div className="request-descriptor">
+                  requests<br></br>outstanding
+                </div>
               </Col>
             </Row>
           </Col>
         </Row>
+        <hr className="divider"></hr>
       </div>
     );
   }
