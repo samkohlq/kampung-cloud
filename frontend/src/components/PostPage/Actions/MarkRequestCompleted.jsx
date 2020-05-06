@@ -21,8 +21,7 @@ class MarkRequestCompleted extends React.Component {
         <Button
           className="mt-5 mb-2 py-3 btn-block"
           onClick={this.handleMarkPostAsCompleted}
-          variant="primary"
-          size="sm"
+          variant="success"
         >
           Mark as completed
         </Button>

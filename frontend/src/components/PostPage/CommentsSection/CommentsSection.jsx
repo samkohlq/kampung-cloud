@@ -64,12 +64,7 @@ class CommentsSection extends React.Component {
                 }
               }}
             />
-            <Button
-              className="mt-2"
-              onClick={this.handleSubmit}
-              variant="info"
-              size="sm"
-            >
+            <Button className="mt-2" onClick={this.handleSubmit} variant="info">
               Send
             </Button>
           </>

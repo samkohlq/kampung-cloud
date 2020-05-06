@@ -35,7 +35,6 @@ class DeleteRequest extends React.Component {
           className="mb-2 btn-block py-3"
           variant="secondary"
           onClick={this.toggleDeleteRequestModal}
-          size="sm"
         >
           Delete
         </Button>

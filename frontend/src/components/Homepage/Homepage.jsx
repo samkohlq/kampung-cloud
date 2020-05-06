@@ -62,7 +62,7 @@ class Homepage extends React.Component {
           <div>
             <Button
               className="mr-2 text-uppercase font-weight-bold px-3"
-              variant="outline-info"
+              variant="outline-success"
               onClick={() => {
                 this.toggleRequestFormModal();
               }}

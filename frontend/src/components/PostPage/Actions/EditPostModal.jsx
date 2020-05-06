@@ -168,7 +168,6 @@ class EditPostModal extends React.Component {
         <Button
           className="mt-5 mb-2 py-3 btn-block"
           variant="primary"
-          size="sm"
           onClick={this.handleShow}
         >
           Edit

@@ -22,7 +22,6 @@ class ReleaseRequest extends React.Component {
           className="mb-2 btn-block py-3"
           onClick={this.handleRemoveFulfillerFromPost}
           variant="secondary"
-          size="sm"
         >
           Release request
         </Button>

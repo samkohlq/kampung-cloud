@@ -34,7 +34,7 @@ class IntroSubSection extends React.Component {
           <Col xs={{ offset: 3, span: 6 }} md={{ offset: 4, span: 4 }}>
             <Row className="pt-3 text-center">
               <Col className="mb-3">
-                <h1 style={{ fontSize: "6rem", color: "#00A166" }}>
+                <h1 className="text-success" style={{ fontSize: "6rem" }}>
                   {this.state.requestsCompleted}
                 </h1>
                 <div className="request-descriptor">
@@ -42,7 +42,7 @@ class IntroSubSection extends React.Component {
                 </div>
               </Col>
               <Col className="mb-3">
-                <h1 style={{ fontSize: "6rem", color: "#00A166" }}>
+                <h1 className="text-success" style={{ fontSize: "6rem" }}>
                   {this.state.requestsOutstanding}
                 </h1>
                 <div className="request-descriptor">

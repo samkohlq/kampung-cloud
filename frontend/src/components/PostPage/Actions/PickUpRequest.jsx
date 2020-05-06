@@ -26,7 +26,6 @@ class PickUpRequest extends React.Component {
           className="btn-block py-3"
           onClick={this.handlePickUpRequest}
           variant="primary"
-          size="sm"
         >
           Pick up request
         </Button>
