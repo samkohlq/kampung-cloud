@@ -23,7 +23,6 @@ class PostsList extends React.Component {
         postsListType: props.postsListType,
       };
     }
-
     return null;
   }
 
@@ -55,10 +54,10 @@ class PostsList extends React.Component {
 
   render() {
     return (
-      <Table className="my-5" responsive="sm" size="sm" hover>
+      <Table className="mb-5" responsive="sm" size="sm" hover>
         <thead>
           <tr>
-            <th style={{ width: "50%" }}>Request</th>
+            <th style={{ width: "60%" }}>Request</th>
             <th style={{ width: "10%" }}>Deadline</th>
             <th style={{ width: "10%" }}>Category</th>
             <th style={{ width: "20%" }}>Status</th>

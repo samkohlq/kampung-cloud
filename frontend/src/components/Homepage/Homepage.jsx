@@ -4,7 +4,7 @@ import firebase from "../../firebase";
 import LoginModal from "../NavBar/LoginModal";
 import NavBar from "../NavBar/NavBar";
 import IntroSubSection from "./IntroSubSection";
-import RequestCategories from "./RequestCategories";
+import RequestCategories from "./RequestCategories/RequestCategories";
 import RequestFormModal from "./RequestFormModal";
 import RequestStats from "./RequestStats";
 
@@ -56,7 +56,7 @@ class Homepage extends React.Component {
         <IntroSubSection />
         <div className="text-center">
           <Button
-            className="mr-2 text-uppercase font-weight-bold"
+            className="mr-2 text-uppercase font-weight-bold px-3"
             variant="outline-primary"
             onClick={() => {
               this.toggleRequestFormModal();
@@ -65,7 +65,7 @@ class Homepage extends React.Component {
             Add a request
           </Button>
           <Button
-            className="text-uppercase font-weight-bold"
+            className="text-uppercase font-weight-bold px-3"
             variant="outline-secondary"
             onClick={() => {
               window.location.href = "/getting-started";

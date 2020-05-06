@@ -1,3 +1,7 @@
 .cursor {
   cursor: pointer;
 }
+
+.table-row-data {
+  font-size: 0.9rem;
+}
