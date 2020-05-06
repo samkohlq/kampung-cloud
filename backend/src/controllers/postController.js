@@ -6,6 +6,7 @@ export const createPost = async (req, res) => {
     requestType: req.body.requestType,
     request: req.body.request,
     requestDetails: req.body.requestDetails,
+    declaration: req.body.declaration,
     requestorUid: req.body.requestorUid,
     requestStatus: 0,
     verificationStatus: 0,

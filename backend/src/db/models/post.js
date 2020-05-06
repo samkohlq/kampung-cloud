@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       requestStatus: DataTypes.INTEGER,
       requestDeadline: DataTypes.DATE,
       requestDetails: DataTypes.STRING,
+      declaration: DataTypes.BOOLEAN,
     },
     {}
   );

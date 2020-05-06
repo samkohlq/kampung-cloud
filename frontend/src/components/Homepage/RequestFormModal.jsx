@@ -15,8 +15,10 @@ class RequestFormModal extends React.Component {
         showRequestTypeValidation: null,
         showRequestValidation: null,
         showRequestDetailsValidation: null,
+        showRequestDeclarationValidation: null,
       },
       request: {
+        declaration: false,
         requestDeadline: null,
         requestType: null,
         request: null,
@@ -42,8 +44,16 @@ class RequestFormModal extends React.Component {
   }
 
   handleFormChange = (event) => {
-    // if (event.target.name === "declaration")
-    if (event.target) {
+    if (event.target.name === "declaration") {
+      const checked = event.target.checked;
+      this.setState({
+        ...this.state,
+        request: {
+          ...this.state.request,
+          [event.target.name]: checked,
+        },
+      });
+    } else if (event.target) {
       this.setState({
         ...this.state,
         request: {
@@ -69,7 +79,8 @@ class RequestFormModal extends React.Component {
       this.state.request.requestDeadline &&
       this.state.request.requestType &&
       this.state.request.request &&
-      this.state.request.requestDetails
+      this.state.request.requestDetails &&
+      this.state.request.declaration === true
     ) {
       this.submitForm();
     } else {
@@ -90,6 +101,7 @@ class RequestFormModal extends React.Component {
           },
         });
       }
+
       if (!this.state.request.requestType) {
         await this.setState({
           ...this.state,
@@ -143,12 +155,30 @@ class RequestFormModal extends React.Component {
           },
         });
       }
+
+      if (this.state.request.declaration === false) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDeclarationValidation: "border-danger",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showRequestDeclarationValidation: null,
+          },
+        });
+      }
     }
   };
 
   submitForm = async () => {
     const requestorUid = await firebase.auth().currentUser.uid;
-    fetch("http://localhost:4000/posts/createPost", {
+    const response = await fetch("http://localhost:4000/posts/createPost", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -159,13 +189,17 @@ class RequestFormModal extends React.Component {
         request: this.state.request.request,
         requestDetails: this.state.request.requestDetails,
         requestorUid: requestorUid,
+        declaration: this.state.request.declaration,
       }),
     });
-    window.location.href = "/";
+    if (response.status === 422) {
+      alert("Please fix the errors in the request form");
+    } else if (response.status === 200) {
+      window.location.href = "/";
+    }
   };
 
   render() {
-    console.log(this.state.request.declaration);
     return (
       <Modal
         show={this.state.showRequestFormModal}
@@ -259,6 +293,12 @@ class RequestFormModal extends React.Component {
                 name="declaration"
                 label="I agree to share my contact information with whoever picks up my request"
               />
+              {this.state.validations.showRequestDeclarationValidation ? (
+                <Form.Text className="text-danger">
+                  You will need to share your contact information with whoever
+                  agrees to help
+                </Form.Text>
+              ) : null}
             </Form.Group>
             <Button
               variant="outline-dark"

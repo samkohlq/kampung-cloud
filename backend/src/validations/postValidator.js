@@ -14,6 +14,7 @@ const postValidationRules = () => {
     ]),
     body("request").isLength({ min: 1, max: 120 }),
     body("requestDetails").isLength({ min: 1, max: 1800 }),
+    body("declaration").equals("true"),
   ];
 };
 
