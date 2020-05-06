@@ -34,7 +34,7 @@ class DeleteRequest extends React.Component {
         <Button
           className="mb-2 btn-block py-3"
           variant="secondary"
-          onClick={this.handleDeleteRequest}
+          onClick={this.toggleDeleteRequestModal}
           size="sm"
         >
           Delete
@@ -43,14 +43,21 @@ class DeleteRequest extends React.Component {
           show={this.state.showDeleteRequestModal}
           onHide={this.toggleDeleteRequestModal}
         >
-          <Modal.Body>test</Modal.Body>
-          <Modal.Footer>
+          <Modal.Body>Are you sure you want to delete this request?</Modal.Body>
+          <Modal.Footer className="justify-content-between">
+            <Button
+              variant="outline-danger"
+              size="sm"
+              onClick={this.handleDeleteRequest}
+            >
+              Yes - delete this request
+            </Button>
             <Button
               variant="outline-secondary"
               size="sm"
-              onClick={this.props.toggleDeleteRequestModal}
+              onClick={this.toggleDeleteRequestModal}
             >
-              Close
+              No - keep this request
             </Button>
           </Modal.Footer>
         </Modal>
