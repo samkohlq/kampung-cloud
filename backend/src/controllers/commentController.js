@@ -3,7 +3,7 @@ import { Comment } from "../db/models";
 export const createComment = async (req, res) => {
   const newComment = await Comment.create({
     userUid: req.body.userUid,
-    postId: req.body.postId,
+    requestId: req.body.requestId,
     comment: req.body.comment,
   }).catch((error) => {
     console.log(error);
@@ -11,9 +11,9 @@ export const createComment = async (req, res) => {
   res.send(newComment);
 };
 
-export const retrievePostComments = async (req, res) => {
+export const retrieveComments = async (req, res) => {
   const retrievedComments = await Comment.findAll({
-    where: { postId: req.query.postId },
+    where: { requestId: req.query.requestId },
     order: [["createdAt", "DESC"]],
   }).catch((error) => {
     console.log(error);

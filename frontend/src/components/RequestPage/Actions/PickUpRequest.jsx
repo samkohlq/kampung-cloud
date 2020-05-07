@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 class PickUpRequest extends React.Component {
   handlePickUpRequest = () => {
     fetch(
-      `http://localhost:4000/posts/assignPostToFulfiller?postId=${this.props.postId}`,
+      `http://localhost:4000/requests/assignRequestToFulfiller?requestId=${this.props.requestId}`,
       {
         method: "PUT",
         headers: {
@@ -16,7 +16,7 @@ class PickUpRequest extends React.Component {
         }),
       }
     );
-    window.location.href = `/posts/${this.props.postId}`;
+    window.location.href = `/requests/${this.props.requestId}`;
   };
 
   render() {

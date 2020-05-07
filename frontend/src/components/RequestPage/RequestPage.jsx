@@ -12,7 +12,7 @@ const requestStatuses = {
   2: "Completed",
 };
 
-class PostPage extends React.Component {
+class RequestPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,17 +22,17 @@ class PostPage extends React.Component {
   }
 
   async componentDidMount() {
-    // retrieve post
-    await this.retrievePost(this.props.match.params.id);
+    // retrieve request
+    await this.retrieveRequest(this.props.match.params.id);
     // retrieve and save requestor's name and verification status in state
     await this.retrieveUserInfo(
-      this.state.retrievedPost.requestorUid,
+      this.state.retrievedRequest.requestorUid,
       this.state.requestForUserConfidentialInfo
     );
     // retrieve and save fulfiller's name in state if request has been picked up
-    if (this.state.retrievedPost.fulfillerUid) {
+    if (this.state.retrievedRequest.fulfillerUid) {
       await this.retrieveUserInfo(
-        this.state.retrievedPost.fulfillerUid,
+        this.state.retrievedRequest.fulfillerUid,
         this.state.requestForUserConfidentialInfo
       );
     }
@@ -54,20 +54,20 @@ class PostPage extends React.Component {
           });
 
         // if logged in user is the requestor
-        if (user.uid === this.state.retrievedPost.requestorUid) {
-          if (this.state.retrievedPost.fulfillerUid) {
+        if (user.uid === this.state.retrievedRequest.requestorUid) {
+          if (this.state.retrievedRequest.fulfillerUid) {
             // retrieve fulfiller's information, including email and phoneNum
             await this.retrieveUserInfo(
-              this.state.retrievedPost.fulfillerUid,
+              this.state.retrievedRequest.fulfillerUid,
               this.state.requestForUserConfidentialInfo,
               idToken
             );
           }
           // else if logged in user is the fulfiller
-        } else if (user.uid === this.state.retrievedPost.fulfillerUid) {
+        } else if (user.uid === this.state.retrievedRequest.fulfillerUid) {
           // retrieve requestor's information, including email and phoneNum
           await this.retrieveUserInfo(
-            this.state.retrievedPost.requestorUid,
+            this.state.retrievedRequest.requestorUid,
             this.state.requestForUserConfidentialInfo,
             idToken
           );
@@ -82,13 +82,16 @@ class PostPage extends React.Component {
     });
   }
 
-  retrievePost = async (postId) => {
+  retrieveRequest = async (requestId) => {
     const response = await fetch(
-      `http://localhost:4000/posts/retrievePost?postId=${postId}`
+      `http://localhost:4000/requests/retrieveRequest?requestId=${requestId}`
     );
     const json = await response.json();
-    const retrievedPost = json[0];
-    return this.setState({ retrievedPost: retrievedPost, isFetching: false });
+    const retrievedRequest = json;
+    return this.setState({
+      retrievedRequest: retrievedRequest,
+      isFetching: false,
+    });
   };
 
   retrieveUserInfo = async (
@@ -110,14 +113,14 @@ class PostPage extends React.Component {
     // if we asked for contact details
     if (requestForUserConfidentialInfo === true) {
       // if we asked for the requestor's contact details
-      if (userUid === this.state.retrievedPost.requestorUid) {
+      if (userUid === this.state.retrievedRequest.requestorUid) {
         return this.setState({
           ...this.state,
           requestorEmail: retrievedUser.email,
           requestorPhoneNum: retrievedUser.phoneNum,
         });
         // if we asked for the fulfiller's contact details
-      } else if (userUid === this.state.retrievedPost.fulfillerUid) {
+      } else if (userUid === this.state.retrievedRequest.fulfillerUid) {
         return this.setState({
           ...this.state,
           fulfillerEmail: retrievedUser.email,
@@ -127,14 +130,13 @@ class PostPage extends React.Component {
       // if we only asked for name and verification status
     } else {
       // check if retrieved user is the requestor or fulfiller
-      if (retrievedUser.authUid === this.state.retrievedPost.requestorUid) {
+      if (retrievedUser.authUid === this.state.retrievedRequest.requestorUid) {
         return this.setState({
           ...this.state,
-          verifiedPost: retrievedUser.verificationStatus,
           requestorName: retrievedUser.userName,
         });
       } else if (
-        retrievedUser.authUid === this.state.retrievedPost.fulfillerUid
+        retrievedUser.authUid === this.state.retrievedRequest.fulfillerUid
       ) {
         return this.setState({
           ...this.state,
@@ -156,16 +158,14 @@ class PostPage extends React.Component {
           <Container>
             <Row>
               <Col xs={12} sm={12} md={8} className="my-5 px-4">
-                <h3 className="mb-3">{this.state.retrievedPost.request}</h3>
-                <h5>
-                  {requestStatuses[this.state.retrievedPost.requestStatus]}
-                </h5>
+                <h3 className="mb-3">{this.state.retrievedRequest.title}</h3>
+                <h5>{requestStatuses[this.state.retrievedRequest.status]}</h5>
                 <h6>
                   {/* show deadline if request has not been completed */}
-                  {this.state.retrievedPost.requestStatus === 2 ? null : (
+                  {this.state.retrievedRequest.status === 2 ? null : (
                     <>
                       {"Deadline: "}
-                      {moment(this.state.retrievedPost.requestDeadline).format(
+                      {moment(this.state.retrievedRequest.deadline).format(
                         "DD MMM YYYY"
                       )}
                     </>
@@ -173,24 +173,19 @@ class PostPage extends React.Component {
                 </h6>
                 {/* Show request type */}
                 <Badge className="mb-2" variant="secondary">
-                  {this.state.retrievedPost.requestType}
+                  {this.state.retrievedRequest.type}
                 </Badge>
                 {/* Show verified badge if user is verified */}
-                <div className="mb-5">
-                  {this.state.verifiedPost === 1 ? (
-                    <Badge variant="info">Verified</Badge>
-                  ) : null}{" "}
-                  by {this.state.requestorName}
-                </div>
+                <div className="mb-5">by {this.state.requestorName}</div>
 
                 <h5 className="text-uppercase">Details</h5>
                 <div className="text-justify" style={{ fontSize: "0.9rem" }}>
-                  {this.state.retrievedPost.requestDetails}
+                  {this.state.retrievedRequest.details}
                 </div>
               </Col>
               <Col xs={12} sm={12} md={4} className="my-5 px-4">
                 <Actions
-                  retrievedPost={this.state.retrievedPost}
+                  retrievedRequest={this.state.retrievedRequest}
                   requestorName={this.state.requestorName}
                   requestorEmail={this.state.requestorEmail}
                   requestorPhoneNum={this.state.requestorPhoneNum}
@@ -203,7 +198,9 @@ class PostPage extends React.Component {
             <hr></hr>
             <Row>
               <Col xs={12} sm={12} md={8} className="my-5 px-4">
-                <CommentsSection retrievedPost={this.state.retrievedPost} />
+                <CommentsSection
+                  retrievedRequest={this.state.retrievedRequest}
+                />
               </Col>
             </Row>
           </Container>
@@ -213,4 +210,4 @@ class PostPage extends React.Component {
   }
 }
 
-export default PostPage;
+export default RequestPage;

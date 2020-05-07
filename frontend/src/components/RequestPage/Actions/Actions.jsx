@@ -3,7 +3,7 @@ import { Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import firebase from "../../../firebase";
 import DeleteRequst from "./DeleteRequest";
-import EditPostModal from "./EditPostModal";
+import EditRequestModal from "./EditRequestModal";
 import MarkRequestCompleted from "./MarkRequestCompleted";
 import PickUpRequest from "./PickUpRequest";
 import ReleaseRequest from "./ReleaseRequest";
@@ -44,7 +44,7 @@ class Actions extends React.Component {
 
   render() {
     const {
-      retrievedPost,
+      retrievedRequest,
       fulfillerName,
       fulfillerEmail,
       fulfillerPhoneNum,
@@ -61,12 +61,12 @@ class Actions extends React.Component {
         </>
       );
     } else {
-      switch (retrievedPost.requestStatus) {
+      switch (retrievedRequest.status) {
         // if help is needed
         case 0:
           if (this.state.loggedIn) {
             // if user is logged in and logged-in user is the requestor, allow user to edit or delete request
-            if (this.state.loggedInUserUid === retrievedPost.requestorUid) {
+            if (this.state.loggedInUserUid === retrievedRequest.requestorUid) {
               actions = (
                 <>
                   <h5 className="my-2">
@@ -78,8 +78,8 @@ class Actions extends React.Component {
                     <Link to="/getting-started">safety guidelines</Link> to
                     protect yourself against scams.
                   </div>
-                  <EditPostModal retrievedPost={retrievedPost} />
-                  <DeleteRequst postId={retrievedPost.id} />
+                  <EditRequestModal retrievedRequest={retrievedRequest} />
+                  <DeleteRequst requestId={retrievedRequest.id} />
                 </>
               );
             } else {
@@ -89,7 +89,7 @@ class Actions extends React.Component {
                   <PickUpRequest
                     loggedInUserUid={this.state.loggedInUserUid}
                     requestorName={requestorName}
-                    postId={retrievedPost.id}
+                    requestId={retrievedRequest.id}
                   />
                 </>
               );
@@ -103,7 +103,7 @@ class Actions extends React.Component {
         case 1:
           if (this.state.loggedIn) {
             // if logged in user is the requestor, show fulfiller's contact details
-            if (this.state.loggedInUserUid === retrievedPost.requestorUid) {
+            if (this.state.loggedInUserUid === retrievedRequest.requestorUid) {
               actions = (
                 <>
                   <h5 className="my-2">
@@ -117,7 +117,7 @@ class Actions extends React.Component {
               );
               // if logged in user is the fulfiller, show requestor's contact details and allow user to release request
             } else if (
-              this.state.loggedInUserUid === retrievedPost.fulfillerUid
+              this.state.loggedInUserUid === retrievedRequest.fulfillerUid
             ) {
               actions = (
                 <>
@@ -132,13 +132,13 @@ class Actions extends React.Component {
                     protect yourself against scams.
                   </div>
                   <br></br>
-                  <MarkRequestCompleted postId={retrievedPost.id} />
-                  <ReleaseRequest postId={retrievedPost.id} />
+                  <MarkRequestCompleted requestId={retrievedRequest.id} />
+                  <ReleaseRequest requestId={retrievedRequest.id} />
                 </>
               );
             }
           } else {
-            actions = <>{requestStatuses[retrievedPost.requestStatus]}</>;
+            actions = <>{requestStatuses[retrievedRequest.status]}</>;
           }
           break;
         // if help has been rendered
@@ -146,8 +146,7 @@ class Actions extends React.Component {
           actions = (
             <>
               <h5 className="my-2">
-                {requestStatuses[retrievedPost.requestStatus]} by{" "}
-                {fulfillerName}
+                {requestStatuses[retrievedRequest.status]} by {fulfillerName}
               </h5>
             </>
           );
@@ -156,7 +155,7 @@ class Actions extends React.Component {
           actions = (
             <>
               <h5 className="my-2">
-                {requestStatuses[retrievedPost.requestStatus]}
+                {requestStatuses[retrievedRequest.status]}
               </h5>
             </>
           );

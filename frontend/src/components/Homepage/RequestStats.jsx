@@ -12,16 +12,16 @@ class IntroSubSection extends React.Component {
   }
 
   componentDidMount() {
-    this.countPostsByRequestStatus();
+    this.countRequestsByStatus();
   }
 
-  countPostsByRequestStatus = () => {
-    fetch(`http://localhost:4000/posts/countPostsByRequestStatus`)
+  countRequestsByStatus = () => {
+    fetch(`http://localhost:4000/requests/countRequestsByStatus`)
       .then((response) => response.json())
-      .then((postsCounts) => {
+      .then((requestsCount) => {
         this.setState({
-          requestsCompleted: postsCounts.completedPosts,
-          requestsOutstanding: postsCounts.outstandingPosts,
+          requestsCompleted: requestsCount.completedRequests,
+          requestsOutstanding: requestsCount.outstandingRequests,
         });
       });
   };

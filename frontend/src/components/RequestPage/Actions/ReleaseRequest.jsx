@@ -2,9 +2,9 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 class ReleaseRequest extends React.Component {
-  handleRemoveFulfillerFromPost = () => {
+  handleRemoveFulfillerFromRequest = () => {
     fetch(
-      `http://localhost:4000/posts/removeFulfillerFromPost?postId=${this.props.postId}`,
+      `http://localhost:4000/requests/removeFulfillerFromRequest?requestId=${this.props.requestId}`,
       {
         method: "PUT",
         headers: {
@@ -12,7 +12,7 @@ class ReleaseRequest extends React.Component {
         },
       }
     );
-    window.location.href = `/posts/${this.props.postId}`;
+    window.location.href = `/requests/${this.props.requestId}`;
   };
 
   render() {
@@ -20,7 +20,7 @@ class ReleaseRequest extends React.Component {
       <>
         <Button
           className="mb-2 btn-block py-3"
-          onClick={this.handleRemoveFulfillerFromPost}
+          onClick={this.handleRemoveFulfillerFromRequest}
           variant="secondary"
         >
           Release request

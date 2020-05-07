@@ -1,9 +1,9 @@
 import { body, validationResult } from "express-validator";
 
-const postValidationRules = () => {
+const requestValidationRules = () => {
   return [
-    body("requestDeadline").isISO8601(),
-    body("requestType").isIn([
+    body("title").isLength({ min: 1, max: 120 }),
+    body("type").isIn([
       "Meals",
       "Groceries",
       "Clothing",
@@ -12,8 +12,8 @@ const postValidationRules = () => {
       "Tech",
       "Other",
     ]),
-    body("request").isLength({ min: 1, max: 120 }),
-    body("requestDetails").isLength({ min: 1, max: 1800 }),
+    body("details").isLength({ min: 1, max: 1800 }),
+    body("deadline").isISO8601(),
     body("declaration").equals("true"),
   ];
 };
@@ -32,6 +32,6 @@ const validate = (req, res, next) => {
 };
 
 module.exports = {
-  postValidationRules,
+  requestValidationRules,
   validate,
 };

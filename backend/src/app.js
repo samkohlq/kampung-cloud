@@ -5,7 +5,7 @@ import logger from "morgan";
 import path from "path";
 import "regenerator-runtime/runtime";
 import commentRouter from "./routes/commentRouter";
-import postRouter from "./routes/postRouter";
+import requestRouter from "./routes/requestRouter";
 import userRouter from "./routes/userRouter";
 
 var app = express();
@@ -18,7 +18,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/users", userRouter);
-app.use("/posts", postRouter);
+app.use("/requests", requestRouter);
 app.use("/comments", commentRouter);
 
 module.exports = app;

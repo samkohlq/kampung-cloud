@@ -37,18 +37,18 @@ class CommentsSection extends React.Component {
       },
       body: JSON.stringify({
         userUid: this.state.loggedInUserUid,
-        postId: this.props.retrievedPost.id,
+        requestId: this.props.retrievedRequest.id,
         comment: this.state.comment,
       }),
     });
-    window.location.href = `/posts/${this.props.retrievedPost.id}`;
+    window.location.href = `/requests/${this.props.retrievedRequest.id}`;
   };
 
   render() {
     return (
       <>
         <h5 className="text-uppercase">Comments</h5>
-        <CommentsList retrievedPost={this.props.retrievedPost} />
+        <CommentsList retrievedRequest={this.props.retrievedRequest} />
         {this.state.loggedIn ? (
           <>
             <FormControl

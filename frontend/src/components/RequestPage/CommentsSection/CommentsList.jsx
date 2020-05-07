@@ -10,12 +10,12 @@ class CommentsList extends React.Component {
   }
 
   async componentDidMount() {
-    await this.retrievePostComments();
+    await this.retrieveComments();
   }
 
-  retrievePostComments = async () => {
+  retrieveComments = async () => {
     const response = await fetch(
-      `http://localhost:4000/comments/retrievePostComments?postId=${this.props.retrievedPost.id}`
+      `http://localhost:4000/comments/retrieveComments?requestId=${this.props.retrievedRequest.id}`
     );
     const json = await response.json();
     const retrievedComments = json;

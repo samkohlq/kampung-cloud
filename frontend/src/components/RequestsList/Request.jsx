@@ -7,11 +7,10 @@ const requestStatuses = {
   2: "Completed",
 };
 
-class Post extends React.Component {
+class Request extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      verifiedPost: null,
       requestorName: null,
       requestForUserConfidentialInfo: false,
     };
@@ -19,7 +18,7 @@ class Post extends React.Component {
 
   componentDidMount() {
     this.retrieveUserInfo(
-      this.props.post.requestorUid,
+      this.props.request.requestorUid,
       this.state.requestForUserConfidentialInfo
     );
   }
@@ -30,26 +29,25 @@ class Post extends React.Component {
     );
     const retrievedUser = await response.json();
     this.setState({
-      verifiedPost: retrievedUser.verificationStatus,
       requestorName: retrievedUser.userName,
     });
   };
 
   render() {
-    const deadline = moment(this.props.post.requestDeadline).format("DD MMM");
+    const deadline = moment(this.props.request.deadline).format("DD MMM");
     return (
       <tr
         style={{ cursor: "pointer" }}
         onClick={() => {
-          window.location.href = `/posts/${this.props.post.id}`;
+          window.location.href = `/requests/${this.props.request.id}`;
         }}
       >
-        <td>{this.props.post.request}</td>
+        <td>{this.props.request.title}</td>
         <td>{deadline}</td>
-        <td>{requestStatuses[this.props.post.requestStatus]}</td>
+        <td>{requestStatuses[this.props.request.status]}</td>
       </tr>
     );
   }
 }
 
-export default Post;
+export default Request;

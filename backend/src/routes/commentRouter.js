@@ -1,17 +1,15 @@
 import express from "express";
 import {
   createComment,
-  retrievePostComments,
+  retrieveComments,
 } from "../controllers/commentController";
 
 const router = express.Router();
 
-// create post
+// create comment
 router.post("/createComment", (req, res) => createComment(req, res));
 
-// retrieve comments belonging to a post
-router.get("/retrievePostComments", (req, res) =>
-  retrievePostComments(req, res)
-);
+// retrieve comments belonging to a request
+router.get("/retrieveComments", (req, res) => retrieveComments(req, res));
 
 export default router;

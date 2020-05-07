@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Spinner } from "react-bootstrap";
 import firebase from "../../firebase";
 import NavBar from "../NavBar/NavBar";
-import PostsList from "../PostsList/PostsList";
+import RequestsList from "../RequestsList/RequestsList";
 
 class Requests extends React.Component {
   constructor(props) {
@@ -34,9 +34,9 @@ class Requests extends React.Component {
       userRequests = this.state.loggedIn ? (
         <>
           <h4>Requests picked up</h4>
-          <PostsList posts={"PickedUp"} />
+          <RequestsList requests={"PickedUp"} />
           <h4>Your requests</h4>
-          <PostsList posts={"Posted"} />
+          <RequestsList requests={"Posted"} />
         </>
       ) : (
         <>

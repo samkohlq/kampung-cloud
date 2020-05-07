@@ -5,9 +5,9 @@ import welcomeBanner from "../../images/welcome-banner.png";
 import LoginModal from "../NavBar/LoginModal";
 import NavBar from "../NavBar/NavBar";
 import IntroSubSection from "./IntroSubSection";
-import RequestCategories from "./RequestCategories/RequestCategories";
 import RequestFormModal from "./RequestFormModal";
 import RequestStats from "./RequestStats";
+import RequestTypes from "./RequestTypes/RequestTypes";
 
 class Homepage extends React.Component {
   constructor(props) {
@@ -86,7 +86,7 @@ class Homepage extends React.Component {
         />
         <Container className="justify-content-center">
           <RequestStats />
-          <RequestCategories />
+          <RequestTypes />
         </Container>
       </>
     );

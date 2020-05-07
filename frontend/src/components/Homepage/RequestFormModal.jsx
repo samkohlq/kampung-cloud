@@ -13,16 +13,16 @@ class RequestFormModal extends React.Component {
       validations: {
         showRequestDeadlineValidation: null,
         showRequestTypeValidation: null,
-        showRequestValidation: null,
+        showRequestTitleValidation: null,
         showRequestDetailsValidation: null,
         showRequestDeclarationValidation: null,
       },
       request: {
         declaration: false,
-        requestDeadline: null,
-        requestType: null,
-        request: null,
-        requestDetails: null,
+        deadline: null,
+        type: null,
+        title: null,
+        details: null,
       },
     };
   }
@@ -69,27 +69,27 @@ class RequestFormModal extends React.Component {
       ...this.state,
       request: {
         ...this.state.request,
-        requestDeadline: date,
+        deadline: date,
       },
     });
   };
 
   handleValidateAndSubmitForm = async () => {
     if (
-      this.state.request.requestDeadline &&
-      this.state.request.requestType &&
-      this.state.request.request &&
-      this.state.request.requestDetails &&
+      this.state.request.deadline &&
+      this.state.request.type &&
+      this.state.request.title &&
+      this.state.request.details &&
       this.state.request.declaration === true
     ) {
       this.submitForm();
     } else {
-      if (!this.state.request.requestDeadline) {
+      if (!this.state.request.deadline) {
         await this.setState({
           ...this.state,
           validations: {
             ...this.state.validations,
-            showRequestDeadlineValidation: "border-danger",
+            showRequestDeadlineValidation: "border-warning",
           },
         });
       } else {
@@ -102,12 +102,12 @@ class RequestFormModal extends React.Component {
         });
       }
 
-      if (!this.state.request.requestType) {
+      if (!this.state.request.Type) {
         await this.setState({
           ...this.state,
           validations: {
             ...this.state.validations,
-            showRequestTypeValidation: "border-danger",
+            showRequestTypeValidation: "border-warning",
           },
         });
       } else {
@@ -120,12 +120,12 @@ class RequestFormModal extends React.Component {
         });
       }
 
-      if (!this.state.request.request) {
+      if (!this.state.request.title) {
         await this.setState({
           ...this.state,
           validations: {
             ...this.state.validations,
-            showRequestValidation: "border-danger",
+            showRequestTitleValidation: "border-warning",
           },
         });
       } else {
@@ -133,17 +133,17 @@ class RequestFormModal extends React.Component {
           ...this.state,
           validations: {
             ...this.state.validations,
-            showRequestValidation: null,
+            showRequestTitleValidation: null,
           },
         });
       }
 
-      if (!this.state.request.requestDetails) {
+      if (!this.state.request.Details) {
         await this.setState({
           ...this.state,
           validations: {
             ...this.state.validations,
-            showRequestDetailsValidation: "border-danger",
+            showRequestDetailsValidation: "border-warning",
           },
         });
       } else {
@@ -161,7 +161,7 @@ class RequestFormModal extends React.Component {
           ...this.state,
           validations: {
             ...this.state.validations,
-            showRequestDeclarationValidation: "border-danger",
+            showRequestDeclarationValidation: "border-warning",
           },
         });
       } else {
@@ -178,20 +178,24 @@ class RequestFormModal extends React.Component {
 
   submitForm = async () => {
     const requestorUid = await firebase.auth().currentUser.uid;
-    const response = await fetch("http://localhost:4000/posts/createPost", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        requestDeadline: this.state.request.requestDeadline,
-        requestType: this.state.request.requestType,
-        request: this.state.request.request,
-        requestDetails: this.state.request.requestDetails,
-        requestorUid: requestorUid,
-        declaration: this.state.request.declaration,
-      }),
-    });
+    const response = await fetch(
+      "http://localhost:4000/requests/createRequest",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: this.state.request.title,
+          type: this.state.request.type,
+          details: this.state.request.details,
+          deadline: this.state.request.deadline,
+          requestorUid: requestorUid,
+          declaration: this.state.request.declaration,
+        }),
+      }
+    );
+    console.log(response);
     if (response.status === 422) {
       alert("Please fix the errors in the request form");
     } else if (response.status === 200) {
@@ -215,21 +219,19 @@ class RequestFormModal extends React.Component {
               <Form.Label>When do you need this by?</Form.Label>
               <DatePicker
                 className={`ml-2 datepicker ${this.state.validations.showRequestDeadlineValidation}`}
-                selected={this.state.request.requestDeadline}
+                selected={this.state.request.deadline}
                 onChange={this.handleDateChange}
                 minDate={Date.now()}
               />
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>
-                What category does your request fall into?
-              </Form.Label>
+              <Form.Label>What type of help are you requesting for?</Form.Label>
               <Form.Control
                 className={this.state.validations.showRequestTypeValidation}
                 as="select"
                 defaultValue="--"
-                name="requestType"
+                name="type"
                 onChange={this.handleFormChange}
               >
                 <option disabled="disabled">--</option>
@@ -241,8 +243,8 @@ class RequestFormModal extends React.Component {
                 <option>Other</option>
               </Form.Control>
               {this.state.validations.showRequestTypeValidation ? (
-                <Form.Text className="text-danger">
-                  Please select a category
+                <Form.Text className="text-warning">
+                  Please select a request type
                 </Form.Text>
               ) : null}
             </Form.Group>
@@ -250,14 +252,14 @@ class RequestFormModal extends React.Component {
             <Form.Group size="sm" className="mb-3">
               <Form.Label>What do you need?</Form.Label>
               <Form.Control
-                className={this.state.validations.showRequestValidation}
+                className={this.state.validations.showRequestTitleValidation}
                 type="text"
-                name="request"
+                name="title"
                 maxLength="120"
                 onChange={this.handleFormChange}
               />
-              {this.state.validations.showRequestValidation ? (
-                <Form.Text className="text-danger">
+              {this.state.validations.showRequestTitleValidation ? (
+                <Form.Text className="text-warning">
                   Please tell us what help you're looking for
                 </Form.Text>
               ) : null}
@@ -271,18 +273,18 @@ class RequestFormModal extends React.Component {
               <Form.Control
                 className={this.state.validations.showRequestDetailsValidation}
                 as="textarea"
-                name="requestDetails"
+                name="details"
                 maxLength="1800"
                 onChange={this.handleFormChange}
               />
               {this.state.validations.showRequestDetailsValidation ? (
-                <Form.Text className="text-danger">
+                <Form.Text className="text-warning">
                   Please tell us more about your request
                 </Form.Text>
               ) : null}
               <Form.Text className="text-muted">
-                For example: Background information, instructions for delivery,
-                sizes required
+                For example: Background warningrmation, instructions for
+                delivery, sizes required
               </Form.Text>
             </Form.Group>
             <Form.Group controlId="formBasicCheckbox">
@@ -294,7 +296,7 @@ class RequestFormModal extends React.Component {
                 label="I agree to share my contact information with whoever picks up my request"
               />
               {this.state.validations.showRequestDeclarationValidation ? (
-                <Form.Text className="text-danger">
+                <Form.Text className="text-warning">
                   You will need to share your contact information with whoever
                   agrees to help
                 </Form.Text>

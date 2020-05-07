@@ -17,7 +17,7 @@ class DeleteRequest extends React.Component {
 
   handleDeleteRequest = () => {
     fetch(
-      `http://localhost:4000/posts/deletePost?postId=${this.props.postId}`,
+      `http://localhost:4000/requests/deleteRequest?requestId=${this.props.requestId}`,
       {
         method: "POST",
         headers: {

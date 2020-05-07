@@ -2,23 +2,23 @@ import React from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 
-class EditPostModal extends React.Component {
+class EditRequestModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showModal: false,
       setShowModal: false,
       requestData: {
-        requestDeadline: new Date(props.retrievedPost.requestDeadline),
-        requestType: props.retrievedPost.requestType,
-        request: props.retrievedPost.request,
-        requestDetails: props.retrievedPost.requestDetails,
-        declaration: props.retrievedPost.declaration,
+        title: props.retrievedRequest.title,
+        type: props.retrievedRequest.type,
+        details: props.retrievedRequest.details,
+        deadline: new Date(props.retrievedRequest.deadline),
+        declaration: props.retrievedRequest.declaration,
       },
       validations: {
         showRequestDeadlineValidation: null,
         showRequestTypeValidation: null,
-        showRequestValidation: null,
+        showRequestTitleValidation: null,
         showRequestDetailsValidation: null,
       },
     };
@@ -35,7 +35,7 @@ class EditPostModal extends React.Component {
   handleDateChange = (event) => {
     this.setState({
       requestData: {
-        requestDeadline: event,
+        deadline: event,
       },
     });
   };
@@ -52,15 +52,15 @@ class EditPostModal extends React.Component {
 
   handleFormSubmit = async () => {
     if (
-      this.state.requestData.requestDeadline &&
-      this.state.requestData.requestType &&
-      this.state.requestData.request &&
-      this.state.requestData.requestDetails
+      this.state.requestData.deadline &&
+      this.state.requestData.type &&
+      this.state.requestData.title &&
+      this.state.requestData.details
     ) {
       this.submitForm();
     } else {
-      // if requestDeadline empty
-      if (!this.state.requestData.requestDeadline) {
+      // if deadline empty
+      if (!this.state.requestData.deadline) {
         await this.setState({
           ...this.state,
           validations: {
@@ -78,8 +78,8 @@ class EditPostModal extends React.Component {
         });
       }
 
-      // if requestType empty
-      if (!this.state.requestData.requestType) {
+      // if type empty
+      if (!this.state.requestData.type) {
         await this.setState({
           ...this.state,
           validations: {
@@ -97,13 +97,13 @@ class EditPostModal extends React.Component {
         });
       }
 
-      // if request empty
-      if (!this.state.requestData.request) {
+      // if title empty
+      if (!this.state.requestData.title) {
         await this.setState({
           ...this.state,
           validations: {
             ...this.state.validations,
-            showRequestValidation: "border-danger",
+            showRequestTitleValidation: "border-danger",
           },
         });
       } else {
@@ -111,13 +111,13 @@ class EditPostModal extends React.Component {
           ...this.state,
           validations: {
             ...this.state.validations,
-            showRequestValidation: null,
+            showRequestTitleValidation: null,
           },
         });
       }
 
       // if request details empty
-      if (!this.state.requestData.requestDetails) {
+      if (!this.state.requestData.details) {
         await this.setState({
           ...this.state,
           validations: {
@@ -139,17 +139,17 @@ class EditPostModal extends React.Component {
 
   submitForm = async () => {
     const response = await fetch(
-      `http://localhost:4000/posts/updatePost?postId=${this.props.retrievedPost.id}`,
+      `http://localhost:4000/requests/updateRequest?requestId=${this.props.retrievedRequest.id}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          requestDeadline: this.state.requestData.requestDeadline,
-          requestType: this.state.requestData.requestType,
-          request: this.state.requestData.request,
-          requestDetails: this.state.requestData.requestDetails,
+          title: this.state.requestData.title,
+          type: this.state.requestData.type,
+          details: this.state.requestData.details,
+          deadline: this.state.requestData.deadline,
           declaration: this.state.requestData.declaration,
         }),
       }
@@ -157,12 +157,11 @@ class EditPostModal extends React.Component {
     if (response.status === 422) {
       alert("Please fix the errors in the form");
     } else if (response.status === 200) {
-      window.location.href = `/posts/${this.props.retrievedPost.id}`;
+      window.location.href = `/requests/${this.props.retrievedRequest.id}`;
     }
   };
 
   render() {
-    console.log(this.props);
     return (
       <>
         <Button
@@ -186,7 +185,7 @@ class EditPostModal extends React.Component {
                 <Form.Label>When do you need this by?</Form.Label>
                 <DatePicker
                   className={`ml-2 datepicker ${this.state.validations.showRequestDeadlineValidation}`}
-                  selected={this.state.requestData.requestDeadline}
+                  selected={this.state.requestData.deadline}
                   onChange={this.handleDateChange}
                   minDate={Date.now()}
                 />
@@ -194,13 +193,13 @@ class EditPostModal extends React.Component {
 
               <Form.Group size="sm" className="mb-3">
                 <Form.Label>
-                  What category does your request fall into?
+                  What type of help are you requesting for?
                 </Form.Label>
                 <Form.Control
                   className={this.state.validations.showRequestTypeValidation}
                   as="select"
-                  defaultValue={this.state.requestData.requestType}
-                  name="requestType"
+                  defaultValue={this.state.requestData.type}
+                  name="type"
                   onChange={this.handleChange}
                 >
                   <option disabled="disabled">--</option>
@@ -214,7 +213,7 @@ class EditPostModal extends React.Component {
                 </Form.Control>
                 {this.state.validations.showRequestTypeValidation ? (
                   <Form.Text className="text-danger">
-                    Please select a category
+                    Please select a request type
                   </Form.Text>
                 ) : null}
               </Form.Group>
@@ -222,14 +221,14 @@ class EditPostModal extends React.Component {
               <Form.Group size="sm" className="mb-3">
                 <Form.Label>What do you need?</Form.Label>
                 <Form.Control
-                  className={this.state.validations.showRequestValidation}
+                  className={this.state.validations.showRequestTitleValidation}
                   type="text"
-                  name="request"
-                  defaultValue={this.state.requestData.request}
+                  name="title"
+                  defaultValue={this.state.requestData.title}
                   onChange={this.handleChange}
                   maxLength="120"
                 />
-                {this.state.validations.showRequestValidation ? (
+                {this.state.validations.showRequestTitleValidation ? (
                   <Form.Text className="text-danger">
                     Please tell us what help you're looking for
                   </Form.Text>
@@ -246,8 +245,8 @@ class EditPostModal extends React.Component {
                     this.state.validations.showRequestDetailsValidation
                   }
                   as="textarea"
-                  name="requestDetails"
-                  defaultValue={this.state.requestData.requestDetails}
+                  name="details"
+                  defaultValue={this.state.requestData.details}
                   maxLength="1800"
                   onChange={this.handleChange}
                 />
@@ -277,4 +276,4 @@ class EditPostModal extends React.Component {
   }
 }
 
-export default EditPostModal;
+export default EditRequestModal;
