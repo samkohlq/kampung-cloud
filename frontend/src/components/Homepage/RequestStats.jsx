@@ -31,10 +31,10 @@ class IntroSubSection extends React.Component {
       <div className="my-5 justify-content-center">
         <hr className="divider"></hr>
         <Row>
-          <Col xs={{ offset: 3, span: 6 }} md={{ offset: 4, span: 4 }}>
+          <Col xs={{ offset: 2, span: 8 }} md={{ offset: 4, span: 4 }}>
             <Row className="pt-3 text-center">
               <Col className="mb-3">
-                <h1 className="text-success" style={{ fontSize: "6rem" }}>
+                <h1 className="text-primary" style={{ fontSize: "4rem" }}>
                   {this.state.requestsCompleted}
                 </h1>
                 <div className="request-descriptor">
@@ -42,7 +42,7 @@ class IntroSubSection extends React.Component {
                 </div>
               </Col>
               <Col className="mb-3">
-                <h1 className="text-success" style={{ fontSize: "6rem" }}>
+                <h1 className="text-primary" style={{ fontSize: "4rem" }}>
                   {this.state.requestsOutstanding}
                 </h1>
                 <div className="request-descriptor">

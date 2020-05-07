@@ -23,7 +23,8 @@ class PickUpRequest extends React.Component {
     return (
       <>
         <Button
-          className="btn-block py-3"
+          className="btn-block py-2"
+          size="sm"
           onClick={this.handlePickUpRequest}
           variant="primary"
         >

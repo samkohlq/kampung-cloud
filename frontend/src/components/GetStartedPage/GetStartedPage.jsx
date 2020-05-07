@@ -1,14 +1,63 @@
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Image, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import firebase from "../../firebase";
+import howItWorks from "../../images/how-it-works.png";
+import RequestFormModal from "../Homepage/RequestFormModal";
+import LoginModal from "../NavBar/LoginModal";
 import NavBar from "../NavBar/NavBar";
 import "./GetStartedPage.css";
 import SafetyGuidelines from "./SafetyGuidelines";
 
 class AboutPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: firebase.auth().currentUser ? true : false,
+      showLoginModal: false,
+      showRequestFormModal: false,
+    };
+    this.toggleLoginModal = this.toggleLoginModal.bind(this);
+    this.toggleRequestFormModal = this.toggleRequestFormModal.bind(this);
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        this.setState({ loggedIn: true });
+      } else {
+        this.setState({ loggedIn: false });
+      }
+    });
+  }
+
+  toggleLoginModal = () => {
+    return this.setState({
+      showLoginModal: !this.state.showLoginModal,
+    });
+  };
+
+  toggleRequestFormModal = () => {
+    if (!this.state.loggedIn) {
+      return this.toggleLoginModal();
+    }
+    this.setState({
+      showRequestFormModal: !this.state.showRequestFormModal,
+    });
+  };
+
   render() {
     return (
       <>
         <NavBar />
+        <LoginModal
+          showLoginModal={this.state.showLoginModal}
+          toggleLoginModal={this.toggleLoginModal}
+        />
+        <RequestFormModal
+          showRequestFormModal={this.state.showRequestFormModal}
+          toggleRequestFormModal={this.toggleRequestFormModal}
+        />
         <Row>
           <Col md={{ offset: 2, span: 8 }}>
             <Container>
@@ -21,7 +70,7 @@ class AboutPage extends React.Component {
                     <p>This kampung is a community built on trust.</p>
                     <p>
                       We want to keep the kampung spirit alive and provide a
-                      safe haven for those who want to help and those who need
+                      public space for those who want to help and those who need
                       help. We know that there are many who want to help but
                       sometimes, just aren’t sure where to start. That’s what
                       we’re here for.
@@ -33,9 +82,18 @@ class AboutPage extends React.Component {
                 <Col className="mx-5">
                   <div className="text-center">
                     <h3 className="my-3 subsection-header">
-                      How are requests fulfilled?
+                      What should I do next?
                     </h3>
-                    <p>Request made > Request on its way > Request fulfilled</p>
+                    <p>
+                      <Link onClick={this.toggleRequestFormModal}>
+                        Add a request
+                      </Link>{" "}
+                      if you're in need of help! Once that's done, anyone with
+                      an account will be able to pick it up. Your contact
+                      information will only be shown when someone has offered to
+                      help.
+                    </p>
+                    <Image src={howItWorks} style={{ width: "85%" }} />
                   </div>
                 </Col>
               </Row>
@@ -46,10 +104,10 @@ class AboutPage extends React.Component {
                       Keeping this Kampung safe
                     </h3>
                     <p>
-                      The safety of our users is important to us. We don’t vet
-                      the requests coming in because we trust that everybody is
-                      here out of the goodness of their hearts and won’t take
-                      advantage of each other.
+                      Your safety is important to us. We can't vet the requests
+                      coming in but trust that everybody is here out of the
+                      goodness of their hearts and won’t take advantage of each
+                      other.
                     </p>
                     <SafetyGuidelines />
                   </div>

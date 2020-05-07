@@ -47,7 +47,8 @@ class CommentsSection extends React.Component {
   render() {
     return (
       <>
-        <h5 className="text-uppercase">Comments</h5>
+        <hr></hr>
+        <h4 style={{ fontFamily: "DM Serif Display" }}>Comments</h4>
         <CommentsList retrievedRequest={this.props.retrievedRequest} />
         {this.state.loggedIn ? (
           <>
@@ -64,7 +65,12 @@ class CommentsSection extends React.Component {
                 }
               }}
             />
-            <Button className="mt-2" onClick={this.handleSubmit} variant="info">
+            <Button
+              className="mt-2 float-right"
+              size="sm"
+              onClick={this.handleSubmit}
+              variant="outline-secondary"
+            >
               Send
             </Button>
           </>

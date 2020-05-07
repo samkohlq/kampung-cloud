@@ -101,7 +101,7 @@ class NavBar extends React.Component {
           <Navbar.Collapse className="justify-content-end">
             <Nav className="mr-auto">
               <Navbar.Text className="text-uppercase mx-1">
-                <Nav.Link href="/getting-started">Get started</Nav.Link>
+                <Nav.Link href="/get-started">Get started</Nav.Link>
               </Navbar.Text>
             </Nav>
             <Navbar.Text>

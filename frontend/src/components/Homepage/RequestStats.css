@@ -8,7 +8,7 @@
 
 .divider {
   border: solid;
-  border-width: 0.1rem;
+  border-width: 0.02rem;
   border-color: #999999;
   background-color: #999999;
 }
@@ -16,4 +16,5 @@
 .request-descriptor {
   text-transform: uppercase;
   color: #666666;
+  font-weight: bold;
 }

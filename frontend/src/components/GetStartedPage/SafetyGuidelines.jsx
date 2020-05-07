@@ -17,9 +17,11 @@ class SafetyGuidelines2 extends React.Component {
           </li>
           <li className="my-3">Otherwise, arrange to meet at a common area</li>
           <li className="my-3">
+            Do not let a stranger into your house or enter a stranger's house
+          </li>
+          <li className="my-3">
             Wear a mask if you are out and maintain a safe distance
           </li>
-          <li className="my-3">Do not let a stranger into your house</li>
         </ul>
       </p>
     );

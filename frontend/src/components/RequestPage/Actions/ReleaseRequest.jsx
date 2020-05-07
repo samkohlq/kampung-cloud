@@ -19,9 +19,9 @@ class ReleaseRequest extends React.Component {
     return (
       <>
         <Button
-          className="mb-2 btn-block py-3"
+          size="sm"
           onClick={this.handleRemoveFulfillerFromRequest}
-          variant="secondary"
+          variant="outline-secondary"
         >
           Release request
         </Button>

@@ -195,7 +195,6 @@ class RequestFormModal extends React.Component {
         }),
       }
     );
-    console.log(response);
     if (response.status === 422) {
       alert("Please fix the errors in the request form");
     } else if (response.status === 200) {
@@ -303,7 +302,7 @@ class RequestFormModal extends React.Component {
               ) : null}
             </Form.Group>
             <Button
-              variant="outline-dark"
+              variant="outline-success"
               size="sm"
               className="float-right mb-3"
               onClick={this.handleValidateAndSubmitForm}

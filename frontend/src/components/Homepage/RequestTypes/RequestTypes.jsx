@@ -41,8 +41,7 @@ class RequestTypes extends React.Component {
       <>
         <h5
           style={{
-            fontFamily: "Cooper Black",
-            fontWeight: "bold",
+            fontFamily: "DM Serif Display",
             fontSize: "1.9rem",
           }}
         >

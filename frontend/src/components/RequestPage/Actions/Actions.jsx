@@ -74,12 +74,14 @@ class Actions extends React.Component {
                     up your request
                   </h5>
                   <div style={{ fontSize: 13 }} className="mt-4">
-                    Follow our{" "}
-                    <Link to="/getting-started">safety guidelines</Link> to
-                    protect yourself against scams.
+                    Follow our <Link to="/get-started">safety guidelines</Link>{" "}
+                    to protect yourself against scams.
                   </div>
-                  <EditRequestModal retrievedRequest={retrievedRequest} />
-                  <DeleteRequst requestId={retrievedRequest.id} />
+                  <br></br>
+                  <div>
+                    <EditRequestModal retrievedRequest={retrievedRequest} />
+                    <DeleteRequst requestId={retrievedRequest.id} />
+                  </div>
                 </>
               );
             } else {
@@ -127,13 +129,14 @@ class Actions extends React.Component {
                     {requestorPhoneNum ? <> or {requestorPhoneNum} </> : null}
                   </div>
                   <div style={{ fontSize: 13 }} className="mt-4">
-                    Follow our{" "}
-                    <Link to="/getting-started">safety guidelines</Link> to
-                    protect yourself against scams.
+                    Follow our <Link to="/get-started">safety guidelines</Link>{" "}
+                    to protect yourself against scams.
                   </div>
                   <br></br>
-                  <MarkRequestCompleted requestId={retrievedRequest.id} />
-                  <ReleaseRequest requestId={retrievedRequest.id} />
+                  <div>
+                    <MarkRequestCompleted requestId={retrievedRequest.id} />
+                    <ReleaseRequest requestId={retrievedRequest.id} />
+                  </div>
                 </>
               );
             }

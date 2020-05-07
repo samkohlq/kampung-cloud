@@ -61,8 +61,8 @@ class Homepage extends React.Component {
         <div className="text-center">
           <div>
             <Button
-              className="mr-2 text-uppercase font-weight-bold px-3"
-              variant="outline-success"
+              className="mr-4 text-uppercase font-weight-bold px-3"
+              variant="success"
               onClick={() => {
                 this.toggleRequestFormModal();
               }}
@@ -73,7 +73,7 @@ class Homepage extends React.Component {
               className="text-uppercase font-weight-bold px-3"
               variant="outline-secondary"
               onClick={() => {
-                window.location.href = "/getting-started";
+                window.location.href = "/get-started";
               }}
             >
               Learn more

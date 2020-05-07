@@ -1,6 +1,6 @@
 import moment from "moment";
 import React from "react";
-import { Badge, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
 import firebase from "../../firebase";
 import NavBar from "../NavBar/NavBar";
 import Actions from "./Actions/Actions";
@@ -18,6 +18,8 @@ class RequestPage extends React.Component {
     this.state = {
       isFetching: true,
       requestForUserConfidentialInfo: false,
+      retrievedRequest: null,
+      icon: null,
     };
   }
 
@@ -35,6 +37,31 @@ class RequestPage extends React.Component {
         this.state.retrievedRequest.fulfillerUid,
         this.state.requestForUserConfidentialInfo
       );
+    }
+
+    if (this.state.retrievedRequest.type) {
+      switch (this.state.retrievedRequest.type) {
+        case "Meals":
+          this.setState({ icon: "/static/media/meals.4127b13b.png" });
+          break;
+        case "Groceries":
+          this.setState({ icon: "/static/media/groceries.2bb89650.png" });
+          break;
+        case "Hygiene":
+          this.setState({ icon: "/static/media/hygiene.14918bce.png" });
+          break;
+        case "Clothing":
+          this.setState({ icon: "/static/media/clothing.fc6bea1c.png" });
+          break;
+        case "Tech":
+          this.setState({ icon: "/static/media/tech.cb221cbd.png" });
+          break;
+        case "Other":
+          this.setState({ icon: "/static/media/other.9623ec22.png" });
+          break;
+        default:
+          break;
+      }
     }
 
     firebase.auth().onAuthStateChanged(async (user) => {
@@ -147,6 +174,7 @@ class RequestPage extends React.Component {
   };
 
   render() {
+    // const type = this.state.retrievedRequest.type;
     return (
       <>
         <NavBar />
@@ -155,35 +183,33 @@ class RequestPage extends React.Component {
             <Spinner animation="border" variant="primary" />
           </>
         ) : (
-          <Container>
+          <Container className="px-4">
             <Row>
-              <Col xs={12} sm={12} md={8} className="my-5 px-4">
-                <h3 className="mb-3">{this.state.retrievedRequest.title}</h3>
-                <h5>{requestStatuses[this.state.retrievedRequest.status]}</h5>
+              <Col xs={12} sm={12} md={8} className="mt-5 px-4">
+                <Image style={{ width: "6em" }} src={this.state.icon} />
+                <h5 className="mt-3" style={{ fontFamily: "DM Serif Display" }}>
+                  Request by {this.state.requestorName}
+                </h5>
                 <h6>
+                  {requestStatuses[this.state.retrievedRequest.status]}
                   {/* show deadline if request has not been completed */}
-                  {this.state.retrievedRequest.status === 2 ? null : (
+                  {this.state.retrievedRequest.status === 0 ? (
                     <>
-                      {"Deadline: "}
+                      {" by "}
                       {moment(this.state.retrievedRequest.deadline).format(
                         "DD MMM YYYY"
                       )}
                     </>
-                  )}
+                  ) : null}
                 </h6>
-                {/* Show request type */}
-                <Badge className="mb-2" variant="secondary">
-                  {this.state.retrievedRequest.type}
-                </Badge>
-                {/* Show verified badge if user is verified */}
-                <div className="mb-5">by {this.state.requestorName}</div>
-
-                <h5 className="text-uppercase">Details</h5>
-                <div className="text-justify">
+                <h4 className="mt-4" style={{ fontFamily: "DM Serif Display" }}>
+                  {this.state.retrievedRequest.title}
+                </h4>
+                <div className="text-justify mt-2">
                   {this.state.retrievedRequest.details}
                 </div>
               </Col>
-              <Col xs={12} sm={12} md={4} className="my-5 px-4">
+              <Col xs={12} sm={12} md={4} className="mt-5 px-4">
                 <Actions
                   retrievedRequest={this.state.retrievedRequest}
                   requestorName={this.state.requestorName}
@@ -195,7 +221,6 @@ class RequestPage extends React.Component {
                 />
               </Col>
             </Row>
-            <hr></hr>
             <Row>
               <Col xs={12} sm={12} md={8} className="my-5 px-4">
                 <CommentsSection
