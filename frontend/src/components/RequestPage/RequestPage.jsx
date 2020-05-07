@@ -179,7 +179,7 @@ class RequestPage extends React.Component {
                 <div className="mb-5">by {this.state.requestorName}</div>
 
                 <h5 className="text-uppercase">Details</h5>
-                <div className="text-justify" style={{ fontSize: "0.9rem" }}>
+                <div className="text-justify">
                   {this.state.retrievedRequest.details}
                 </div>
               </Col>

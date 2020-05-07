@@ -283,8 +283,8 @@ class RequestFormModal extends React.Component {
                 </Form.Text>
               ) : null}
               <Form.Text className="text-muted">
-                For example: Background warningrmation, instructions for
-                delivery, sizes required
+                For example: Background information, instructions for delivery,
+                sizes required
               </Form.Text>
             </Form.Group>
             <Form.Group controlId="formBasicCheckbox">
