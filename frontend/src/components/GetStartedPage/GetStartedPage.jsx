@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import NavBar from "../NavBar/NavBar";
-import "./GettingStartedPage.css";
+import "./GetStartedPage.css";
 import SafetyGuidelines from "./SafetyGuidelines";
 
 class AboutPage extends React.Component {
@@ -35,10 +35,7 @@ class AboutPage extends React.Component {
                     <h3 className="my-3 subsection-header">
                       How are requests fulfilled?
                     </h3>
-                    <p>
-                      Request made > Request being prepared > Request on its way
-                      > Request fulfilled
-                    </p>
+                    <p>Request made > Request on its way > Request fulfilled</p>
                   </div>
                 </Col>
               </Row>

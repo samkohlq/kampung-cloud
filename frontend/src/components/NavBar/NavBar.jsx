@@ -100,8 +100,8 @@ class NavBar extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-end">
             <Nav className="mr-auto">
-              <Navbar.Text className="text-uppercase">
-                <Nav.Link href="/getting-started">Getting Started</Nav.Link>
+              <Navbar.Text className="text-uppercase mx-1">
+                <Nav.Link href="/getting-started">Get started</Nav.Link>
               </Navbar.Text>
             </Nav>
             <Navbar.Text>
