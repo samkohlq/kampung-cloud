@@ -17,6 +17,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/", (req, res) => {
+  res.send("hit home!");
+});
 app.use("/users", userRouter);
 app.use("/requests", requestRouter);
 app.use("/comments", commentRouter);

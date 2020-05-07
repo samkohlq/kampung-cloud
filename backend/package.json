@@ -2,14 +2,20 @@
   "name": "backend",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "build": "npm run clean && npm run build-babel",
-    "build-babel": "babel -d ./build ./src -s --copy-files && rm -rf ./build/tests",
+    "build-babel": "babel -d ./build ./src -s --copy-files",
     "clean": "rm -rf build",
-    "start": "npm run build && node ./build/bin/www",
+    "start": "NODE_ENV=production npm run build && node ./build/bin/www",
     "start:dev": "nodemon --exec babel-node ./src/bin/www"
   },
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -21,14 +27,11 @@
     "pg": "^8.0.2",
     "pg-hstore": "^2.3.3",
     "regenerator-runtime": "^0.13.5",
-    "sequelize": "^5.21.6"
+    "sequelize": "^5.21.6",
+    "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.9.5",
-    "nodemon": "^2.0.3",
-    "sequelize-cli": "^5.5.1"
+    "nodemon": "^2.0.3"
   }
 }
