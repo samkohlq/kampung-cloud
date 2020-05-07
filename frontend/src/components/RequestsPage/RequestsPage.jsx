@@ -35,7 +35,8 @@ class Requests extends React.Component {
         <>
           <h4>Requests picked up</h4>
           <RequestsList requests={"PickedUp"} />
-          <h4>Your requests</h4>
+          <br></br>
+          <h4 className="mt-5">Your requests</h4>
           <RequestsList requests={"Posted"} />
         </>
       ) : (

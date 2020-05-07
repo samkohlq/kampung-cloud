@@ -56,20 +56,37 @@ class RequestsList extends React.Component {
 
   render() {
     return (
-      <Table className="mb-5" responsive="sm" hover>
-        <thead>
-          <tr>
-            <th style={{ width: "60%" }}>Request</th>
-            <th style={{ width: "20%" }}>Deadline</th>
-            <th style={{ width: "20%" }}>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.requests.map((request, i) => (
-            <Request key={i} request={request} />
-          ))}
-        </tbody>
-      </Table>
+      <>
+        {this.state.requests.length === 0 ? (
+          <>
+            <Table className="mb-5" responsive="sm" hover>
+              <thead>
+                <tr>
+                  <th style={{ width: "60%" }}>Request</th>
+                  <th style={{ width: "20%" }}>Deadline</th>
+                  <th style={{ width: "20%" }}>Status</th>
+                </tr>
+              </thead>
+            </Table>
+            <h6 className="text-center text-secondary">Nothing here yet</h6>
+          </>
+        ) : (
+          <Table className="mb-5" responsive="sm" hover>
+            <thead>
+              <tr>
+                <th style={{ width: "60%" }}>Request</th>
+                <th style={{ width: "20%" }}>Deadline</th>
+                <th style={{ width: "20%" }}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.requests.map((request, i) => (
+                <Request key={i} request={request} />
+              ))}
+            </tbody>
+          </Table>
+        )}
+      </>
     );
   }
 }
