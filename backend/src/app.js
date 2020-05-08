@@ -12,7 +12,7 @@ import userRouter from "./routes/userRouter";
 var app = express();
 var corsOptions = {
   origin: "*",
-  optionsSuccessStatus: 200,
+  // optionsSuccessStatus: 200,
 };
 
 app.use(logger("dev"));
