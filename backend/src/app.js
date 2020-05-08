@@ -4,9 +4,10 @@ import express from "express";
 import logger from "morgan";
 import path from "path";
 import "regenerator-runtime/runtime";
-var commentRouter = require("./routes/commentRouter");
-var requestRouter = require("./routes/requestRouter");
-var userRouter = require("./routes/userRouter");
+import commentRouter from "./routes/commentRouter";
+import indexRouter from "./routes/index";
+import requestRouter from "./routes/requestRouter";
+import userRouter from "./routes/userRouter";
 
 var app = express();
 var corsOptions = {
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/", indexRouter);
 app.use("/users", cors(corsOptions), userRouter);
 app.use("/requests", cors(corsOptions), requestRouter);
 app.use("/comments", cors(corsOptions), commentRouter);
