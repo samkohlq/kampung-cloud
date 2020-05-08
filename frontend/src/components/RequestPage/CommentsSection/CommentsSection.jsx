@@ -31,7 +31,7 @@ class CommentsSection extends React.Component {
 
   handleSubmit = () => {
     fetch(
-      "https://secure-savannah-60280.herokuapp.com/comments/createComment",
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/comments/createComment`,
       {
         method: "POST",
         headers: {

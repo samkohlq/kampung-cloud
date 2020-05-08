@@ -111,7 +111,7 @@ class RequestPage extends React.Component {
 
   retrieveRequest = async (requestId) => {
     const response = await fetch(
-      `https://secure-savannah-60280.herokuapp.com/requests/retrieveRequest?requestId=${requestId}`
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/retrieveRequest?requestId=${requestId}`
     );
     const json = await response.json();
     const retrievedRequest = json;
@@ -127,7 +127,7 @@ class RequestPage extends React.Component {
     idToken
   ) => {
     const response = await fetch(
-      `https://secure-savannah-60280.herokuapp.com/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`,
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`,
       {
         method: "GET",
         headers: {

@@ -17,7 +17,7 @@ class IntroSubSection extends React.Component {
 
   countRequestsByStatus = () => {
     fetch(
-      `https://secure-savannah-60280.herokuapp.com/requests/countRequestsByStatus`
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/countRequestsByStatus`
     )
       .then((response) => response.json())
       .then((requestsCount) => {

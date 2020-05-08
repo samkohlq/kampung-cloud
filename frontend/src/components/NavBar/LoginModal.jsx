@@ -28,6 +28,25 @@ class LoginModal extends React.Component {
     }
   }
 
+  handleSignIn = () => {
+    fetch(
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/createUser`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
+          userName: "samkoh",
+          email: "samkohlq@gmail.com",
+          phoneNum: null,
+          authUid: "1234",
+        }),
+      }
+    );
+  };
+
   render() {
     var uiConfig = {
       signInFlow: "popup",
@@ -45,9 +64,10 @@ class LoginModal extends React.Component {
             .then((idToken) => {
               return idToken;
             });
+          console.log(idToken);
           if (authResult.additionalUserInfo.isNewUser) {
-            await fetch(
-              "https://secure-savannah-60280.herokuapp.com/users/createUser",
+            fetch(
+              `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/createUser`,
               {
                 method: "POST",
                 headers: {
@@ -75,6 +95,7 @@ class LoginModal extends React.Component {
           onHide={this.props.toggleLoginModal}
         >
           <Modal.Body>
+            <Button onClick={this.handleSignIn}>Sign in</Button>
             <StyledFirebaseAuth
               uiConfig={uiConfig}
               firebaseAuth={firebase.auth()}

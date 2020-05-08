@@ -179,7 +179,7 @@ class RequestFormModal extends React.Component {
   submitForm = async () => {
     const requestorUid = await firebase.auth().currentUser.uid;
     const response = await fetch(
-      "https://secure-savannah-60280.herokuapp.com/requests/createRequest",
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/createRequest`,
       {
         method: "POST",
         headers: {

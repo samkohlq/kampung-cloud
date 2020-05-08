@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 class ReleaseRequest extends React.Component {
   handleRemoveFulfillerFromRequest = () => {
     fetch(
-      `https://secure-savannah-60280.herokuapp.com/requests/removeFulfillerFromRequest?requestId=${this.props.requestId}`,
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/removeFulfillerFromRequest?requestId=${this.props.requestId}`,
       {
         method: "PUT",
         headers: {

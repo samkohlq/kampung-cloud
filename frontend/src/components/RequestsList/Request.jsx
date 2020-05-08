@@ -26,7 +26,7 @@ class Request extends React.Component {
 
   retrieveUserInfo = async (userUid, requestForUserConfidentialInfo) => {
     const response = await fetch(
-      `https://secure-savannah-60280.herokuapp.com/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`
     );
     const retrievedUser = await response.json();
     this.setState({

@@ -17,7 +17,7 @@ class DeleteRequest extends React.Component {
 
   handleDeleteRequest = () => {
     fetch(
-      `https://secure-savannah-60280.herokuapp.com/requests/deleteRequest?requestId=${this.props.requestId}`,
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/deleteRequest?requestId=${this.props.requestId}`,
       {
         method: "POST",
         headers: {

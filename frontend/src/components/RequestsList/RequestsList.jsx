@@ -46,7 +46,7 @@ class RequestsList extends React.Component {
       fetchRequest = `retrieveRequests?type=${this.state.type}`;
     }
     const response = await fetch(
-      `https://secure-savannah-60280.herokuapp.com/requests/${fetchRequest}`
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/${fetchRequest}`
     );
     const requests = await response.json();
     this.setState({

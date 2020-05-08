@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 class MarkRequestCompleted extends React.Component {
   handleMarkRequestCompleted = () => {
     fetch(
-      `https://secure-savannah-60280.herokuapp.com/requests/markRequestCompleted?requestId=${this.props.requestId}`,
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/markRequestCompleted?requestId=${this.props.requestId}`,
       {
         method: "PUT",
         headers: {

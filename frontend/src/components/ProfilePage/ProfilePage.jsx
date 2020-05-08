@@ -61,7 +61,7 @@ class Profile extends React.Component {
     idToken
   ) => {
     await fetch(
-      `https://secure-savannah-60280.herokuapp.com/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`,
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`,
       {
         method: "GET",
         headers: {
@@ -92,7 +92,7 @@ class Profile extends React.Component {
         return idToken;
       });
     const response = await fetch(
-      `https://secure-savannah-60280.herokuapp.com/users/updateUserPhoneNum?authUid=${userUid}`,
+      `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/updateUserPhoneNum?authUid=${userUid}`,
       {
         method: "PUT",
         headers: {
