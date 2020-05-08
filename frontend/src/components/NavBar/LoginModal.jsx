@@ -35,7 +35,7 @@ class LoginModal extends React.Component {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${idToken}`,
+          Authorization: `Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg4ODQ4YjVhZmYyZDUyMDEzMzFhNTQ3ZDE5MDZlNWFhZGY2NTEzYzgiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiU2FtYW50aGEgS29oIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdpbjBrVDU4Rzd1QjhpdURiREl4MnZmUXdROWZVMFdweVpuVGlxMy1BIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2thbXB1bmctY2xvdWQtcHJvZCIsImF1ZCI6ImthbXB1bmctY2xvdWQtcHJvZCIsImF1dGhfdGltZSI6MTU4ODkzOTU1MywidXNlcl9pZCI6Imo3MnkwQTVjY0ZhajAzNk5hcmJ3TUZWVU9PeDIiLCJzdWIiOiJqNzJ5MEE1Y2NGYWowMzZOYXJid01GVlVPT3gyIiwiaWF0IjoxNTg4OTM5NTUzLCJleHAiOjE1ODg5NDMxNTMsImVtYWlsIjoic2Fta29obHFAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMTYzNTEzOTA1NTA0MzAzODgzMTkiXSwiZW1haWwiOlsic2Fta29obHFAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.j-oQKNDYgEdVFnuBXdH_YLksRA9G9otRU0HVV7JYIi1X0D_ZwN1sCpVqT-IyNlLeSAZcN2HDLJhzAdbVTEI--O5wLZDdmTc5rfWD9ie6tfncjpeghLwd5jciPdB4gpCfv5bidXlE1l_V1ZIf_2CETlcggH1uAvnVAj2LRnL9ESrTBj_hqqmXQ-zrwzp8p517v3aFwVeZfKvDheYqGRZjqzRIdvZdZ60DRfrEHWgnDiO7vygJwBlXV5Ay5IeGkKERg82cPgg-hKgz7nYPxDXasudDvcJIzaOVpPJ76lrdeSZtrKGPS50Cbg27v5meOc8iRgoCvo1viaXH0TsVoUAF6g`,
         },
         body: JSON.stringify({
           userName: "samkoh",
@@ -64,9 +64,8 @@ class LoginModal extends React.Component {
             .then((idToken) => {
               return idToken;
             });
-          console.log(idToken);
           if (authResult.additionalUserInfo.isNewUser) {
-            fetch(
+            await fetch(
               `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/createUser`,
               {
                 method: "POST",
