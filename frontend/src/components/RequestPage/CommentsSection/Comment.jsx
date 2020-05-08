@@ -17,7 +17,7 @@ class Comment extends React.Component {
 
   retrieveUserInfo = async (userUid) => {
     const response = await fetch(
-      `http://localhost:4000/users/retrieveUserInfo?authUid=${userUid}`,
+      `https://secure-savannah-60280.herokuapp.com/users/retrieveUserInfo?authUid=${userUid}`,
       {
         method: "GET",
         headers: {

@@ -46,19 +46,22 @@ class LoginModal extends React.Component {
               return idToken;
             });
           if (authResult.additionalUserInfo.isNewUser) {
-            await fetch("http://localhost:4000/users/createUser", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${idToken}`,
-              },
-              body: JSON.stringify({
-                userName: authResult.user.displayName,
-                email: authResult.user.email,
-                phoneNum: authResult.user.phoneNumber,
-                authUid: authResult.user.uid,
-              }),
-            });
+            await fetch(
+              "https://secure-savannah-60280.herokuapp.com/users/createUser",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${idToken}`,
+                },
+                body: JSON.stringify({
+                  userName: authResult.user.displayName,
+                  email: authResult.user.email,
+                  phoneNum: authResult.user.phoneNumber,
+                  authUid: authResult.user.uid,
+                }),
+              }
+            );
           }
           return true;
         },

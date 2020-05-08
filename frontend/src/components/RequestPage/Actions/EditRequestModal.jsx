@@ -139,7 +139,7 @@ class EditRequestModal extends React.Component {
 
   submitForm = async () => {
     const response = await fetch(
-      `http://localhost:4000/requests/updateRequest?requestId=${this.props.retrievedRequest.id}`,
+      `https://secure-savannah-60280.herokuapp.com/requests/updateRequest?requestId=${this.props.retrievedRequest.id}`,
       {
         method: "PUT",
         headers: {

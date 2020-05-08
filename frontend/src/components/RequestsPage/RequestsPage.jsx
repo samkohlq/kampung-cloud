@@ -33,11 +33,15 @@ class Requests extends React.Component {
     } else {
       userRequests = this.state.loggedIn ? (
         <>
-          <h4>Requests picked up</h4>
-          <RequestsList requests={"PickedUp"} />
+          <h4 className="my-5" style={{ fontFamily: "DM Serif Display" }}>
+            Requests picked up
+          </h4>
+          <RequestsList type={"PickedUp"} />
           <br></br>
-          <h4 className="mt-5">Your requests</h4>
-          <RequestsList requests={"Posted"} />
+          <h4 className="my-5" style={{ fontFamily: "DM Serif Display" }}>
+            Your requests
+          </h4>
+          <RequestsList type={"Posted"} />
         </>
       ) : (
         <>

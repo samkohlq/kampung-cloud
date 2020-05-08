@@ -38,15 +38,15 @@ class RequestsList extends React.Component {
     const loggedInUserUid = firebase.auth().currentUser
       ? firebase.auth().currentUser.uid
       : null;
-    if (this.props.requests === "PickedUp") {
+    if (this.props.type === "PickedUp") {
       fetchRequest = `retrieveAssignedRequests?loggedInUserUid=${loggedInUserUid}`;
-    } else if (this.props.requests === "Posted") {
+    } else if (this.props.type === "Posted") {
       fetchRequest = `retrievePostedRequests?loggedInUserUid=${loggedInUserUid}`;
     } else {
       fetchRequest = `retrieveRequests?type=${this.state.type}`;
     }
     const response = await fetch(
-      `http://localhost:4000/requests/${fetchRequest}`
+      `https://secure-savannah-60280.herokuapp.com/requests/${fetchRequest}`
     );
     const requests = await response.json();
     this.setState({
@@ -59,29 +59,32 @@ class RequestsList extends React.Component {
       <>
         {this.state.requests.length === 0 ? (
           <>
-            <Table className="mb-5" responsive="sm" hover>
-              <thead>
-                <tr>
-                  <th style={{ width: "60%" }}>Request</th>
-                  <th style={{ width: "20%" }}>Deadline</th>
-                  <th style={{ width: "20%" }}>Status</th>
-                </tr>
-              </thead>
-            </Table>
-            <h6 className="text-center text-secondary">Nothing here yet</h6>
+            <h6 className="text-center text-secondary my-5">
+              Nothing here yet
+            </h6>
           </>
         ) : (
           <Table className="mb-5" responsive="sm" hover>
             <thead>
               <tr>
-                <th style={{ width: "60%" }}>Request</th>
-                <th style={{ width: "20%" }}>Deadline</th>
-                <th style={{ width: "20%" }}>Status</th>
+                {this.props.type === "PickedUp" ? (
+                  <>
+                    <th style={{ width: "60%" }}>Request</th>
+                    <th style={{ width: "20%" }}>Deadline</th>
+                    <th style={{ width: "20%" }}>Requestor</th>
+                  </>
+                ) : (
+                  <>
+                    <th style={{ width: "60%" }}>Request</th>
+                    <th style={{ width: "20%" }}>Deadline</th>
+                    <th style={{ width: "20%" }}>Status</th>
+                  </>
+                )}
               </tr>
             </thead>
             <tbody>
               {this.state.requests.map((request, i) => (
-                <Request key={i} request={request} />
+                <Request key={i} request={request} type={this.props.type} />
               ))}
             </tbody>
           </Table>

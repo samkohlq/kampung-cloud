@@ -16,7 +16,9 @@ class IntroSubSection extends React.Component {
   }
 
   countRequestsByStatus = () => {
-    fetch(`http://localhost:4000/requests/countRequestsByStatus`)
+    fetch(
+      `https://secure-savannah-60280.herokuapp.com/requests/countRequestsByStatus`
+    )
       .then((response) => response.json())
       .then((requestsCount) => {
         this.setState({

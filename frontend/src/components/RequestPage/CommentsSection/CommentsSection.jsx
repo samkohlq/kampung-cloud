@@ -30,17 +30,20 @@ class CommentsSection extends React.Component {
   };
 
   handleSubmit = () => {
-    fetch("http://localhost:4000/comments/createComment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userUid: this.state.loggedInUserUid,
-        requestId: this.props.retrievedRequest.id,
-        comment: this.state.comment,
-      }),
-    });
+    fetch(
+      "https://secure-savannah-60280.herokuapp.com/comments/createComment",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userUid: this.state.loggedInUserUid,
+          requestId: this.props.retrievedRequest.id,
+          comment: this.state.comment,
+        }),
+      }
+    );
     window.location.href = `/requests/${this.props.retrievedRequest.id}`;
   };
 

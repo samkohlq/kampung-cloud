@@ -15,7 +15,7 @@ class CommentsList extends React.Component {
 
   retrieveComments = async () => {
     const response = await fetch(
-      `http://localhost:4000/comments/retrieveComments?requestId=${this.props.retrievedRequest.id}`
+      `https://secure-savannah-60280.herokuapp.com/comments/retrieveComments?requestId=${this.props.retrievedRequest.id}`
     );
     const json = await response.json();
     const retrievedComments = json;

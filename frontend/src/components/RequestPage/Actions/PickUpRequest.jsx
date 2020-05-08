@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 class PickUpRequest extends React.Component {
   handlePickUpRequest = () => {
     fetch(
-      `http://localhost:4000/requests/assignRequestToFulfiller?requestId=${this.props.requestId}`,
+      `https://secure-savannah-60280.herokuapp.com/requests/assignRequestToFulfiller?requestId=${this.props.requestId}`,
       {
         method: "PUT",
         headers: {

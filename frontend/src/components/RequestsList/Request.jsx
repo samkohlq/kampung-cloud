@@ -12,6 +12,7 @@ class Request extends React.Component {
     super(props);
     this.state = {
       requestorName: null,
+      requestorEmail: null,
       requestForUserConfidentialInfo: false,
     };
   }
@@ -25,11 +26,12 @@ class Request extends React.Component {
 
   retrieveUserInfo = async (userUid, requestForUserConfidentialInfo) => {
     const response = await fetch(
-      `http://localhost:4000/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`
+      `https://secure-savannah-60280.herokuapp.com/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`
     );
     const retrievedUser = await response.json();
     this.setState({
       requestorName: retrievedUser.userName,
+      requestorEmail: retrievedUser.email,
     });
   };
 
@@ -44,7 +46,15 @@ class Request extends React.Component {
       >
         <td>{this.props.request.title}</td>
         <td>{deadline}</td>
-        <td>{requestStatuses[this.props.request.status]}</td>
+        {this.props.type === "PickedUp" ? (
+          <>
+            <td>{this.state.requestorName}</td>
+          </>
+        ) : (
+          <>
+            <td>{requestStatuses[this.props.request.status]}</td>
+          </>
+        )}
       </tr>
     );
   }

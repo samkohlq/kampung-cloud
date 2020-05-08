@@ -111,7 +111,7 @@ class RequestPage extends React.Component {
 
   retrieveRequest = async (requestId) => {
     const response = await fetch(
-      `http://localhost:4000/requests/retrieveRequest?requestId=${requestId}`
+      `https://secure-savannah-60280.herokuapp.com/requests/retrieveRequest?requestId=${requestId}`
     );
     const json = await response.json();
     const retrievedRequest = json;
@@ -127,7 +127,7 @@ class RequestPage extends React.Component {
     idToken
   ) => {
     const response = await fetch(
-      `http://localhost:4000/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`,
+      `https://secure-savannah-60280.herokuapp.com/users/retrieveUserInfo?requestForUserConfidentialInfo=${requestForUserConfidentialInfo}&authUid=${userUid}`,
       {
         method: "GET",
         headers: {
