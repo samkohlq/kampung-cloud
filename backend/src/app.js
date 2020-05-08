@@ -11,8 +11,7 @@ import userRouter from "./routes/userRouter";
 
 var app = express();
 var corsOptions = {
-  origin: "https://kampung-cloud-prod.web.app",
-  methods: ["GET", "PUT", "POST"],
+  origin: "*",
   optionsSuccessStatus: 200,
 };
 
