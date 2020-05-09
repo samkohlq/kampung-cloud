@@ -16,6 +16,8 @@ class LoginModal extends React.Component {
         password: null,
       },
       showLoginValidation: null,
+      showForgotPasswordModal: null,
+      emailForPasswordReset: null,
       showSignUpModal: false,
       signUpErrorMessage: null,
       createUserData: {
@@ -42,6 +44,22 @@ class LoginModal extends React.Component {
       this.setState({ showLoginModal: this.props.showLoginModal });
     }
   }
+
+  showOtherModal = () => {
+    this.props.toggleLoginModal();
+    this.toggleSignUpModal();
+  };
+
+  toggleSignUpModal = () => {
+    this.setState({ showSignUpModal: !this.state.showSignUpModal });
+  };
+
+  toggleForgotPasswordModal = () => {
+    this.props.toggleLoginModal();
+    this.setState({
+      showForgotPasswordModal: !this.state.showForgotPasswordModal,
+    });
+  };
 
   handleSignUpChange = (event) => {
     this.setState({
@@ -88,7 +106,6 @@ class LoginModal extends React.Component {
         displayName: this.state.createUserData.userName,
       });
     }
-    window.location.reload();
   };
 
   handleLoginChange = (event) => {
@@ -123,16 +140,16 @@ class LoginModal extends React.Component {
         }
         this.setState({ showLoginValidation: "border border-warning" });
       });
-    window.location.reload();
   };
 
-  showOtherModal = () => {
-    this.props.toggleLoginModal();
-    this.toggleSignUpModal();
+  handleForgotPasswordChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   };
 
-  toggleSignUpModal = () => {
-    this.setState({ showSignUpModal: !this.state.showSignUpModal });
+  handleForgotPassword = async () => {
+    await auth.sendPasswordResetEmail(this.state.emailForPasswordReset);
   };
 
   render() {
@@ -173,14 +190,23 @@ class LoginModal extends React.Component {
                   onChange={this.handleLoginChange}
                 />
               </Form.Group>
-              <Button
-                className="float-right mb-4"
-                variant="success"
-                size="sm"
-                onClick={this.handleLogin}
-              >
-                Log in
-              </Button>
+              <div className="mb-4">
+                <Button
+                  variant="link"
+                  size="sm"
+                  onClick={this.toggleForgotPasswordModal}
+                >
+                  Forgot password?
+                </Button>
+                <Button
+                  className="float-right mx-2"
+                  variant="success"
+                  size="sm"
+                  onClick={this.handleLogin}
+                >
+                  Log in
+                </Button>
+              </div>
             </Form>
           </Modal.Body>
           <Modal.Footer className="justify-content-center">
@@ -274,6 +300,42 @@ class LoginModal extends React.Component {
               Sign in
             </Button>
           </Modal.Footer>
+        </Modal>
+
+        {/* Forgot password modal */}
+        <Modal
+          show={this.state.showForgotPasswordModal}
+          onHide={this.toggleForgotPasswordModal}
+        >
+          <Modal.Body>
+            <Modal.Header closeButton>
+              <Modal.Title>Forgot password</Modal.Title>
+            </Modal.Header>
+            <Form className="m-4">
+              {this.state.forgotPasswordErrorMessage ? (
+                <Form.Text className="text-warning my-3">
+                  {this.state.forgotPasswordErrorMessage}
+                </Form.Text>
+              ) : null}
+              <Form.Group>
+                <Form.Control
+                  className={`${this.state.showForgotPasswordValidation}`}
+                  name="emailForPasswordReset"
+                  type="email"
+                  placeholder="Enter email"
+                  onChange={this.handleForgotPasswordChange}
+                />
+              </Form.Group>
+              <Button
+                className="float-right mb-4"
+                variant="success"
+                size="sm"
+                onClick={this.handleForgotPassword}
+              >
+                Send me a password reset email
+              </Button>
+            </Form>
+          </Modal.Body>
         </Modal>
       </>
     );
