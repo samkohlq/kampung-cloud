@@ -93,7 +93,7 @@ class HowItWorksPage extends React.Component {
                       information will only be shown when someone has offered to
                       help.
                     </p>
-                    <Image src={howItWorks} style={{ width: "85%" }} />
+                    <Image src={howItWorks} style={{ width: "100%" }} />
                   </div>
                 </Col>
               </Row>
