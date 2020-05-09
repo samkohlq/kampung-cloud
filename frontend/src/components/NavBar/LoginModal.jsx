@@ -84,10 +84,11 @@ class LoginModal extends React.Component {
           }),
         }
       );
-      credential.user.updateProfile({
+      await credential.user.updateProfile({
         displayName: this.state.createUserData.userName,
       });
     }
+    window.location.reload();
   };
 
   handleLoginChange = (event) => {
@@ -122,6 +123,7 @@ class LoginModal extends React.Component {
         }
         this.setState({ showLoginValidation: "border border-warning" });
       });
+    window.location.reload();
   };
 
   showOtherModal = () => {
