@@ -14,6 +14,7 @@ class NavBar extends React.Component {
       showLoginModal: false,
     };
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
+    this.updateUserName = this.updateUserName.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +34,12 @@ class NavBar extends React.Component {
   toggleLoginModal = () => {
     this.setState({
       showLoginModal: !this.state.showLoginModal,
+    });
+  };
+
+  updateUserName = (userName) => {
+    this.setState({
+      loggedInUserName: userName,
     });
   };
 
@@ -83,6 +90,7 @@ class NavBar extends React.Component {
         <LoginModal
           showLoginModal={this.state.showLoginModal}
           toggleLoginModal={this.toggleLoginModal}
+          updateUserName={this.updateUserName}
         />
       </>
     );
