@@ -6,10 +6,10 @@ import howItWorks from "../../images/how-it-works.png";
 import RequestFormModal from "../Homepage/RequestFormModal";
 import LoginModal from "../NavBar/LoginModal";
 import NavBar from "../NavBar/NavBar";
-import "./GetStartedPage.css";
+import "./HowItWorksPage.css";
 import SafetyGuidelines from "./SafetyGuidelines";
 
-class AboutPage extends React.Component {
+class HowItWorksPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,9 +64,9 @@ class AboutPage extends React.Component {
               <Row className="my-5">
                 <Col className="mx-5">
                   <div className="text-center">
-                    <h3 className="my-3 subsection-header">
+                    <div className="my-3 main-header">
                       How this Kampung works
-                    </h3>
+                    </div>
                     <p>This kampung is a community built on trust.</p>
                     <p>
                       We want to keep the kampung spirit alive and provide a
@@ -81,12 +81,12 @@ class AboutPage extends React.Component {
               <Row className="my-5">
                 <Col className="mx-5">
                   <div className="text-center">
-                    <h3 className="my-3 subsection-header">
+                    <div className="my-3 subsection-header">
                       What should I do next?
-                    </h3>
+                    </div>
                     <p>
                       <Link onClick={this.toggleRequestFormModal}>
-                        Add a request
+                        Make a request
                       </Link>{" "}
                       if you're in need of help! Once that's done, anyone with
                       an account will be able to pick it up. Your contact
@@ -100,14 +100,14 @@ class AboutPage extends React.Component {
               <Row className="my-5">
                 <Col className="mx-5">
                   <div className="text-left">
-                    <h3 className="my-3  subsection-header">
+                    <div className="my-3  subsection-header">
                       Keeping this Kampung safe
-                    </h3>
+                    </div>
                     <p>
-                      Your safety is important to us. We can't vet the requests
-                      coming in but trust that everybody is here out of the
-                      goodness of their hearts and won’t take advantage of each
-                      other.
+                      Your safety is important to us. We can’t vet the requests
+                      coming in and can only trust that everybody is here out of
+                      the goodness of their hearts, and won’t take advantage of
+                      each other.
                     </p>
                     <SafetyGuidelines />
                   </div>
@@ -121,4 +121,4 @@ class AboutPage extends React.Component {
   }
 }
 
-export default AboutPage;
+export default HowItWorksPage;

@@ -60,7 +60,7 @@ class RequestsList extends React.Component {
         {this.state.requests.length === 0 ? (
           <>
             <h6 className="text-center text-secondary my-5">
-              Nothing here yet
+              Nothing here yet!
             </h6>
           </>
         ) : (

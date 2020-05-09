@@ -67,7 +67,7 @@ class Homepage extends React.Component {
                 this.toggleRequestFormModal();
               }}
             >
-              Add a request
+              Make a request
             </Button>
             <Button
               className="text-uppercase font-weight-bold px-3"

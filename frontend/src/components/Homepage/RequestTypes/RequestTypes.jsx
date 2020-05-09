@@ -48,7 +48,7 @@ class RequestTypes extends React.Component {
           Request board
         </h5>
         <div className="text-secondary small">
-          Click to filter the requests by type
+          Click to filter requests by type
         </div>
         <Row className="my-5">
           <Col align="center">
@@ -72,7 +72,7 @@ class RequestTypes extends React.Component {
                 });
               }}
             />
-            <div className="text-secondary small mt-1">all</div>
+            <div className="text-secondary text-uppercase small mt-1">all</div>
           </Col>
           <Col align="center">
             <HoverImage
@@ -95,7 +95,9 @@ class RequestTypes extends React.Component {
                 });
               }}
             />
-            <div className="text-secondary small mt-1">meals</div>
+            <div className="text-secondary text-uppercase small mt-1">
+              meals
+            </div>
           </Col>
           <Col align="center">
             <HoverImage
@@ -118,7 +120,9 @@ class RequestTypes extends React.Component {
                 });
               }}
             />
-            <div className="text-secondary small mt-1">groceries</div>
+            <div className="text-secondary text-uppercase small mt-1">
+              groceries
+            </div>
           </Col>
           <Col align="center">
             <HoverImage
@@ -141,7 +145,9 @@ class RequestTypes extends React.Component {
                 });
               }}
             />
-            <div className="text-secondary small mt-1">hygiene</div>
+            <div className="text-secondary text-uppercase small mt-1">
+              hygiene
+            </div>
           </Col>
           <Col align="center">
             <HoverImage
@@ -164,7 +170,9 @@ class RequestTypes extends React.Component {
                 });
               }}
             />
-            <div className="text-secondary small mt-1">clothing</div>
+            <div className="text-secondary text-uppercase small mt-1">
+              clothing
+            </div>
           </Col>
           <Col align="center">
             <HoverImage
@@ -187,7 +195,7 @@ class RequestTypes extends React.Component {
                 });
               }}
             />
-            <div className="text-secondary small mt-1">tech</div>
+            <div className="text-secondary text-uppercase small mt-1">tech</div>
           </Col>
           <Col align="center">
             <HoverImage
@@ -210,7 +218,9 @@ class RequestTypes extends React.Component {
                 });
               }}
             />
-            <div className="text-secondary small mt-1">other</div>
+            <div className="text-secondary text-uppercase small mt-1">
+              other
+            </div>
           </Col>
         </Row>
         <RequestsList type={this.state.type} />
