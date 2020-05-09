@@ -1,14 +1,26 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import { Button, Form, Modal } from "react-bootstrap";
 import { default as firebase } from "../../firebase";
 import "./LoginModal.css";
+
+const auth = firebase.auth();
 
 class LoginModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      newUser: null,
       showLoginModal: this.props.showLoginModal,
+      createUserData: {
+        userName: null,
+        email: null,
+        phoneNum: null,
+        password: null,
+      },
+      loginData: {
+        email: null,
+        password: null,
+      },
     };
   }
 
@@ -18,7 +30,6 @@ class LoginModal extends React.Component {
         showLoginModal: props.showLoginModal,
       };
     }
-
     return null;
   }
 
@@ -28,87 +39,188 @@ class LoginModal extends React.Component {
     }
   }
 
-  handleSignIn = () => {
-    fetch(
+  handleSignUpChange = (event) => {
+    this.setState({
+      ...this.state,
+      createUserData: {
+        ...this.state.createUserData,
+        [event.target.name]: event.target.value,
+      },
+    });
+  };
+
+  handleSignUp = async () => {
+    const credential = await auth.createUserWithEmailAndPassword(
+      this.state.createUserData.email,
+      this.state.createUserData.password
+    );
+    const idToken = await credential.user.getIdToken();
+    await fetch(
       `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/createUser`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg4ODQ4YjVhZmYyZDUyMDEzMzFhNTQ3ZDE5MDZlNWFhZGY2NTEzYzgiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiU2FtYW50aGEgS29oIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdpbjBrVDU4Rzd1QjhpdURiREl4MnZmUXdROWZVMFdweVpuVGlxMy1BIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2thbXB1bmctY2xvdWQtcHJvZCIsImF1ZCI6ImthbXB1bmctY2xvdWQtcHJvZCIsImF1dGhfdGltZSI6MTU4ODkzOTU1MywidXNlcl9pZCI6Imo3MnkwQTVjY0ZhajAzNk5hcmJ3TUZWVU9PeDIiLCJzdWIiOiJqNzJ5MEE1Y2NGYWowMzZOYXJid01GVlVPT3gyIiwiaWF0IjoxNTg4OTM5NTUzLCJleHAiOjE1ODg5NDMxNTMsImVtYWlsIjoic2Fta29obHFAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMTYzNTEzOTA1NTA0MzAzODgzMTkiXSwiZW1haWwiOlsic2Fta29obHFAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.j-oQKNDYgEdVFnuBXdH_YLksRA9G9otRU0HVV7JYIi1X0D_ZwN1sCpVqT-IyNlLeSAZcN2HDLJhzAdbVTEI--O5wLZDdmTc5rfWD9ie6tfncjpeghLwd5jciPdB4gpCfv5bidXlE1l_V1ZIf_2CETlcggH1uAvnVAj2LRnL9ESrTBj_hqqmXQ-zrwzp8p517v3aFwVeZfKvDheYqGRZjqzRIdvZdZ60DRfrEHWgnDiO7vygJwBlXV5Ay5IeGkKERg82cPgg-hKgz7nYPxDXasudDvcJIzaOVpPJ76lrdeSZtrKGPS50Cbg27v5meOc8iRgoCvo1viaXH0TsVoUAF6g`,
+          Authorization: `Bearer ${idToken}`,
         },
         body: JSON.stringify({
-          userName: "samkoh",
-          email: "samkohlq@gmail.com",
-          phoneNum: null,
-          authUid: "1234",
+          userName: this.state.createUserData.displayName,
+          email: credential.user.email,
+          phoneNum: this.state.createUserData.phoneNum,
+          authUid: credential.user.uid,
         }),
       }
+    );
+    this.setState({ newUser: false });
+  };
+
+  handleLoginChange = (event) => {
+    this.setState({
+      ...this.state,
+      loginData: {
+        ...this.state.loginData,
+        [event.target.name]: event.target.value,
+      },
+    });
+  };
+
+  handleLogin = async () => {
+    await auth.signInWithEmailAndPassword(
+      this.state.loginData.email,
+      this.state.loginData.password
     );
   };
 
   render() {
-    var uiConfig = {
-      signInFlow: "popup",
-      signInSuccessUrl: window.location.href,
-      signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      ],
-      credentialHelper: "none",
-      callbacks: {
-        signInSuccessWithAuthResult: async (authResult, redirectUrl) => {
-          const idToken = await firebase
-            .auth()
-            .currentUser.getIdToken()
-            .then((idToken) => {
-              return idToken;
-            });
-          if (authResult.additionalUserInfo.isNewUser) {
-            await fetch(
-              `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/createUser`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${idToken}`,
-                },
-                body: JSON.stringify({
-                  userName: authResult.user.displayName,
-                  email: authResult.user.email,
-                  phoneNum: authResult.user.phoneNumber,
-                  authUid: authResult.user.uid,
-                }),
-              }
-            );
-          }
-          return true;
-        },
-      },
-    };
+    const loginOrSignUp = this.state.newUser ? (
+      <>
+        <Modal.Body>
+          <Modal.Header closeButton>
+            <Modal.Title>Sign up</Modal.Title>
+          </Modal.Header>
+          <Form className="m-4">
+            <Form.Text className="text-muted mb-3">
+              Your contact details will only be shared with others when you
+              create a request or offer help to someone in need
+            </Form.Text>
+            <Form.Group>
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                name="userName"
+                placeholder="First and last name"
+                onChange={this.handleSignUpChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                name="email"
+                type="email"
+                placeholder="Enter email"
+                onChange={this.handleSignUpChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Phone number</Form.Label>
+              <Form.Control
+                name="phoneNum"
+                placeholder="Enter phone number"
+                onChange={this.handleSignUpChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                name="password"
+                type="password"
+                placeholder="Password"
+                onChange={this.handleSignUpChange}
+              />
+            </Form.Group>
+            <Button
+              className="float-right mb-4"
+              variant="success"
+              size="sm"
+              onClick={this.handleSignUp}
+            >
+              Sign up
+            </Button>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+          <div className="small">Already have an account?</div>
+          <Button
+            className="m-0 p-0"
+            variant="link"
+            size="sm"
+            style={{ fontSize: "0.8rem" }}
+            onClick={() => {
+              this.setState({ newUser: false });
+            }}
+          >
+            Sign in
+          </Button>
+        </Modal.Footer>
+      </>
+    ) : (
+      <>
+        <Modal.Body>
+          <Modal.Header closeButton>
+            <Modal.Title>Log in</Modal.Title>
+          </Modal.Header>
+          <Form className="m-4">
+            <Form.Group>
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                name="email"
+                type="email"
+                placeholder="Enter email"
+                onChange={this.handleLoginChange}
+              />
+            </Form.Group>
 
+            <Form.Group>
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                name="password"
+                type="password"
+                placeholder="Password"
+                onChange={this.handleLoginChange}
+              />
+            </Form.Group>
+            <Button
+              className="float-right mb-4"
+              variant="success"
+              size="sm"
+              onClick={this.handleLogin}
+            >
+              Log in
+            </Button>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+          <div className="small">Don't have an account yet? </div>
+          <Button
+            className="m-0 p-0"
+            variant="link"
+            size="sm"
+            style={{ fontSize: "0.8rem" }}
+            onClick={() => {
+              this.setState({ newUser: true });
+            }}
+          >
+            Create one
+          </Button>
+        </Modal.Footer>
+      </>
+    );
     return (
       <>
         <Modal
           show={this.state.showLoginModal}
           onHide={this.props.toggleLoginModal}
         >
-          <Modal.Body>
-            <Button onClick={this.handleSignIn}>Sign in</Button>
-            <StyledFirebaseAuth
-              uiConfig={uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              onClick={this.props.toggleLoginModal}
-            >
-              Close
-            </Button>
-          </Modal.Footer>
+          {loginOrSignUp}
         </Modal>
       </>
     );
