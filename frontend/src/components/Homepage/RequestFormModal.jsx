@@ -102,7 +102,7 @@ class RequestFormModal extends React.Component {
         });
       }
 
-      if (!this.state.request.Type) {
+      if (!this.state.request.type) {
         await this.setState({
           ...this.state,
           validations: {
@@ -138,7 +138,7 @@ class RequestFormModal extends React.Component {
         });
       }
 
-      if (!this.state.request.Details) {
+      if (!this.state.request.details) {
         await this.setState({
           ...this.state,
           validations: {
@@ -174,6 +174,7 @@ class RequestFormModal extends React.Component {
         });
       }
     }
+    console.log(this.state.validations);
   };
 
   submitForm = async () => {
