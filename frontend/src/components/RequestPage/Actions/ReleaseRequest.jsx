@@ -19,6 +19,7 @@ class ReleaseRequest extends React.Component {
     return (
       <>
         <Button
+          className="mt-2"
           size="sm"
           onClick={this.handleRemoveFulfillerFromRequest}
           variant="outline-secondary"

@@ -179,9 +179,9 @@ class RequestPage extends React.Component {
       <>
         <NavBar />
         {this.state.isFetching ? (
-          <>
+          <div align="center">
             <Spinner animation="border" variant="primary" />
-          </>
+          </div>
         ) : (
           <Container className="px-4">
             <Row>
