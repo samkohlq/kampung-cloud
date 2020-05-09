@@ -102,7 +102,9 @@ class LoginModal extends React.Component {
             authUid: credential.user.uid,
           }),
         }
-      );
+      ).then(() => {
+        this.setState({ showSignUpModal: false });
+      });
       await credential.user.updateProfile({
         displayName: this.state.createUserData.userName,
       });
@@ -140,8 +142,10 @@ class LoginModal extends React.Component {
           });
         }
         this.setState({ showLoginValidation: "border border-warning" });
+      })
+      .then(() => {
+        this.setState({ showLoginModal: false });
       });
-    this.setState({ showLoginModal: false });
   };
 
   handleForgotPasswordChange = (event) => {
