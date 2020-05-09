@@ -15,8 +15,8 @@ class DeleteRequest extends React.Component {
     });
   };
 
-  handleDeleteRequest = () => {
-    fetch(
+  handleDeleteRequest = async () => {
+    await fetch(
       `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/deleteRequest?requestId=${this.props.requestId}`,
       {
         method: "POST",

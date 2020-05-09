@@ -2,8 +2,8 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 class ReleaseRequest extends React.Component {
-  handleRemoveFulfillerFromRequest = () => {
-    fetch(
+  handleRemoveFulfillerFromRequest = async () => {
+    await fetch(
       `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/removeFulfillerFromRequest?requestId=${this.props.requestId}`,
       {
         method: "PUT",

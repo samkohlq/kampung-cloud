@@ -2,8 +2,8 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 class PickUpRequest extends React.Component {
-  handlePickUpRequest = () => {
-    fetch(
+  handlePickUpRequest = async () => {
+    await fetch(
       `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/assignRequestToFulfiller?requestId=${this.props.requestId}`,
       {
         method: "PUT",

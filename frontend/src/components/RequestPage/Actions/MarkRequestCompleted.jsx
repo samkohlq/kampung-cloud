@@ -2,8 +2,8 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 class MarkRequestCompleted extends React.Component {
-  handleMarkRequestCompleted = () => {
-    fetch(
+  handleMarkRequestCompleted = async () => {
+    await fetch(
       `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/requests/markRequestCompleted?requestId=${this.props.requestId}`,
       {
         method: "PUT",
