@@ -85,6 +85,7 @@ class LoginModal extends React.Component {
       });
     if (credential) {
       await this.props.updateUserName(this.state.createUserData.userName);
+      this.setState({ showSignUpModal: false });
       const idToken = await credential.user.getIdToken();
       await fetch(
         `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/createUser`,
@@ -140,6 +141,7 @@ class LoginModal extends React.Component {
         }
         this.setState({ showLoginValidation: "border border-warning" });
       });
+    this.setState({ showLoginModal: false });
   };
 
   handleForgotPasswordChange = (event) => {
@@ -150,6 +152,7 @@ class LoginModal extends React.Component {
 
   handleForgotPassword = async () => {
     await auth.sendPasswordResetEmail(this.state.emailForPasswordReset);
+    this.setState({ showForgotPasswordModal: false });
   };
 
   render() {

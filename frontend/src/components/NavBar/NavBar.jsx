@@ -9,7 +9,7 @@ class NavBar extends React.Component {
     super(props);
     this.state = {
       isFetching: true,
-      loggedIn: firebase.auth().currentUser ? true : false,
+      loggedIn: null,
       loggedInUserName: null,
       showLoginModal: false,
     };
@@ -122,5 +122,4 @@ class NavBar extends React.Component {
     );
   }
 }
-
 export default NavBar;
