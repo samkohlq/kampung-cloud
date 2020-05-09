@@ -54,10 +54,7 @@ class LoginModal extends React.Component {
       this.state.createUserData.email,
       this.state.createUserData.password
     );
-    await credential.user.updateProfile({
-      displayName: this.state.createUserData.userName,
-    });
-    this.props.updateUserName(this.state.createUserData.userName);
+    await this.props.updateUserName(this.state.createUserData.userName);
     const idToken = await credential.user.getIdToken();
     await fetch(
       `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/createUser`,
@@ -75,6 +72,9 @@ class LoginModal extends React.Component {
         }),
       }
     );
+    credential.user.updateProfile({
+      displayName: this.state.createUserData.userName,
+    });
   };
 
   handleLoginChange = (event) => {
