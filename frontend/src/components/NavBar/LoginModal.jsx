@@ -64,7 +64,7 @@ class LoginModal extends React.Component {
           Authorization: `Bearer ${idToken}`,
         },
         body: JSON.stringify({
-          userName: this.state.createUserData.displayName,
+          userName: this.state.createUserData.userName,
           email: credential.user.email,
           phoneNum: this.state.createUserData.phoneNum,
           authUid: credential.user.uid,
