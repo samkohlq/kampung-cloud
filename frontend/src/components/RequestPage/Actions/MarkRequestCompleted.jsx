@@ -19,7 +19,7 @@ class MarkRequestCompleted extends React.Component {
     return (
       <>
         <Button
-          className="mr-1"
+          className="mt-2 mr-1"
           size="sm"
           onClick={this.handleMarkRequestCompleted}
           variant="success"

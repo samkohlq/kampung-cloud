@@ -165,7 +165,7 @@ class EditRequestModal extends React.Component {
     return (
       <>
         <Button
-          className="mr-1"
+          className="mt-2 mr-1"
           variant="success"
           size="sm"
           onClick={this.handleShow}

@@ -46,7 +46,7 @@ class NavBar extends React.Component {
   render() {
     const loggedInUser = this.state.loggedIn ? (
       <Nav>
-        <NavDropdown title={this.state.loggedInUserName}>
+        <NavDropdown className="mx-1" title={this.state.loggedInUserName}>
           <NavDropdown.Item
             className="small"
             onClick={() => {
@@ -78,7 +78,7 @@ class NavBar extends React.Component {
       <>
         <Nav>
           <Nav.Link
-            className="text-uppercase"
+            className="text-uppercase mx-1"
             variant="primary"
             onClick={() => {
               this.toggleLoginModal();
