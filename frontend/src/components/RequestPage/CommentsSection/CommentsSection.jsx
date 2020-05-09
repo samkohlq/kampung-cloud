@@ -29,8 +29,8 @@ class CommentsSection extends React.Component {
     this.setState({ comment: event.target.value });
   };
 
-  handleSubmit = () => {
-    fetch(
+  handleSubmit = async () => {
+    const response = await fetch(
       `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/comments/createComment`,
       {
         method: "POST",
@@ -44,7 +44,9 @@ class CommentsSection extends React.Component {
         }),
       }
     );
-    window.location.href = `/requests/${this.props.retrievedRequest.id}`;
+    if (response.status === 200) {
+      window.location.href = `/requests/${this.props.retrievedRequest.id}`;
+    }
   };
 
   render() {
