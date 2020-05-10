@@ -20,11 +20,10 @@ class LoginModal extends React.Component {
         showEmailValidation: null,
         showPasswordValidation: null,
       },
+      loginButtonStatus: null,
       showForgotPasswordModal: false,
-      showSignUpModal: false,
     };
     this.toggleForgotPasswordModal = this.toggleForgotPasswordModal.bind(this);
-    this.toggleSignUpModal = this.toggleSignUpModal.bind(this);
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -41,11 +40,6 @@ class LoginModal extends React.Component {
       this.setState({ showLoginModal: this.props.showLoginModal });
     }
   }
-
-  toggleSignUpModal = () => {
-    this.props.toggleLoginModal();
-    this.setState({ showSignUpModal: !this.state.showSignUpModal });
-  };
 
   toggleForgotPasswordModal = () => {
     this.props.toggleLoginModal();
@@ -84,12 +78,18 @@ class LoginModal extends React.Component {
             loginErrorMessage: error.message,
           });
         }
+      })
+      .then(() => {
+        this.props.toggleLoginModal();
       });
-    this.props.toggleLoginModal();
   };
 
   handleValidateAndLogin = async () => {
     if (this.state.loginData.email && this.state.loginData.password) {
+      this.setState({
+        ...this.state,
+        loginButtonStatus: true,
+      });
       this.login();
     } else {
       // validate email field
@@ -182,6 +182,7 @@ class LoginModal extends React.Component {
                   variant="success"
                   size="sm"
                   onClick={this.handleValidateAndLogin}
+                  disabled={this.state.loginButtonStatus}
                 >
                   Log in
                 </Button>
@@ -195,7 +196,7 @@ class LoginModal extends React.Component {
               variant="link"
               size="sm"
               style={{ fontSize: "0.8rem" }}
-              onClick={this.toggleSignUpModal}
+              onClick={this.props.toggleSignUpModal}
             >
               Create one
             </Button>

@@ -3,6 +3,7 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import firebase from "../../firebase";
 import Logo from "../../images/logo.png";
 import LoginModal from "./LoginModal";
+import SignUpModal from "./SignUpModal";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -12,14 +13,17 @@ class NavBar extends React.Component {
       loggedIn: null,
       loggedInUserName: null,
       showLoginModal: false,
+      showSignUpModal: false,
     };
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
+    this.toggleSignUpModal = this.toggleSignUpModal.bind(this);
     this.updateUserName = this.updateUserName.bind(this);
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        console.log(user.displayName);
         this.setState({
           loggedIn: true,
           loggedInUserName: user.displayName,
@@ -34,6 +38,12 @@ class NavBar extends React.Component {
   toggleLoginModal = () => {
     this.setState({
       showLoginModal: !this.state.showLoginModal,
+    });
+  };
+
+  toggleSignUpModal = () => {
+    this.setState({
+      showSignUpModal: !this.state.showSignUpModal,
     });
   };
 
@@ -67,7 +77,6 @@ class NavBar extends React.Component {
             className="small"
             onClick={() => {
               firebase.auth().signOut();
-              this.setState({ showLoginModal: false });
             }}
           >
             Log out
@@ -90,6 +99,11 @@ class NavBar extends React.Component {
         <LoginModal
           showLoginModal={this.state.showLoginModal}
           toggleLoginModal={this.toggleLoginModal}
+          toggleSignUpModal={this.toggleSignUpModal}
+        />
+        <SignUpModal
+          showSignUpModal={this.state.showSignUpModal}
+          toggleSignUpModal={this.toggleSignUpModal}
           updateUserName={this.updateUserName}
         />
       </>

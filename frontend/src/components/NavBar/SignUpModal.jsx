@@ -27,6 +27,7 @@ class SignUpModal extends React.Component {
         phoneNumValidationMessage: null,
         passwordValidationMessage: null,
       },
+      submitButtonStatus: null,
     };
   }
 
@@ -69,7 +70,9 @@ class SignUpModal extends React.Component {
       });
     if (credential) {
       await this.props.updateUserName(this.state.createUserData.userName);
-      this.setState({ showSignUpModal: false });
+      await credential.user.updateProfile({
+        displayName: this.state.createUserData.userName,
+      });
       const idToken = await credential.user.getIdToken();
       await fetch(
         `${process.env.REACT_APP_KAMPUNG_CLOUD_SERVER_URL}/users/createUser`,
@@ -87,10 +90,7 @@ class SignUpModal extends React.Component {
           }),
         }
       ).then(() => {
-        this.setState({ showSignUpModal: false });
-      });
-      await credential.user.updateProfile({
-        displayName: this.state.createUserData.userName,
+        this.props.toggleSignUpModal();
       });
     }
   };
@@ -102,6 +102,10 @@ class SignUpModal extends React.Component {
       this.state.createUserData.phoneNum &&
       this.state.createUserData.password
     ) {
+      this.setState({
+        ...this.state,
+        submitButtonStatus: true,
+      });
       this.signUp();
     } else {
       // validate username field
@@ -300,6 +304,7 @@ class SignUpModal extends React.Component {
                 variant="success"
                 size="sm"
                 onClick={this.handleValidateAndSignUp}
+                disabled={this.state.submitButtonStatus}
               >
                 Sign up
               </Button>

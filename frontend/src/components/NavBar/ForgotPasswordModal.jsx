@@ -11,6 +11,7 @@ class ForgotPasswordModal extends React.Component {
       emailForPasswordReset: null,
       showEmailErrorMessage: null,
       showEmailValidation: null,
+      passwordResetButtonStatus: null,
     };
   }
 
@@ -41,6 +42,10 @@ class ForgotPasswordModal extends React.Component {
 
   handleValidateAndSendPasswordResetEmail = async () => {
     if (this.state.emailForPasswordReset) {
+      this.setState({
+        ...this.state,
+        passwordResetButtonStatus: true,
+      });
       await auth.sendPasswordResetEmail(this.state.emailForPasswordReset);
       this.props.toggleForgotPasswordModal();
     } else {
@@ -87,6 +92,7 @@ class ForgotPasswordModal extends React.Component {
                 variant="success"
                 size="sm"
                 onClick={this.handleValidateAndSendPasswordResetEmail}
+                disabled={this.state.passwordResetButtonStatus}
               >
                 Send me a password reset email
               </Button>
