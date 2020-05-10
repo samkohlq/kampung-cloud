@@ -9,6 +9,8 @@ class ForgotPasswordModal extends React.Component {
     super(props);
     this.state = {
       emailForPasswordReset: null,
+      showEmailErrorMessage: null,
+      showEmailValidation: null,
     };
   }
 
@@ -37,9 +39,21 @@ class ForgotPasswordModal extends React.Component {
     });
   };
 
-  handleForgotPassword = async () => {
-    await auth.sendPasswordResetEmail(this.state.emailForPasswordReset);
-    this.props.toggleForgotPasswordModal();
+  handleValidateAndSendPasswordResetEmail = async () => {
+    if (this.state.emailForPasswordReset) {
+      await auth.sendPasswordResetEmail(this.state.emailForPasswordReset);
+      this.props.toggleForgotPasswordModal();
+    } else {
+      // validate email field
+      if (!this.state.emailForPasswordReset) {
+        await this.setState({
+          ...this.state,
+          showEmailErrorMessage:
+            "Let us know where to send your password reset email to",
+          showEmailValidation: "border-warning",
+        });
+      }
+    }
   };
 
   render() {
@@ -54,14 +68,14 @@ class ForgotPasswordModal extends React.Component {
               <Modal.Title>Forgot password</Modal.Title>
             </Modal.Header>
             <Form className="m-4">
-              {this.state.forgotPasswordErrorMessage ? (
+              {this.state.showEmailErrorMessage ? (
                 <Form.Text className="text-warning my-3">
-                  {this.state.forgotPasswordErrorMessage}
+                  {this.state.showEmailErrorMessage}
                 </Form.Text>
               ) : null}
               <Form.Group>
                 <Form.Control
-                  className={`${this.state.showForgotPasswordValidation}`}
+                  className={`${this.state.showEmailValidation}`}
                   name="emailForPasswordReset"
                   type="email"
                   placeholder="Enter email"
@@ -72,7 +86,7 @@ class ForgotPasswordModal extends React.Component {
                 className="float-right mb-4"
                 variant="success"
                 size="sm"
-                onClick={this.handleForgotPassword}
+                onClick={this.handleValidateAndSendPasswordResetEmail}
               >
                 Send me a password reset email
               </Button>

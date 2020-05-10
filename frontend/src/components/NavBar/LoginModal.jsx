@@ -16,7 +16,10 @@ class LoginModal extends React.Component {
         email: null,
         password: null,
       },
-      showLoginValidation: null,
+      validations: {
+        showEmailValidation: null,
+        showPasswordValidation: null,
+      },
       showForgotPasswordModal: false,
       showSignUpModal: false,
     };
@@ -61,7 +64,7 @@ class LoginModal extends React.Component {
     });
   };
 
-  handleLogin = async () => {
+  login = async () => {
     await auth
       .signInWithEmailAndPassword(
         this.state.loginData.email,
@@ -85,6 +88,50 @@ class LoginModal extends React.Component {
     this.props.toggleLoginModal();
   };
 
+  handleValidateAndLogin = async () => {
+    if (this.state.loginData.email && this.state.loginData.password) {
+      this.login();
+    } else {
+      // validate email field
+      if (!this.state.loginData.email) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showEmailValidation: "border-warning",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showEmailValidation: null,
+          },
+        });
+      }
+
+      // validate password field
+      if (!this.state.loginData.password) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showPasswordValidation: "border-warning",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showPasswordValidation: null,
+          },
+        });
+      }
+    }
+  };
+
   render() {
     return (
       <>
@@ -105,7 +152,7 @@ class LoginModal extends React.Component {
               <Form.Group>
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
-                  className={`${this.state.showLoginValidation}`}
+                  className={`${this.state.validations.showEmailValidation}`}
                   name="email"
                   type="email"
                   placeholder="Enter email"
@@ -115,7 +162,7 @@ class LoginModal extends React.Component {
               <Form.Group>
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  className={`${this.state.showLoginValidation}`}
+                  className={`${this.state.validations.showPasswordValidation}`}
                   name="password"
                   type="password"
                   placeholder="Password"
@@ -134,7 +181,7 @@ class LoginModal extends React.Component {
                   className="float-right mx-2"
                   variant="success"
                   size="sm"
-                  onClick={this.handleLogin}
+                  onClick={this.handleValidateAndLogin}
                 >
                   Log in
                 </Button>

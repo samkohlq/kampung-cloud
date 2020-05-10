@@ -15,7 +15,18 @@ class SignUpModal extends React.Component {
         phoneNum: null,
         password: null,
       },
-      showSignUpValidation: null,
+      validations: {
+        showUserNameValidation: null,
+        showEmailValidation: null,
+        showPhoneNumValidation: null,
+        showPasswordValidation: null,
+      },
+      validationMessages: {
+        userNameValidationMessage: null,
+        emailValidationMessage: null,
+        phoneNumValidationMessage: null,
+        passwordValidationMessage: null,
+      },
     };
   }
 
@@ -44,7 +55,7 @@ class SignUpModal extends React.Component {
     });
   };
 
-  handleSignUp = async () => {
+  signUp = async () => {
     const credential = await auth
       .createUserWithEmailAndPassword(
         this.state.createUserData.email,
@@ -84,6 +95,127 @@ class SignUpModal extends React.Component {
     }
   };
 
+  handleValidateAndSignUp = async () => {
+    if (
+      this.state.createUserData.userName &&
+      this.state.createUserData.email &&
+      this.state.createUserData.phoneNum &&
+      this.state.createUserData.password
+    ) {
+      this.signUp();
+    } else {
+      // validate username field
+      if (!this.state.createUserData.userName) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showUserNameValidation: "border-warning",
+          },
+          validationMessages: {
+            ...this.state.validationMessages,
+            userNameValidationMessage:
+              "Please let us know your first and last name",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showUserNameValidation: null,
+          },
+          validationMessages: {
+            ...this.state.validationMessages,
+            userNameValidationMessage: null,
+          },
+        });
+      }
+
+      // validate email field
+      if (!this.state.createUserData.email) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showEmailValidation: "border-warning",
+          },
+          validationMessages: {
+            ...this.state.validationMessages,
+            emailValidationMessage:
+              "Please let us know which email account you will be using",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showEmailValidation: null,
+          },
+          validationMessages: {
+            ...this.state.validationMessages,
+            emailValidationMessage: null,
+          },
+        });
+      }
+
+      // validate phone number field
+      if (!this.state.createUserData.phoneNum) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showPhoneNumValidation: "border-warning",
+          },
+          validationMessages: {
+            ...this.state.validationMessages,
+            phoneNumValidationMessage: "Please provide us with a phone number",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showPhoneNumValidation: null,
+          },
+          validationMessages: {
+            ...this.state.validationMessages,
+            phoneNumValidationMessage: null,
+          },
+        });
+      }
+
+      // validate password field
+      if (!this.state.createUserData.password) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showPasswordValidation: "border-warning",
+          },
+          validationMessages: {
+            ...this.state.validationMessages,
+            passwordValidationMessage: "Please enter a password",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showPasswordValidation: null,
+          },
+          validationMessages: {
+            ...this.state.validationMessages,
+            passwordValidationMessage: null,
+          },
+        });
+      }
+    }
+  };
+
   render() {
     return (
       <>
@@ -108,43 +240,66 @@ class SignUpModal extends React.Component {
               <Form.Group>
                 <Form.Label>Name</Form.Label>
                 <Form.Control
+                  className={`${this.state.validations.showUserNameValidation}`}
                   name="userName"
                   placeholder="First and last name"
                   onChange={this.handleSignUpChange}
                 />
+                {this.state.validationMessages.userNameValidationMessage ? (
+                  <Form.Text className="text-warning my-1">
+                    {this.state.validationMessages.userNameValidationMessage}
+                  </Form.Text>
+                ) : null}
               </Form.Group>
               <Form.Group>
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
-                  className={`${this.state.showSignUpValidation}`}
+                  className={`${this.state.validations.showEmailValidation}`}
                   name="email"
                   type="email"
                   placeholder="Enter email"
                   onChange={this.handleSignUpChange}
                 />
+                {this.state.validationMessages.emailValidationMessage ? (
+                  <Form.Text className="text-warning my-1">
+                    {this.state.validationMessages.emailValidationMessage}
+                  </Form.Text>
+                ) : null}
               </Form.Group>
               <Form.Group>
                 <Form.Label>Phone number</Form.Label>
                 <Form.Control
+                  className={`${this.state.validations.showPhoneNumValidation}`}
                   name="phoneNum"
                   placeholder="Enter phone number"
                   onChange={this.handleSignUpChange}
                 />
+                {this.state.validationMessages.phoneNumValidationMessage ? (
+                  <Form.Text className="text-warning my-1">
+                    {this.state.validationMessages.phoneNumValidationMessage}
+                  </Form.Text>
+                ) : null}
               </Form.Group>
               <Form.Group>
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                  className={`${this.state.validations.showPasswordValidation}`}
                   name="password"
                   type="password"
                   placeholder="Password"
                   onChange={this.handleSignUpChange}
                 />
+                {this.state.validationMessages.passwordValidationMessage ? (
+                  <Form.Text className="text-warning my-1">
+                    {this.state.validationMessages.passwordValidationMessage}
+                  </Form.Text>
+                ) : null}
               </Form.Group>
               <Button
                 className="float-right mb-4"
                 variant="success"
                 size="sm"
-                onClick={this.handleSignUp}
+                onClick={this.handleValidateAndSignUp}
               >
                 Sign up
               </Button>
