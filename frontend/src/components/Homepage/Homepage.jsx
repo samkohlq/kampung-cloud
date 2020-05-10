@@ -73,7 +73,7 @@ class Homepage extends React.Component {
               className="text-uppercase font-weight-bold px-3"
               variant="outline-secondary"
               onClick={() => {
-                window.location.href = "/get-started";
+                window.location.href = "/how-this-kampung-works";
               }}
             >
               Learn more

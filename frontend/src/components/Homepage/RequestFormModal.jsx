@@ -174,7 +174,6 @@ class RequestFormModal extends React.Component {
         });
       }
     }
-    console.log(this.state.validations);
   };
 
   submitForm = async () => {
