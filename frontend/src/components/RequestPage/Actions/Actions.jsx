@@ -141,7 +141,7 @@ class Actions extends React.Component {
               );
             }
           } else {
-            actions = <>{requestStatuses[retrievedRequest.status]}</>;
+            actions = null;
           }
           break;
         // if help has been rendered
