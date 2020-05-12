@@ -214,6 +214,11 @@ class RequestFormModal extends React.Component {
         </Modal.Header>
         <Modal.Body>
           <Form>
+            <Form.Text className="text-muted">
+              Don't worry! Until someone offers their help, you will still be
+              able to edit this request after posting it.
+            </Form.Text>
+            <hr></hr>
             <Form.Group size="sm" className="mb-3">
               <Form.Label>When do you need this by?</Form.Label>
               <DatePicker
@@ -307,7 +312,7 @@ class RequestFormModal extends React.Component {
               className="float-right mb-3"
               onClick={this.handleValidateAndSubmitForm}
             >
-              Submit request
+              Post request
             </Button>
           </Form>
         </Modal.Body>

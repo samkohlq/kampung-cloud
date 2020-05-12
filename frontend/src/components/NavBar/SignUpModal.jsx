@@ -238,8 +238,9 @@ class SignUpModal extends React.Component {
                 </Form.Text>
               ) : null}
               <Form.Text className="text-muted mb-3">
-                Your contact details will only be shared with others when you
-                create a request or offer help to someone in need
+                We will share your contact details with others only when you
+                create a request or offer help to someone in need. This is so
+                that you can make arrangements with each other.
               </Form.Text>
               <Form.Group>
                 <Form.Label>Name</Form.Label>

@@ -32,7 +32,7 @@ class Homepage extends React.Component {
   }
 
   toggleLoginModal = () => {
-    return this.setState({
+    this.setState({
       showLoginModal: !this.state.showLoginModal,
     });
   };
