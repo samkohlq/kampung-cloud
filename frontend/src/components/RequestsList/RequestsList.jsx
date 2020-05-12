@@ -84,14 +84,14 @@ class RequestsList extends React.Component {
         ) : null}
         {this.state.requests.length === 0 ? (
           <>
-            <div>
+            <div style={{ marginBottom: "8em" }}>
               <h6 className="text-center text-secondary my-5">
                 Nothing here yet!
               </h6>
             </div>
           </>
         ) : (
-          <Table responsive="sm" hover>
+          <Table style={{ marginBottom: "8em" }} responsive="sm" hover>
             <thead>
               <tr>
                 {this.props.type === "PickedUp" ? (
