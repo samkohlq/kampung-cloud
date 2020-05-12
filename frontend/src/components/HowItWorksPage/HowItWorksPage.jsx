@@ -99,18 +99,7 @@ class HowItWorksPage extends React.Component {
               </Row>
               <Row className="my-5">
                 <Col className="mx-5">
-                  <div className="text-left">
-                    <div className="my-3  subsection-header">
-                      Keeping this Kampung safe
-                    </div>
-                    <p>
-                      Your safety is important to us. We can’t vet the requests
-                      coming in and can only trust that everybody is here out of
-                      the goodness of their hearts, and won’t take advantage of
-                      each other.
-                    </p>
-                    <SafetyGuidelines />
-                  </div>
+                  <SafetyGuidelines />
                 </Col>
               </Row>
             </Container>

@@ -198,7 +198,7 @@ class RequestFormModal extends React.Component {
     if (response.status === 422) {
       alert("Please fix the errors in the request form");
     } else if (response.status === 200) {
-      window.location.href = "/";
+      window.location.reload();
     }
   };
 

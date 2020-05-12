@@ -1,6 +1,7 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import firebase from "../../firebase";
+import RequestFormModal from "../Homepage/RequestFormModal";
 import Request from "./Request";
 
 class RequestsList extends React.Component {
@@ -10,12 +11,19 @@ class RequestsList extends React.Component {
       loggedInUserUid: null,
       type: this.props.type,
       requests: [],
+      showRequestFormModal: false,
     };
   }
 
   componentDidMount() {
     this.retrieveRequests();
   }
+
+  toggleRequestFormModal = () => {
+    this.setState({
+      showRequestFormModal: !this.state.showRequestFormModal,
+    });
+  };
 
   static getDerivedStateFromProps(props, state) {
     if (props.type !== state.type) {
@@ -57,6 +65,23 @@ class RequestsList extends React.Component {
   render() {
     return (
       <>
+        {this.props.type === "Posted" ? (
+          <div>
+            <Button
+              className="mb-4 text-uppercase font-weight-bold px-3"
+              variant="success"
+              onClick={() => {
+                this.toggleRequestFormModal();
+              }}
+            >
+              Make a request
+            </Button>
+            <RequestFormModal
+              showRequestFormModal={this.state.showRequestFormModal}
+              toggleRequestFormModal={this.toggleRequestFormModal}
+            />
+          </div>
+        ) : null}
         {this.state.requests.length === 0 ? (
           <>
             <h6 className="text-center text-secondary my-5">
