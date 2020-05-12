@@ -3,14 +3,12 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBZ8p56tzf-5KrLnrrekQKJUbfg2-ITDAU",
-  authDomain: "kampung-cloud-prod.firebaseapp.com",
-  databaseURL: "https://kampung-cloud-prod.firebaseio.com",
-  projectId: "kampung-cloud-prod",
-  storageBucket: "kampung-cloud-prod.appspot.com",
-  messagingSenderId: "537175327608",
-  appId: "1:537175327608:web:4500ad3eab73d6b6edfe8d",
-  measurementId: "G-XBZMZMGZMF",
+  apiKey: process.env.FIREBASE_CONFIG_API_KEY,
+  authDomain: process.env.FIREBASE_CONFIG_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
 firebase.initializeApp(firebaseConfig);
