@@ -11,6 +11,14 @@ class ContactUsPage extends React.Component {
       details: null,
       contactInfo: null,
       submitButtonStatus: null,
+      validations: {
+        showTypeValidation: null,
+        showTypeErrorMessage: null,
+        showDetailsValidation: null,
+        showDetailsErrorMessage: null,
+        showContactInfoValidation: null,
+        showContactInfoErrorMessage: null,
+      },
     };
   }
 
@@ -36,6 +44,9 @@ class ContactUsPage extends React.Component {
         }),
       }
     );
+    if (response.status === 422) {
+      alert("Please fix the errors in the feedback form");
+    }
     if (response.status === 200) {
       window.location.reload();
     }
@@ -44,6 +55,66 @@ class ContactUsPage extends React.Component {
   handleValidateAndSubmitFeedback = async () => {
     if (this.state.type && this.state.details && this.state.contactInfo) {
       this.submitFeedback();
+    } else {
+      if (!this.state.type) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showTypeValidation: "border-warning",
+            showTypeErrorMessage: "Please select a feedback category",
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showTypeValidation: null,
+            showTypeErrorMessage: null,
+          },
+        });
+      }
+
+      if (!this.state.details) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showDetailsValidation: "border-warning",
+            showDetailsErrorMessage: true,
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showDetailsValidation: null,
+            showDetailsErrorMessage: null,
+          },
+        });
+      }
+
+      if (!this.state.contactInfo) {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showContactInfoValidation: "border-warning",
+            showContactInfoErrorMessage: true,
+          },
+        });
+      } else {
+        await this.setState({
+          ...this.state,
+          validations: {
+            ...this.state.validations,
+            showContactInfoValidation: null,
+            showContactInfoErrorMessage: null,
+          },
+        });
+      }
     }
   };
 
@@ -73,38 +144,57 @@ class ContactUsPage extends React.Component {
                 <Form.Group>
                   <Form.Label>I would like to...</Form.Label>
                   <Form.Control
+                    className={this.state.validations.showTypeValidation}
                     as="select"
                     defaultValue="--"
                     name="type"
                     onChange={this.handleFormChange}
                   >
                     <option disabled="disabled">--</option>
-                    <option>Report harrassment</option>
+                    <option>Report harassment</option>
                     <option>Report a scam</option>
                     <option>Provide feedback</option>
                     <option>Report a bug</option>
                     <option>Ask a question</option>
                   </Form.Control>
+                  {this.state.validations.showTypeErrorMessage ? (
+                    <Form.Text className="text-warning">
+                      Please select a feedback category
+                    </Form.Text>
+                  ) : null}
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>
                     Is there anything else you'd like us to know?
                   </Form.Label>
                   <Form.Control
+                    className={this.state.validations.showDetailsValidation}
                     as="textarea"
                     name="details"
                     onChange={this.handleFormChange}
                   />
+                  {this.state.validations.showDetailsErrorMessage ? (
+                    <Form.Text className="text-warning">
+                      Please tell us more about your experience
+                    </Form.Text>
+                  ) : null}
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>How can we contact you?</Form.Label>
                   <Form.Control
+                    className={this.state.validations.showContactInfoValidation}
                     name="contactInfo"
                     onChange={this.handleFormChange}
                   />
                   <Form.Text className="text-secondary">
                     Please provide your number or email address
                   </Form.Text>
+                  {this.state.validations.showContactInfoErrorMessage ? (
+                    <Form.Text className="text-warning">
+                      We need your contact information so that we can get back
+                      to you on your feedback
+                    </Form.Text>
+                  ) : null}
                 </Form.Group>
                 <Button
                   className="float-right"
