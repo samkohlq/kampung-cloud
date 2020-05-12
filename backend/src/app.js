@@ -12,8 +12,8 @@ import userRouter from "./routes/userRouter";
 
 var app = express();
 var whitelist = [
-  "https://kampung-cloud-prod.web.app",
-  "https://kampung-cloud-prod.firebaseapp.com",
+  "https://kampungcloud.web.app",
+  "https://kampungcloud.firebaseapp.com",
 ];
 var corsOptions = {
   origin: (origin, callback) => {
