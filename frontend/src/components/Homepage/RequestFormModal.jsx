@@ -297,7 +297,7 @@ class RequestFormModal extends React.Component {
                 type="checkbox"
                 onChange={this.handleFormChange}
                 name="declaration"
-                label="I agree to share my contact information with whoever picks up my request"
+                label="I consent to sharing my contact information with whoever picks up my request"
               />
               {this.state.validations.showRequestDeclarationValidation ? (
                 <Form.Text className="text-warning">

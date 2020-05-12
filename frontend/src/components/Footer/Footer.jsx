@@ -8,12 +8,12 @@ class Footer extends React.Component {
     return (
       <Navbar fixed="bottom" className="footer ">
         <Container className="justify-content-center">
-          <div className="small text-white text-center">
+          <div className="my-2 text-white text-center">
             Have a question? Visit our{" "}
             <Link
               to="/frequently-asked-questions"
               className="text-white"
-              style={{ textDecoration: "underline" }}
+              style={{ textDecoration: "underline", fontSize: "0.9rem" }}
             >
               FAQ page
             </Link>{" "}
@@ -25,7 +25,7 @@ class Footer extends React.Component {
             >
               contact us
             </Link>
-            <div className="mt-1" style={{ fontSize: "0.7rem" }}>
+            <div className="my-2" style={{ fontSize: "0.7rem" }}>
               Kampung Cloud, 2020
             </div>
           </div>
