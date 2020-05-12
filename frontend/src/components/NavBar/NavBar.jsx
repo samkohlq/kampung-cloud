@@ -23,7 +23,6 @@ class NavBar extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user.displayName);
         this.setState({
           loggedIn: true,
           loggedInUserName: user.displayName,

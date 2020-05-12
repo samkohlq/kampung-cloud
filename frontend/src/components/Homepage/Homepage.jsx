@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container, Image } from "react-bootstrap";
 import firebase from "../../firebase";
 import welcomeBanner from "../../images/welcome-banner.png";
+import Footer from "../Footer/Footer";
 import LoginModal from "../NavBar/LoginModal";
 import NavBar from "../NavBar/NavBar";
 import IntroSubSection from "./IntroSubSection";
@@ -88,6 +89,7 @@ class Homepage extends React.Component {
           <RequestStats />
           <RequestTypes />
         </Container>
+        <Footer />
       </>
     );
   }

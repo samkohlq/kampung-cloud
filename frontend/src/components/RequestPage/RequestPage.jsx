@@ -2,6 +2,7 @@ import moment from "moment";
 import React from "react";
 import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
 import firebase from "../../firebase";
+import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
 import Actions from "./Actions/Actions";
 import CommentsSection from "./CommentsSection/CommentsSection";
@@ -183,7 +184,7 @@ class RequestPage extends React.Component {
             <Spinner animation="border" variant="primary" />
           </div>
         ) : (
-          <Container className="px-4">
+          <Container className="px-4" style={{ marginBottom: "5em" }}>
             <Row>
               <Col xs={12} sm={12} md={8} className="mt-5 px-4">
                 <Image style={{ width: "6em" }} src={this.state.icon} />
@@ -230,6 +231,7 @@ class RequestPage extends React.Component {
             </Row>
           </Container>
         )}
+        <Footer />
       </>
     );
   }

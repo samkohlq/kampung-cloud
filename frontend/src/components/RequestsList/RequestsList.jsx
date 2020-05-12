@@ -89,7 +89,7 @@ class RequestsList extends React.Component {
             </h6>
           </>
         ) : (
-          <Table className="mb-5" responsive="sm" hover>
+          <Table style={{ marginBottom: "5em" }} responsive="sm" hover>
             <thead>
               <tr>
                 {this.props.type === "PickedUp" ? (

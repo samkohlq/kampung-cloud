@@ -3,6 +3,7 @@ import { Col, Container, Image, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import firebase from "../../firebase";
 import howItWorks from "../../images/how-it-works.png";
+import Footer from "../Footer/Footer";
 import RequestFormModal from "../Homepage/RequestFormModal";
 import LoginModal from "../NavBar/LoginModal";
 import NavBar from "../NavBar/NavBar";
@@ -105,6 +106,7 @@ class HowItWorksPage extends React.Component {
             </Container>
           </Col>
         </Row>
+        <Footer />
       </>
     );
   }

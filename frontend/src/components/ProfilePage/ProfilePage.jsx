@@ -9,6 +9,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import firebase from "../../firebase";
+import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
 
 class Profile extends React.Component {
@@ -211,6 +212,7 @@ class Profile extends React.Component {
             <Col md={6}>{profile}</Col>
           </Row>
         </Container>
+        <Footer />
       </>
     );
   }
