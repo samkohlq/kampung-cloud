@@ -20,7 +20,7 @@ class LoginModal extends React.Component {
         showEmailValidation: null,
         showPasswordValidation: null,
       },
-      loginButtonStatus: null,
+      loginButtonStatus: false,
       showForgotPasswordModal: false,
     };
     this.toggleForgotPasswordModal = this.toggleForgotPasswordModal.bind(this);
@@ -64,6 +64,11 @@ class LoginModal extends React.Component {
         this.state.loginData.email,
         this.state.loginData.password
       )
+      .then((user) => {
+        if (user) {
+          this.props.toggleLoginModal();
+        }
+      })
       .catch((error) => {
         if (error.code === "auth/user-not-found") {
           this.setState({
@@ -78,9 +83,6 @@ class LoginModal extends React.Component {
             loginErrorMessage: error.message,
           });
         }
-      })
-      .then(() => {
-        this.props.toggleLoginModal();
       });
   };
 
