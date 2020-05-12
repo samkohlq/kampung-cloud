@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "kampung-cloud-prod"
+    "default": "kampung-cloud-prod",
+    "production": "kampungcloud"
   }
 }
