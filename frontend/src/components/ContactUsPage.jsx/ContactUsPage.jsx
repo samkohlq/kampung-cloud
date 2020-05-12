@@ -132,7 +132,7 @@ class ContactUsPage extends React.Component {
                   fontSize: "1.5rem",
                 }}
               >
-                Let us know how we can help!
+                How can we help?
               </div>
               <Form className="my-4">
                 <Form.Text className="mb-3">
@@ -153,9 +153,11 @@ class ContactUsPage extends React.Component {
                     <option disabled="disabled">--</option>
                     <option>Report harassment</option>
                     <option>Report a scam</option>
-                    <option>Provide feedback</option>
+                    <option>
+                      Create an account but I don't have an email address
+                    </option>
                     <option>Report a bug</option>
-                    <option>Ask a question</option>
+                    <option>Provide feedback / Ask a question</option>
                   </Form.Control>
                   {this.state.validations.showTypeErrorMessage ? (
                     <Form.Text className="text-warning">

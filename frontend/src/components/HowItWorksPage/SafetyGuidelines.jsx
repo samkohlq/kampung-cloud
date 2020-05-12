@@ -8,7 +8,7 @@ class SafetyGuidelines2 extends React.Component {
         <p>
           Your safety is important to us. We are making calls to verify requests
           coming in but we simply can't vet every single request. All we can do
-          is trust that everybody here is out of the goodness of their hearts,
+          is trust that everybody is here out of the goodness of their hearts,
           and won't take advantage of each other.
         </p>
         <p className="text-left my-5">

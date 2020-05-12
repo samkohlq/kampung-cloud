@@ -9,11 +9,25 @@ class Footer extends React.Component {
       <Navbar fixed="bottom" className="footer ">
         <Container className="justify-content-center">
           <div className="small text-white text-center">
-            Have a question?{" "}
-            <Link to="/contact-us" className="text-white">
-              Contact us
+            Have a question? Visit our{" "}
+            <Link
+              to="/frequently-asked-questions"
+              className="text-white"
+              style={{ textDecoration: "underline" }}
+            >
+              FAQ page
+            </Link>{" "}
+            or{" "}
+            <Link
+              to="/contact-us"
+              className="text-white"
+              style={{ textDecoration: "underline" }}
+            >
+              contact us
             </Link>
-            <div>Kampung Cloud, 2020</div>
+            <div className="mt-1" style={{ fontSize: "0.7rem" }}>
+              Kampung Cloud, 2020
+            </div>
           </div>
         </Container>
       </Navbar>
