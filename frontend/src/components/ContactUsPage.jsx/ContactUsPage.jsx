@@ -199,7 +199,7 @@ class ContactUsPage extends React.Component {
                   ) : null}
                 </Form.Group>
                 <Button
-                  className="float-right"
+                  className="float-right mb-5"
                   size="sm"
                   variant="success"
                   onClick={this.handleValidateAndSubmitFeedback}
