@@ -9,13 +9,13 @@ class Footer extends React.Component {
       <Navbar fixed="bottom" className="footer ">
         <Container className="justify-content-center">
           <div className="my-1 small text-white text-center">
-            Have a question? Visit our{" "}
+            Have a question? Visit{" "}
             <Link
               to="/frequently-asked-questions"
               className="text-white"
               style={{ textDecoration: "underline" }}
             >
-              FAQ page
+              FAQs
             </Link>{" "}
             or{" "}
             <Link

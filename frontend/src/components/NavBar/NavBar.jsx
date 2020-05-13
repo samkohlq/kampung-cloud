@@ -113,7 +113,7 @@ class NavBar extends React.Component {
           <Navbar.Brand href="/">
             <img
               src={Logo}
-              width="200"
+              width="140"
               className="d-inline-block align-top"
               alt="kampung cloud logo"
             />
