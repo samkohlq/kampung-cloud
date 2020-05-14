@@ -74,7 +74,8 @@ class Actions extends React.Component {
                     up your request
                   </h5>
                   <div style={{ fontSize: 13 }} className="mt-4">
-                    Follow our <Link to="/get-started">safety guidelines</Link>{" "}
+                    Follow our{" "}
+                    <Link to="/how-this-kampung-works">safety guidelines</Link>{" "}
                     to protect yourself against scams.
                   </div>
                   <br></br>
@@ -130,11 +131,6 @@ class Actions extends React.Component {
                     <br></br>
                   </div>
                   <div style={{ fontSize: 13 }} className="mt-4">
-                    Follow our <Link to="/get-started">safety guidelines</Link>{" "}
-                    to protect yourself against scams.
-                  </div>
-                  <br></br>
-                  <div>
                     If you're unable to get everything on the list of a request,
                     we encourage you to leave a comment below with what you've
                     managed to get, and release the request.
@@ -142,7 +138,14 @@ class Actions extends React.Component {
                     requestor and other potential volunteers to stay updated
                     with the status of the request. It also promotes a sense of
                     collaboration within the community.
+                    <br></br>
+                    Follow our{" "}
+                    <Link to="/how-this-kampung-works">
+                      safety guidelines
+                    </Link>{" "}
+                    to protect yourself against scams.
                   </div>
+                  <br></br>
                   <div>
                     <MarkRequestCompleted requestId={retrievedRequest.id} />
                     <ReleaseRequest requestId={retrievedRequest.id} />
