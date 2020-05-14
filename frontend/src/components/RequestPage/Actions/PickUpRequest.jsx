@@ -32,7 +32,10 @@ class PickUpRequest extends React.Component {
         </Button>
         <div className="my-2 small">
           You'll see {this.props.requestorName}'s contact details here after you
-          pick up the request
+          pick up the request. If you're not sure about whether you can fulfill
+          the request, feel free to make clarifications with{" "}
+          {this.props.requestorName}. You can release the request later if you
+          realise that you can't help.
         </div>
       </>
     );

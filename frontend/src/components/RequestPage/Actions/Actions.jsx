@@ -127,12 +127,22 @@ class Actions extends React.Component {
                   <div className="mb-2">
                     Contact {requestorName} at {requestorEmail}{" "}
                     {requestorPhoneNum ? <> or {requestorPhoneNum} </> : null}
+                    <br></br>
                   </div>
                   <div style={{ fontSize: 13 }} className="mt-4">
                     Follow our <Link to="/get-started">safety guidelines</Link>{" "}
                     to protect yourself against scams.
                   </div>
                   <br></br>
+                  <div>
+                    If you're unable to get everything on the list of a request,
+                    we encourage you to leave a comment on the request page with
+                    what you've managed to get, and release the request.
+                    <br></br>By doing so, it makes it more convenient for the
+                    requestor and other potential volunteers to stay updated
+                    with the status of the request. It also promotes a sense of
+                    collaboration within the community.
+                  </div>
                   <div>
                     <MarkRequestCompleted requestId={retrievedRequest.id} />
                     <ReleaseRequest requestId={retrievedRequest.id} />
